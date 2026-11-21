@@ -156,6 +156,26 @@ class TestApiSettings(unittest.TestCase):
         with self.assertRaises(ValueError):
             ProcessRequest(url="https://www.youtube.com/watch?v=dQw4w9WgXcQ", action="type_yt_ai_clip", clip_language="ml")
 
+    def test_subtitle_style_and_framing_settings_roundtrip(self):
+        os.environ.pop("SUBTITLE_STYLE", None)
+        os.environ.pop("CLIP_FRAMING", None)
+        defaults = self.client.get("/api/settings").json()
+        self.assertEqual(defaults.get("subtitle_style"), "classic")
+        self.assertEqual(defaults.get("clip_framing"), "auto")
+
+        res = self.client.post("/api/settings", json={"subtitle_style": "plate", "clip_framing": "blur"})
+        self.assertEqual(res.status_code, 200)
+        saved = self.client.get("/api/settings").json()
+        self.assertEqual(saved.get("subtitle_style"), "plate")
+        self.assertEqual(saved.get("clip_framing"), "blur")
+        with open(self.env_path, "r", encoding="utf-8") as f:
+            env_text = f.read()
+        self.assertIn("SUBTITLE_STYLE=plate", env_text)
+        self.assertIn("CLIP_FRAMING=blur", env_text)
+
+        self.assertEqual(self.client.post("/api/settings", json={"subtitle_style": "neon"}).status_code, 400)
+        self.assertEqual(self.client.post("/api/settings", json={"clip_framing": "zoom"}).status_code, 400)
+
     def test_studio_background_setting_roundtrip_and_validation(self):
         os.environ.pop("STUDIO_BACKGROUND", None)
         self.assertEqual(self.client.get("/api/settings").json().get("studio_background"), "obsidian")

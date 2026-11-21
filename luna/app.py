@@ -63,13 +63,19 @@ from .clipper.clipper import _get_encoder_flags
 from .clipper.config import (
     DEFAULT_GEMINI_MODEL,
     DEFAULT_OPENAI_BASE_URL,
+    SUPPORTED_CLIP_FRAMING,
+    SUPPORTED_SUBTITLE_STYLES,
+    clip_framing,
     clip_language,
     llm_provider,
+    normalize_clip_framing,
     normalize_clip_language,
     normalize_studio_background,
+    normalize_subtitle_style,
     openai_base_url,
     openai_model,
     studio_background,
+    subtitle_style,
     transcribe_provider,
     transcribe_provider_label,
 )
@@ -1959,6 +1965,8 @@ def _worker_process(job_id: str, req: ProcessRequest):
                 language=None,
                 clip_language=req.clip_language or clip_language(),
                 use_face_detect=req.use_face_detect,
+                framing=clip_framing(),
+                subtitle_style=subtitle_style(),
                 on_status=on_status,
                 out_dir=job_output_dir,
                 progress_hook=progress_hook,
@@ -2915,6 +2923,8 @@ class SettingsUpdateRequest(BaseModel):
     transcribe_provider: Optional[str] = None
     clip_language: Optional[str] = None
     studio_background: Optional[str] = None
+    subtitle_style: Optional[str] = None
+    clip_framing: Optional[str] = None
     openai_api_key: Optional[str] = None
     openai_base_url: Optional[str] = None
     openai_model: Optional[str] = None
@@ -2980,6 +2990,8 @@ async def api_get_settings():
         "llm_provider": os.getenv("LLM_PROVIDER", "").strip().lower(),
         "transcribe_provider": transcribe_provider(),
         "clip_language": clip_language(),
+        "subtitle_style": subtitle_style(),
+        "clip_framing": clip_framing(),
         "studio_background": studio_background(),
         # Secrets are never echoed back; only a hint plus a configured flag.
         "openai_api_key": _mask_key(openai_key),
@@ -3028,6 +3040,22 @@ async def api_save_settings(req: SettingsUpdateRequest):
         if not normalized_lang:
             raise HTTPException(status_code=400, detail="Unsupported clip language; use 'en' or 'ru'")
         updates["CLIP_OUTPUT_LANGUAGE"] = normalized_lang
+    if req.subtitle_style is not None:
+        normalized_style = normalize_subtitle_style(req.subtitle_style)
+        if not normalized_style:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Unknown subtitle style; use one of {', '.join(SUPPORTED_SUBTITLE_STYLES)}",
+            )
+        updates["SUBTITLE_STYLE"] = normalized_style
+    if req.clip_framing is not None:
+        normalized_framing = normalize_clip_framing(req.clip_framing)
+        if not normalized_framing:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Unknown clip framing; use one of {', '.join(SUPPORTED_CLIP_FRAMING)}",
+            )
+        updates["CLIP_FRAMING"] = normalized_framing
     if req.studio_background is not None:
         normalized_bg = normalize_studio_background(req.studio_background)
         if not normalized_bg:

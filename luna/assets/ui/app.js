@@ -4360,6 +4360,36 @@ function setClipLanguage(value) {
   syncSettingsDirtyState();
 }
 
+function syncSubtitleStyleUI() {
+  syncLogoSelect({
+    hiddenId: 'selectSubtitleStyle', menuId: 'subtitleStyleMenu',
+    labelId: 'subtitleStyleTriggerLabel',
+  });
+}
+
+function setSubtitleStyle(value) {
+  const input = document.getElementById('selectSubtitleStyle');
+  if (input) input.value = value || 'classic';
+  syncSubtitleStyleUI();
+  closeMenu('subtitleStyleMenu');
+  syncSettingsDirtyState();
+}
+
+function syncClipFramingUI() {
+  syncLogoSelect({
+    hiddenId: 'selectClipFraming', menuId: 'clipFramingMenu',
+    labelId: 'clipFramingTriggerLabel',
+  });
+}
+
+function setClipFraming(value) {
+  const input = document.getElementById('selectClipFraming');
+  if (input) input.value = value || 'auto';
+  syncClipFramingUI();
+  closeMenu('clipFramingMenu');
+  syncSettingsDirtyState();
+}
+
 function toggleLlmProviderMenu(force) { toggleMenu('llmProviderTrigger', 'llmProviderMenu', force); }
 function closeLlmProviderMenu() { closeMenu('llmProviderMenu'); }
 
@@ -4458,6 +4488,8 @@ function getSettingsSnapshot() {
     llm_provider: document.getElementById('selectLlmProvider')?.value || '',
     transcribe_provider: document.getElementById('selectTranscribeProvider')?.value || '',
     clip_language: document.getElementById('selectClipLanguage')?.value || 'en',
+    subtitle_style: document.getElementById('selectSubtitleStyle')?.value || 'classic',
+    clip_framing: document.getElementById('selectClipFraming')?.value || 'auto',
     openai_base_url: (document.getElementById('inputOpenaiBase')?.value || '').trim(),
     openai_model: (document.getElementById('inputOpenaiModel')?.value || '').trim(),
   };
@@ -4506,6 +4538,8 @@ function revertSettingsToSnapshot() {
       selectLlmProvider: savedSettingsSnapshot.llm_provider,
       selectTranscribeProvider: savedSettingsSnapshot.transcribe_provider,
       selectClipLanguage: savedSettingsSnapshot.clip_language,
+      selectSubtitleStyle: savedSettingsSnapshot.subtitle_style,
+      selectClipFraming: savedSettingsSnapshot.clip_framing,
       inputOpenaiBase: savedSettingsSnapshot.openai_base_url,
       inputOpenaiModel: savedSettingsSnapshot.openai_model,
     };
@@ -4516,6 +4550,8 @@ function revertSettingsToSnapshot() {
     if (typeof syncLlmProviderUI === 'function') syncLlmProviderUI();
     if (typeof syncTranscribeUI === 'function') syncTranscribeUI();
     if (typeof syncClipLanguageUI === 'function') syncClipLanguageUI();
+    if (typeof syncSubtitleStyleUI === 'function') syncSubtitleStyleUI();
+    if (typeof syncClipFramingUI === 'function') syncClipFramingUI();
     const hiddenModel = document.getElementById('selectOpenaiModel');
     if (hiddenModel) {
       const optionValues = Array.from(document.querySelectorAll('#openaiModelItems [data-value]'))
@@ -4605,6 +4641,8 @@ async function loadSettingsData() {
       selectLlmProvider: data.llm_provider,
       selectTranscribeProvider: data.transcribe_provider,
       selectClipLanguage: data.clip_language || 'en',
+      selectSubtitleStyle: data.subtitle_style || 'classic',
+      selectClipFraming: data.clip_framing || 'auto',
       inputOpenaiBase: data.openai_base_url,
       inputOpenaiModel: data.openai_model
     };
@@ -4621,6 +4659,8 @@ async function loadSettingsData() {
     if (typeof syncLlmProviderUI === 'function') syncLlmProviderUI();
     if (typeof syncTranscribeUI === 'function') syncTranscribeUI();
     if (typeof syncClipLanguageUI === 'function') syncClipLanguageUI();
+    if (typeof syncSubtitleStyleUI === 'function') syncSubtitleStyleUI();
+    if (typeof syncClipFramingUI === 'function') syncClipFramingUI();
     // Secrets come back masked, never as the key itself. Show the hint as a
     // placeholder and leave the field empty, so saving cannot overwrite the key.
     const inputOpenai = document.getElementById('inputOpenai');
@@ -4685,6 +4725,8 @@ async function saveSettings() {
     llm_provider: document.getElementById('selectLlmProvider')?.value,
     transcribe_provider: document.getElementById('selectTranscribeProvider')?.value,
     clip_language: nextClipLang,
+    subtitle_style: document.getElementById('selectSubtitleStyle')?.value || 'classic',
+    clip_framing: document.getElementById('selectClipFraming')?.value || 'auto',
     openai_base_url: document.getElementById('inputOpenaiBase')?.value.trim(),
     openai_model: document.getElementById('inputOpenaiModel')?.value.trim(),
   };
@@ -9316,6 +9358,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const hidden = document.getElementById('selectClipLanguage');
         if (hidden) hidden.value = data.clip_language;
         if (typeof syncClipLanguageUI === 'function') syncClipLanguageUI();
+      }
+      if (data && data.subtitle_style) {
+        const hiddenStyle = document.getElementById('selectSubtitleStyle');
+        if (hiddenStyle) hiddenStyle.value = data.subtitle_style;
+        if (typeof syncSubtitleStyleUI === 'function') syncSubtitleStyleUI();
+      }
+      if (data && data.clip_framing) {
+        const hiddenFraming = document.getElementById('selectClipFraming');
+        if (hiddenFraming) hiddenFraming.value = data.clip_framing;
+        if (typeof syncClipFramingUI === 'function') syncClipFramingUI();
       }
       if (data && data.studio_background && typeof window.applyStudioBackground === 'function') {
         window.applyStudioBackground(data.studio_background);

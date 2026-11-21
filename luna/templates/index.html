@@ -1023,6 +1023,106 @@
             <p class="text-[11px] text-zinc-500">Язык по умолчанию для заголовков и описаний клипов, созданных ИИ. Названия исходных видео и медиатеки остаются на языке оригинала.</p>
           </div>
 
+          <!-- Subtitle Style Row -->
+          <div class="space-y-1">
+            <div class="flex items-center justify-between text-xs gap-2">
+              <label class="font-medium text-zinc-200" for="subtitleStyleTrigger">Шаблон субтитров</label>
+              <span class="text-[11px] text-zinc-500">ИИ-клипы</span>
+            </div>
+            <div class="relative" id="subtitleStyleMenuWrap">
+              <input type="hidden" id="selectSubtitleStyle" value="classic">
+              <button type="button" id="subtitleStyleTrigger" onclick="toggleMenu('subtitleStyleTrigger', 'subtitleStyleMenu')"
+                aria-haspopup="listbox" aria-expanded="false" aria-controls="subtitleStyleMenu"
+                class="t-input w-full px-3 text-xs text-white text-left cursor-pointer">
+                <span id="subtitleStyleTriggerLabel" class="font-sans flex-1 min-w-0 truncate">Классический</span>
+                <svg class="ml-auto w-3.5 h-3.5 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+
+              <div id="subtitleStyleMenu" role="listbox" aria-label="Шаблон субтитров"
+                class="hidden fixed z-[140] rounded-xl border border-white/[0.08] bg-[#171717] p-1 shadow-[0_16px_36px_rgba(0,0,0,0.75)] max-h-[280px] overflow-y-auto">
+                <div class="relative z-[2] px-2.5 py-1.5 text-[11px] font-sans text-zinc-500">Шаблон</div>
+
+                <button type="button" role="option" data-value="classic" data-label="Классический" onclick="setSubtitleStyle('classic')"
+                  class="settings-menu-item relative z-[2] w-full flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-zinc-200 transition cursor-pointer">
+                  <span>Классический</span>
+                  <svg class="select-check ml-auto w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+
+                <button type="button" role="option" data-value="bold" data-label="Крупный" onclick="setSubtitleStyle('bold')"
+                  class="settings-menu-item relative z-[2] w-full flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-zinc-200 transition cursor-pointer">
+                  <span>Крупный</span>
+                  <svg class="select-check ml-auto w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+
+                <button type="button" role="option" data-value="plate" data-label="С подложкой" onclick="setSubtitleStyle('plate')"
+                  class="settings-menu-item relative z-[2] w-full flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-zinc-200 transition cursor-pointer">
+                  <span>С подложкой</span>
+                  <svg class="select-check ml-auto w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+
+                <button type="button" role="option" data-value="top" data-label="Сверху" onclick="setSubtitleStyle('top')"
+                  class="settings-menu-item relative z-[2] w-full flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-zinc-200 transition cursor-pointer">
+                  <span>Сверху</span>
+                  <svg class="select-check ml-auto w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+
+                <button type="button" role="option" data-value="accent" data-label="С акцентом" onclick="setSubtitleStyle('accent')"
+                  class="settings-menu-item relative z-[2] w-full flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-zinc-200 transition cursor-pointer">
+                  <span>С акцентом</span>
+                  <svg class="select-check ml-auto w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+              </div>
+            </div>
+            <p class="text-[11px] text-zinc-500">Вид титров в готовых клипах: короткая строка в 2-4 слова, смена успевает за речью.</p>
+          </div>
+
+          <!-- Clip Framing Row -->
+          <div class="space-y-1">
+            <div class="flex items-center justify-between text-xs gap-2">
+              <label class="font-medium text-zinc-200" for="clipFramingTrigger">Кадрирование клипов</label>
+              <span class="text-[11px] text-zinc-500">ИИ-клипы</span>
+            </div>
+            <div class="relative" id="clipFramingMenuWrap">
+              <input type="hidden" id="selectClipFraming" value="auto">
+              <button type="button" id="clipFramingTrigger" onclick="toggleMenu('clipFramingTrigger', 'clipFramingMenu')"
+                aria-haspopup="listbox" aria-expanded="false" aria-controls="clipFramingMenu"
+                class="t-input w-full px-3 text-xs text-white text-left cursor-pointer">
+                <span id="clipFramingTriggerLabel" class="font-sans flex-1 min-w-0 truncate">Авто</span>
+                <svg class="ml-auto w-3.5 h-3.5 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+
+              <div id="clipFramingMenu" role="listbox" aria-label="Кадрирование клипов"
+                class="hidden fixed z-[140] rounded-xl border border-white/[0.08] bg-[#171717] p-1 shadow-[0_16px_36px_rgba(0,0,0,0.75)] max-h-[280px] overflow-y-auto">
+                <div class="relative z-[2] px-2.5 py-1.5 text-[11px] font-sans text-zinc-500">Кадрирование</div>
+
+                <button type="button" role="option" data-value="auto" data-label="Авто" onclick="setClipFraming('auto')"
+                  class="settings-menu-item relative z-[2] w-full flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-zinc-200 transition cursor-pointer">
+                  <span>Авто</span>
+                  <svg class="select-check ml-auto w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+
+                <button type="button" role="option" data-value="blur" data-label="Размытый фон" onclick="setClipFraming('blur')"
+                  class="settings-menu-item relative z-[2] w-full flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-zinc-200 transition cursor-pointer">
+                  <span>Размытый фон</span>
+                  <svg class="select-check ml-auto w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+
+                <button type="button" role="option" data-value="face" data-label="Слежение за лицом" onclick="setClipFraming('face')"
+                  class="settings-menu-item relative z-[2] w-full flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-zinc-200 transition cursor-pointer">
+                  <span>Слежение за лицом</span>
+                  <svg class="select-check ml-auto w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+
+                <button type="button" role="option" data-value="center" data-label="По центру" onclick="setClipFraming('center')"
+                  class="settings-menu-item relative z-[2] w-full flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-zinc-200 transition cursor-pointer">
+                  <span>По центру</span>
+                  <svg class="select-check ml-auto w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+              </div>
+            </div>
+            <p class="text-[11px] text-zinc-500">Авто: одно лицо в кадре — камера ведёт его, два и больше — клип собирается на размытом фоне, чтобы оба собеседника остались в кадре.</p>
+          </div>
+
           <!-- Google Gemini Row -->
           <div class="space-y-1">
             <div class="flex items-center justify-between text-xs">
