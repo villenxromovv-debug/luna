@@ -74,9 +74,10 @@ def generate_shorts(
 
     shorts = crop_highlights_local(
         source_path, top, aspect_ratio=aspect_ratio, out_dir=out_dir, use_face_detect=use_face_detect, on_progress=_on_clip_progress,
-        # Subtitles are burned into the clip by the renderer. They were causing good
-        # videos to fail, so the pipeline does not pass cues at all for now.
-        transcript_segments=[],
+        # Subtitles are burned into the clip by the renderer. Upstream stopped
+        # passing cues because overlays were breaking some renders; pass the real
+        # transcript again so finished clips carry subtitles.
+        transcript_segments=transcript.get("segments") or [],
         cancel_event=cancel_event,
     )
 

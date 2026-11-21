@@ -206,7 +206,7 @@ def _try_fetch_native_youtube_subtitles(
     if media_path:
         stem = Path(media_path).stem
         parent_dir = Path(media_path).parent
-        langs_pref = [language] if language else ["id", "id-orig", "en", "en-orig"]
+        langs_pref = [language] if language else ["ru", "ru-orig", "en", "en-orig"]
         def _sort_by_lang(path_obj: Path) -> int:
             fn = path_obj.name.lower()
             for idx, l in enumerate(langs_pref):
@@ -244,7 +244,7 @@ def _try_fetch_native_youtube_subtitles(
             api = YouTubeTranscriptApi()
             t_list = api.list(vid)
             target_t = None
-            langs = [language] if language else ["id", "id-orig", "en", "en-orig"]
+            langs = [language] if language else ["ru", "ru-orig", "en", "en-orig"]
             for l in langs:
                 try:
                     target_t = t_list.find_transcript([l])
@@ -254,8 +254,8 @@ def _try_fetch_native_youtube_subtitles(
                     pass
             if not target_t:
                 all_tracks = list(t_list)
-                pref_prefixes = (f"{language.lower()}",) if language else ("id", "en")
-                # Prefer ID/EN regional variants (e.g. en-US) and non-generated original tracks
+                pref_prefixes = (f"{language.lower()}",) if language else ("ru", "en")
+                # Prefer RU/EN regional variants (e.g. en-US) and non-generated original tracks
                 # before falling back arbitrarily to the first alphabetical foreign language.
                 target_t = next(
                     (
@@ -297,7 +297,7 @@ def _try_fetch_native_youtube_subtitles(
                 out_stem = f"source_{vid}"
 
             sub_template = str(out_dir / f"{out_stem}.%(ext)s")
-            sub_langs = [language] if language else ["id", "id-orig", "en", "en-orig"]
+            sub_langs = [language] if language else ["ru", "ru-orig", "en", "en-orig"]
 
             cookie_file = os.path.join(ROOT_DIR, "cookies.txt")
             ydl_sub_opts = {
