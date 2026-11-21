@@ -1,4 +1,4 @@
-﻿import os
+import os
 import importlib
 import shutil
 import subprocess
@@ -10,7 +10,14 @@ from unittest.mock import patch
 from PIL import Image, ImageChops
 
 from luna.clipper.clipper import crop_clip_local, crop_highlights_local, _run_ffmpeg
-from luna.clipper.subtitles import SUBTITLE_STYLES, overlay_args, render_cues, segments_for_clip, split_cue
+from luna.clipper.subtitles import (
+    SUBTITLE_STYLES,
+    cues_from_words,
+    overlay_args,
+    render_cues,
+    segments_for_clip,
+    split_cue,
+)
 
 
 pipeline = importlib.import_module("luna.clipper.pipeline")
@@ -57,6 +64,45 @@ class TestCues(unittest.TestCase):
 
 
 @unittest.skipUnless(shutil.which("ffmpeg"), "ffmpeg is not installed")
+class TestWordCues(unittest.TestCase):
+    def test_cues_follow_word_timings_and_limit_words(self):
+        words = [
+            {"start": 0.0, "end": 0.3, "text": "Привет"},
+            {"start": 0.35, "end": 0.5, "text": "как"},
+            {"start": 0.5, "end": 0.8, "text": "дела"},
+            {"start": 1.6, "end": 1.9, "text": "Проверка"},
+        ]
+        cues = cues_from_words(words, 0.0, 3.0)
+        self.assertEqual([cue["text"] for cue in cues], ["Привет как дела", "Проверка"])
+        self.assertAlmostEqual(cues[0]["start"], 0.0)
+        self.assertAlmostEqual(cues[0]["end"], 0.8)
+        self.assertEqual(len(cues[0]["word_times"]), 3)
+
+    def test_cues_are_clamped_to_the_clip(self):
+        words = [{"start": 9.8, "end": 10.6, "text": "край"}]
+        cues = cues_from_words(words, 10.0, 12.0)
+        self.assertEqual(len(cues), 1)
+        self.assertAlmostEqual(cues[0]["start"], 0.0)
+        self.assertAlmostEqual(cues[0]["end"], 0.6)
+
+    def test_karaoke_uses_real_word_windows(self):
+        cue = {
+            "start": 1.0,
+            "end": 2.0,
+            "text": "три слова",
+            "word_times": [
+                {"start": 1.0, "end": 1.2, "text": "три"},
+                {"start": 1.2, "end": 1.9, "text": "слова"},
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            rendered = render_cues([cue], 1080, 1920, tmp, style="karaoke")
+        self.assertEqual(len(rendered), 2)
+        self.assertAlmostEqual(rendered[0][0], 1.0)
+        self.assertAlmostEqual(rendered[0][1], 1.2)
+        self.assertAlmostEqual(rendered[1][1], 1.9)
+
+
 class TestSubtitleStyles(unittest.TestCase):
     def _render(self, style, text="короткая фраза тут", start=0.0, end=2.0):
         with tempfile.TemporaryDirectory() as tmp:

@@ -23,7 +23,7 @@ import time
 from typing import Callable, Dict, List, Optional, Tuple
 
 from .config import local_output_dir, normalize_clip_framing
-from .subtitles import MAX_INLINE_OVERLAY_SCREENS, overlay_args, overlay_args_script, render_cues, segments_for_clip
+from .subtitles import MAX_INLINE_OVERLAY_SCREENS, cues_from_words, overlay_args, overlay_args_script, render_cues, segments_for_clip
 
 # Sample face position once per second (approx 30 frames) for tracking
 FACE_DETECT_SAMPLE_EVERY = 30
@@ -686,6 +686,7 @@ def crop_highlights_local(
     use_face_detect: Optional[bool] = None,
     on_progress: Optional[Callable[[int, int], None]] = None,
     transcript_segments: Optional[List[Dict]] = None,
+    transcript_words: Optional[List[Dict]] = None,
     cancel_event: Optional[threading.Event] = None,
     framing: Optional[str] = None,
     subtitle_style: Optional[str] = None,
@@ -729,6 +730,14 @@ def crop_highlights_local(
             flush=True,
         )
         try:
+            clip_start = float(h["start_time"])
+            clip_end = float(h["end_time"]) + 0.25
+            # Word timings, when YouTube provides them, keep captions on the speaker's heels.
+            cues = (
+                cues_from_words(transcript_words or [], clip_start, clip_end)
+                if transcript_words
+                else segments_for_clip(transcript_segments or [], clip_start, clip_end)
+            )
             crop_clip_local(
                 source_path,
                 float(h["start_time"]),
@@ -736,9 +745,7 @@ def crop_highlights_local(
                 aspect_ratio,
                 out_path,
                 src_dims=src_dims,
-                cues=segments_for_clip(
-                    transcript_segments or [], float(h["start_time"]), float(h["end_time"]) + 0.25
-                ),
+                cues=cues,
                 worker_threads=worker_threads,
                 cancel_event=cancel_event,
                 framing=resolved_framing,

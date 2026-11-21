@@ -216,6 +216,61 @@ def segments_for_clip(segments: List[Dict], clip_start: float, clip_end: float) 
     return [c for c in cues if c["end"] > c["start"]]
 
 
+CUE_MAX_GAP = 0.45
+CUE_SENTENCE_ENDS = (".", "!", "?", "…")
+
+
+def cues_from_words(words: List[Dict], clip_start: float, clip_end: float, max_words: int = 4) -> List[Dict]:
+    """Build short cues from word timings, so each screen starts when its words are spoken.
+
+    A caption line says what was said in a 2-4 second window; a word list says exactly
+    when. Grouping words by pause and sentence end keeps captions on the speaker's heels
+    instead of spreading a line's time evenly across it.
+    """
+    inside = [
+        word for word in sorted(words, key=lambda item: float(item["start"]))
+        if float(word["end"]) > clip_start
+        and float(word["start"]) < clip_end
+        and str(word.get("text", "")).strip()
+    ]
+    cues: List[Dict] = []
+    current: List[Dict] = []
+
+    def flush() -> None:
+        nonlocal current
+        if not current:
+            return
+        start = max(float(current[0]["start"]), clip_start) - clip_start
+        end = min(float(current[-1]["end"]), clip_end) - clip_start
+        text = " ".join(str(word["text"]).strip() for word in current)
+        if text and end > start:
+            cues.append({
+                "start": round(start, 3),
+                "end": round(end, 3),
+                "text": text,
+                "word_times": [
+                    {
+                        "start": round(max(float(word["start"]), clip_start) - clip_start, 3),
+                        "end": round(min(float(word["end"]), clip_end) - clip_start, 3),
+                        "text": str(word["text"]).strip(),
+                    }
+                    for word in current
+                ],
+            })
+        current = []
+
+    for word in inside:
+        if current:
+            gap = float(word["start"]) - float(current[-1]["end"])
+            if gap > CUE_MAX_GAP or len(current) >= max_words:
+                flush()
+            elif str(current[-1]["text"]).rstrip().endswith(CUE_SENTENCE_ENDS):
+                flush()
+        current.append(word)
+    flush()
+    return cues
+
+
 def _resolve_style(style: str) -> Dict:
     """Return a preset by name; an unknown name falls back to classic, never raises."""
     preset = SUBTITLE_STYLES.get(style) if isinstance(style, str) else None
@@ -510,6 +565,24 @@ def render_cues(
         text = _normalize_text(cue.get("text", ""))
         if not text or cue_end <= cue_start:
             continue
+        word_times = cue.get("word_times") or []
+        if preset.get("karaoke") and len(word_times) > 1 and " ".join(
+            _normalize_text(item.get("text", "")) for item in word_times
+        ) == text:
+            # Real per-word timings: the highlight moves exactly when the word is spoken.
+            size = _fit_font_size(text, base_size, max_width, preset)
+            if size is not None:
+                for index, item in enumerate(word_times):
+                    word_start = max(cue_start, float(item["start"]))
+                    word_end = min(cue_end, float(item["end"]))
+                    if word_end - word_start < 0.05:
+                        word_end = min(cue_end, word_start + 0.12)
+                    if word_end <= word_start:
+                        continue
+                    path = os.path.join(out_dir, f"cue_{len(rendered):04d}.png")
+                    _draw_karaoke(text, size, preset, index).save(path)
+                    rendered.append(RenderedScreen(word_start, word_end, path, overlay_y, text))
+                continue
         chunks = _chunk_text(text)
         chunks = _merge_short_chunks(chunks, cue_end - cue_start)
         screens = _fit_chunks(chunks, base_size, max_width, preset, bool(preset["uppercase"]))

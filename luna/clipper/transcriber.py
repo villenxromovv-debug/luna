@@ -378,6 +378,7 @@ def transcribe_local(
                     )
                     if on_status:
                         on_status("transcript_found")
+                    _attach_youtube_words(cached, media_path, video_url)
                     return cached
 
     # Step 1: Check YouTube native transcript
@@ -390,6 +391,7 @@ def transcribe_local(
         if on_status:
             on_status("transcript_found")
         _write_srt_cache(media_path, native_transcript, cache_provider, language)
+        _attach_youtube_words(native_transcript, media_path, video_url)
         return native_transcript
 
     # Step 2: Native not found, fallback to Groq Whisper
@@ -413,7 +415,68 @@ def transcribe_local(
 
     cache_path = _write_srt_cache(media_path, transcript, cache_provider, language)
     print(f"[transcribe/local] wrote cache: {cache_path} (provider: {transcript.get('provider')})", flush=True)
+    _attach_youtube_words(transcript, media_path, video_url)
     return transcript
+
+
+def _words_cache_path(media_path: str) -> Path:
+    return Path(media_path).parent / f"{Path(media_path).stem}.words.json"
+
+
+def _attach_youtube_words(transcript: Dict, media_path: str, video_url: Optional[str]) -> None:
+    """Add word-level timings for the captions, when YouTube publishes them.
+
+    Caption lines are 5-12 words, so burned-in text always trails the speaker a bit.
+    A json3 caption track carries one timestamp per word and costs a single request;
+    without it the renderer keeps spreading a line's time across its words.
+    """
+    if not video_url or "youtu" not in str(video_url) or not transcript.get("segments"):
+        return
+    cache = _words_cache_path(media_path)
+    try:
+        if cache.exists() and cache.stat().st_mtime >= os.path.getmtime(media_path):
+            cached = json.loads(cache.read_text(encoding="utf-8"))
+            words = cached.get("words") or []
+            if words:
+                transcript["words"] = words
+                print(f"[transcribe/words] reused {len(words)} cached word timings", flush=True)
+                return
+    except (OSError, ValueError):
+        pass
+
+    try:
+        import yt_dlp
+
+        from .yt_words import from_info
+    except Exception as e:  # optional dependency or broken install must not fail the job
+        print(f"[transcribe/words] unavailable ({e})", flush=True)
+        return
+
+    cookie_file = os.path.join(ROOT_DIR, "cookies.txt")
+    options = {
+        "quiet": True,
+        "no_warnings": True,
+        "skip_download": True,
+        "noplaylist": True,
+        "socket_timeout": 20,
+    }
+    if os.path.exists(cookie_file):
+        options["cookiefile"] = cookie_file
+    try:
+        with yt_dlp.YoutubeDL(options) as ydl:
+            info = ydl.extract_info(video_url, download=False)
+        words = from_info(info) or []
+    except Exception as e:
+        print(f"[transcribe/words] fetch failed ({e})", flush=True)
+        words = []
+
+    try:
+        cache.write_text(json.dumps({"words": words}, ensure_ascii=False), encoding="utf-8")
+    except OSError:
+        pass
+    if words:
+        transcript["words"] = words
+        print(f"[transcribe/words] {len(words)} word timings from YouTube captions", flush=True)
 
 
 GROQ_FREE_TIER_MAX_BYTES = 25 * 1024 * 1024  # 25MB, Groq free-tier upload limit

@@ -90,6 +90,7 @@ def generate_shorts(
         # passing cues because overlays were breaking some renders; pass the real
         # transcript again so finished clips carry subtitles.
         transcript_segments=transcript.get("segments") or [],
+        transcript_words=transcript.get("words") or [],
         cancel_event=cancel_event,
         framing=framing,
         subtitle_style=subtitle_style,
