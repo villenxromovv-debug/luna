@@ -138,8 +138,8 @@ def _startup_banner() -> str:
     port = (_cli_value("--port") or os.getenv("LUNA_PORT", "8000")).strip() or "8000"
     host = (_cli_value("--host") or os.getenv("LUNA_HOST", "127.0.0.1")).strip().lower() or "127.0.0.1"
     if host in ("127.0.0.1", "localhost", "::1", "0.0.0.0", "::"):
-        return f"Luna is running: http://127.0.0.1:{port}  or  http://localhost:{port}"
-    return f"Luna is running: http://{host}:{port}  (or http://localhost:{port} if it is the same machine)"
+        return f"Luna запущена: http://127.0.0.1:{port}  или  http://localhost:{port}"
+    return f"Luna запущена: http://{host}:{port}  (или http://localhost:{port}, если это тот же компьютер)"
 
 
 @asynccontextmanager
@@ -158,7 +158,7 @@ async def _lifespan(_app: FastAPI):
 
 
 app = FastAPI(
-    title="Luna: Multi-Platform Media & AI Shorts Web Studio",
+    title="Luna: медиа-студия с ИИ-нарезкой клипов",
     lifespan=_lifespan,
 )
 
@@ -457,7 +457,7 @@ def friendly_error_message(exc: BaseException) -> str:
     if "no space left" in text:
         return "The disk is full. Free some space and try again."
     if "permission denied" in text:
-        return "Luna could not write to the output folder. Check its permissions."
+        return "Не удалось записать в папку вывода. Проверьте права доступа."
     if raw:
         return raw[:240]
     return "The job failed for an unknown reason."
@@ -509,7 +509,7 @@ def _run_ffmpeg(cmd: List[str], timeout_sec: float, cancel_event: Optional[threa
     try:
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     except FileNotFoundError:
-        raise RuntimeError("ffmpeg was not found. Install FFmpeg or let Luna download it on first run.")
+        raise RuntimeError("ffmpeg не найден. Установите FFmpeg или разрешите программе скачать его при первом запуске.")
 
     while True:
         if cancel_event is not None and cancel_event.is_set():
@@ -3355,7 +3355,7 @@ async def api_apply_update(req: ApplyUpdateRequest = ApplyUpdateRequest()):
                     _update_state.update({
                         "status": "restarting",
                         "stage": "restarting",
-                        "message": "Restarting Luna...",
+                        "message": "Перезапускаем Luna...",
                         "error": None,
                         "updated_sha": res.get("updated_sha", ""),
                         "updated_short_sha": res.get("updated_short_sha", ""),

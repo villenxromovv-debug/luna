@@ -502,17 +502,17 @@ if (window.lucide && typeof window.lucide.createIcons === 'function') {
 
 const SUB_FEATURES = {
   youtube: [
-    { id: 'type_yt_ai_clip', label: 'AI Short Clips', desc: 'Virality Score', icon: 'clapperboard', btnText: 'Generate', drawer: 'ai-clip' },
-    { id: 'type_yt_video', label: 'Full HD Video', desc: '1080p / 720p / 480p MP4', icon: 'film', btnText: 'Download', drawer: 'quality' },
-    { id: 'type_yt_mp3', label: 'Audio MP3', desc: '320kbps High Quality', icon: 'music', btnText: 'Download', drawer: null },
-    { id: 'type_yt_clip', label: 'Video Trimmer', desc: 'Manually trim video duration', icon: 'scissors', btnText: 'Download', drawer: 'trimmer' }
+    { id: 'type_yt_ai_clip', label: 'ИИ-клипы', desc: 'Вирусный рейтинг', icon: 'clapperboard', btnText: 'Создать', drawer: 'ai-clip' },
+    { id: 'type_yt_video', label: 'Видео Full HD', desc: '1080p / 720p / 480p MP4', icon: 'film', btnText: 'Скачать', drawer: 'quality' },
+    { id: 'type_yt_mp3', label: 'Аудио MP3', desc: '320 кбит/с, высокое качество', icon: 'music', btnText: 'Скачать', drawer: null },
+    { id: 'type_yt_clip', label: 'Нарезка видео', desc: 'Ручная нарезка по таймкодам', icon: 'scissors', btnText: 'Скачать', drawer: 'trimmer' }
   ],
   instagram: [
-    { id: 'type_ig_reels', label: 'Reels', desc: 'Reels / Video Post', icon: 'film', btnText: 'Download', drawer: null }
+    { id: 'type_ig_reels', label: 'Reels', desc: 'Reels / видео-пост', icon: 'film', btnText: 'Скачать', drawer: null }
   ],
   tiktok: [
-    { id: 'type_tt_video', label: 'Video MP4', desc: 'HD Video MP4', icon: 'film', btnText: 'Download', drawer: null },
-    { id: 'type_tt_mp3', label: 'Audio MP3', desc: 'TikTok song / soundtrack', icon: 'music', btnText: 'Download', drawer: null }
+    { id: 'type_tt_video', label: 'Видео MP4', desc: 'HD-видео MP4', icon: 'film', btnText: 'Скачать', drawer: null },
+    { id: 'type_tt_mp3', label: 'Audio MP3', desc: 'Трек или саундтрек из TikTok', icon: 'music', btnText: 'Скачать', drawer: null }
   ]
 };
 
@@ -559,7 +559,7 @@ async function pasteMainUrl() {
 }
 
 function formatPlatformName(platform) {
-  if (!platform) return 'Media';
+  if (!platform) return 'Медиа';
   const p = platform.toLowerCase();
   if (p.includes('youtube')) return 'YouTube';
   if (p.includes('tiktok')) return 'TikTok';
@@ -606,7 +606,7 @@ function extractVideoInfoInstant(url) {
       return {
         platform: isYoutubeShortUrl(url) ? 'YouTube Shorts' : 'YouTube',
         thumbnail: `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`,
-        title: 'Loading video title...'
+        title: 'Загружаем название видео...'
       };
     }
     return null;
@@ -615,14 +615,14 @@ function extractVideoInfoInstant(url) {
     return {
       platform: 'TikTok',
       thumbnail: null,
-      title: 'Loading media title...'
+      title: 'Загружаем название...'
     };
   }
   if (host === 'instagram.com' || host.endsWith('.instagram.com') || host === 'instagr.am' || host.endsWith('.instagr.am')) {
     return {
       platform: 'Instagram',
       thumbnail: null,
-      title: 'Loading Reels title...'
+      title: 'Загружаем название Reels...'
     };
   }
   return null;
@@ -860,8 +860,8 @@ let debounceTimer = null;
 let lastUnavailableUrl = '';
 function showUnavailablePreview(message, url, notify = true) {
   latestVideoTitle = { url: '', title: '' };
-  previewPlatformTag.innerText = 'Unavailable';
-  previewTitle.innerText = 'Link unavailable';
+  previewPlatformTag.innerText = 'Недоступно';
+  previewTitle.innerText = 'Ссылка недоступна';
   previewDuration.innerText = '';
   previewDuration.classList.add('hidden');
   if (previewBullet) previewBullet.classList.add('hidden');
@@ -1138,9 +1138,9 @@ function switchPlatform(plat, manualSwitch = false) {
   }
 
   // Update placeholder
-  if (plat === 'youtube') mainUrlInput.placeholder = 'Paste a YouTube link';
-  else if (plat === 'instagram') mainUrlInput.placeholder = 'Paste link Reels';
-  else if (plat === 'tiktok') mainUrlInput.placeholder = 'Paste link TikTok';
+  if (plat === 'youtube') mainUrlInput.placeholder = 'Вставьте ссылку YouTube';
+  else if (plat === 'instagram') mainUrlInput.placeholder = 'Вставьте ссылку на Reels';
+  else if (plat === 'tiktok') mainUrlInput.placeholder = 'Вставьте ссылку TikTok';
 }
 
 function populateSubFeatureMenu(plat) {
@@ -1603,7 +1603,7 @@ const TASK_CONFIGS = {
     },
     {
       key: 'check_sub',
-      label: 'Checking transcript',
+      label: 'Проверяем транскрипт',
       amount: 'YouTube API',
       details: [
         { label: 'Searching for auto-captions and official subtitles', meta: 'Auto API' },
@@ -1612,7 +1612,7 @@ const TASK_CONFIGS = {
     },
     {
       key: 'whisper',
-      label: 'Audio transcription',
+      label: 'Транскрибация аудио',
       amount: 'Cloud API',
       details: [
         { label: 'Speech-to-text fallback', meta: 'When no subtitles' },
@@ -1621,7 +1621,7 @@ const TASK_CONFIGS = {
     },
     {
       key: 'virality',
-      label: 'Viral Potential & Hook Analysis',
+      label: 'Анализ вирусного потенциала',
       amount: 'Hook Scoring',
       details: [
         { label: 'Viral potential and retention score', meta: 'Top Hooks' },
@@ -1630,7 +1630,7 @@ const TASK_CONFIGS = {
     },
     {
       key: 'render',
-      label: 'Render Vertical Clips',
+      label: 'Рендерим вертикальные клипы',
       amount: 'H.264',
       details: [
         { label: 'Hardware encoder when available', meta: 'AMF, MF or x264' },
@@ -1651,10 +1651,10 @@ const TASK_CONFIGS = {
     },
     {
       key: 'vault',
-      label: 'Saving to Workspace',
-      amount: 'Waiting',
+      label: 'Сохраняем в медиатеку',
+      amount: 'Ожидание',
       details: [
-        { label: 'Adding to the local storage catalog', meta: 'Waiting' },
+        { label: 'Adding to the local storage catalog', meta: 'Ожидание' },
         { label: 'Files are ready to play or download', meta: 'Ready' }
       ]
     }
@@ -1673,10 +1673,10 @@ const TASK_CONFIGS = {
     {
       key: 'vault',
       label: 'Convert to 320 kbps MP3 & Save',
-      amount: 'Waiting',
+      amount: 'Ожидание',
       details: [
         { label: 'High-quality FFmpeg LAME encoding', meta: 'CBR 320k' },
-        { label: 'Saving to the local Workspace', meta: 'Waiting' }
+        { label: 'Saving to the local Workspace', meta: 'Ожидание' }
       ]
     }
   ],
@@ -1684,7 +1684,7 @@ const TASK_CONFIGS = {
   type_yt_clip: [
     {
       key: 'trim',
-      label: 'Trimming video segments',
+      label: 'Нарезаем фрагменты',
       amount: 'Custom Range',
       details: [
         { label: 'Validating clip time range', meta: 'Keyframe' },
@@ -1693,10 +1693,10 @@ const TASK_CONFIGS = {
     },
     {
       key: 'vault',
-      label: 'Saving to Workspace',
-      amount: 'Waiting',
+      label: 'Сохраняем в медиатеку',
+      amount: 'Ожидание',
       details: [
-        { label: 'Adding the trimmed video to the library', meta: 'Waiting' },
+        { label: 'Adding the trimmed video to the library', meta: 'Ожидание' },
         { label: 'File is ready to share', meta: 'Ready' }
       ]
     }
@@ -1709,15 +1709,15 @@ const TASK_CONFIGS = {
       amount: 'Reel Stream',
       details: [
         { label: 'Download video without a watermark', meta: 'Lossless' },
-        { label: 'Verifying MP4 stream integrity', meta: 'Checked' }
+        { label: 'Verifying MP4 stream integrity', meta: 'Проверен' }
       ]
     },
     {
       key: 'vault',
-      label: 'Saving to Workspace',
-      amount: 'Waiting',
+      label: 'Сохраняем в медиатеку',
+      amount: 'Ожидание',
       details: [
-        { label: 'Saving to the Instagram folder', meta: 'Waiting' },
+        { label: 'Saving to the Instagram folder', meta: 'Ожидание' },
         { label: 'File is ready for offline viewing', meta: 'Ready' }
       ]
     }
@@ -1735,10 +1735,10 @@ const TASK_CONFIGS = {
     },
     {
       key: 'vault',
-      label: 'Saving to Workspace',
-      amount: 'Waiting',
+      label: 'Сохраняем в медиатеку',
+      amount: 'Ожидание',
       details: [
-        { label: 'Saving to the TikTok folder', meta: 'Waiting' },
+        { label: 'Saving to the TikTok folder', meta: 'Ожидание' },
         { label: 'File is ready to use', meta: 'Ready' }
       ]
     }
@@ -1757,10 +1757,10 @@ const TASK_CONFIGS = {
     {
       key: 'vault',
       label: 'Convert to 320 kbps MP3 & Save',
-      amount: 'Waiting',
+      amount: 'Ожидание',
       details: [
         { label: 'Encoding FFmpeg LAME 320kbps', meta: 'MP3' },
-        { label: 'Saving to the local Workspace', meta: 'Waiting' }
+        { label: 'Saving to the local Workspace', meta: 'Ожидание' }
       ]
     }
   ]
@@ -1993,27 +1993,27 @@ function setTaskStatuses(statusArr, progressData, computedProgressPct) {
     if (amountEl && !taskDurations[row.key]) {
       if (row.key === 'vault') {
         if (newStatus === 'done') {
-          amountEl.innerText = 'Saved';
+          amountEl.innerText = 'Сохранено';
         } else if (newStatus === 'running') {
-          amountEl.innerText = 'Saving...';
+          amountEl.innerText = 'Сохранение...';
         } else if (newStatus === 'failed') {
-          amountEl.innerText = 'Failed';
+          amountEl.innerText = 'Ошибка';
         } else {
-          amountEl.innerText = 'Waiting';
+          amountEl.innerText = 'Ожидание';
         }
       } else if (row.key === 'check_sub') {
         if (newStatus === 'done') {
-          amountEl.innerText = currentStage === 'transcript_found' ? 'Found' : 'Checked';
+          amountEl.innerText = currentStage === 'transcript_found' ? 'Найден' : 'Проверен';
         } else if (newStatus === 'running') {
-          amountEl.innerText = 'Checking...';
+          amountEl.innerText = 'Проверка...';
         }
       } else if (row.key === 'whisper') {
         if (currentStage === 'transcript_found') {
-          amountEl.innerText = 'Available';
+          amountEl.innerText = 'Доступен';
         } else if (newStatus === 'running') {
-          amountEl.innerText = 'Transcribing...';
+          amountEl.innerText = 'Транскрибация...';
         } else if (newStatus === 'done') {
-          amountEl.innerText = 'Complete';
+          amountEl.innerText = 'Готово';
         }
       }
     }
@@ -2049,7 +2049,7 @@ function setTaskStatuses(statusArr, progressData, computedProgressPct) {
           if (progressPctEl) progressPctEl.classList.add('hidden');
           if (progressStageEl) {
             progressStageEl.classList.remove('hidden');
-            progressStageEl.innerText = (progressData && progressData.stage_detail) || 'Processing...';
+            progressStageEl.innerText = (progressData && progressData.stage_detail) || 'Обработка...';
           }
           if (progressMetaEl) progressMetaEl.classList.add('hidden');
           if (progressFillEl) {
@@ -2130,13 +2130,13 @@ function getPillHtml(status) {
 
 // Workspace Confirmation & Trigger Action
 function getPipelineLabel(act) {
-  if (act === 'type_yt_ai_clip' || act === 'ai_clip') return 'AI Shorts 9:16 Virality';
-  if (act === 'type_yt_video') return `YouTube Full Video (${selectedQuality}p)`;
-  if (act === 'type_yt_mp3' || act === 'type_tt_mp3') return 'Audio MP3 320kbps';
-  if (act === 'type_yt_clip') return 'Manual Video Trimmer';
+  if (act === 'type_yt_ai_clip' || act === 'ai_clip') return 'ИИ-шортсы 9:16, вирусный рейтинг';
+  if (act === 'type_yt_video') return `Полное видео YouTube (${selectedQuality}p)`;
+  if (act === 'type_yt_mp3' || act === 'type_tt_mp3') return 'Аудио MP3, 320 кбит/с';
+  if (act === 'type_yt_clip') return 'Ручная нарезка видео';
   if (act === 'type_ig_reels') return 'Instagram Reels Full HD';
-  if (act === 'type_tt_video') return 'TikTok Clean (No Watermark)';
-  return 'Media Download';
+  if (act === 'type_tt_video') return 'TikTok без водяного знака';
+  return 'Скачивание медиа';
 }
 
 function showNoticeModal(heading, desc) {
@@ -2145,7 +2145,7 @@ function showNoticeModal(heading, desc) {
   const h = document.getElementById('noticeModalHeading');
   const p = document.getElementById('noticeModalDesc');
   if (!modal || !box) return;
-  if (h) h.innerText = heading || 'Notice';
+  if (h) h.innerText = heading || 'Уведомление';
   if (p) p.innerText = desc || '';
   modal.classList.remove('hidden');
   requestAnimationFrame(() => {
@@ -2178,9 +2178,9 @@ function showConfirmModal(heading, desc, proceedLabel) {
       resolve(true);
       return;
     }
-    if (h) h.innerText = heading || 'Confirmation';
+    if (h) h.innerText = heading || 'Подтверждение';
     if (p) p.innerText = desc || '';
-    if (proceedBtn) proceedBtn.innerText = proceedLabel || 'Continue';
+    if (proceedBtn) proceedBtn.innerText = proceedLabel || 'Продолжить';
     modal.classList.remove('hidden');
     requestAnimationFrame(() => {
       box.classList.remove('scale-95', 'opacity-0');
@@ -2226,7 +2226,7 @@ function isValidMediaUrl(str) {
 function showMissingApiKeyToast(message) {
   lunaToast.add({
     type: 'warning',
-    title: 'API key required',
+    title: 'Нужен API-ключ',
     description: message || 'Gemini and Groq API keys are required for AI Short Clips.',
     timeout: 6500,
     link: {
@@ -2433,7 +2433,7 @@ window.selectCustomWorkspace = function (wsName) {
   const selectedBadge = document.getElementById('wsDropdownSelectedBadge');
   if (selectedText) selectedText.innerText = wsName;
   if (selectedBadge) {
-    selectedBadge.innerText = `${count} file`;
+    selectedBadge.innerText = `${count} файл(ов)`;
     selectedBadge.classList.remove('hidden');
   }
 
@@ -2453,13 +2453,13 @@ window.populateExistingWorkspacesSelect = function (preselectedName = null) {
 
   if (vaultProjects.length === 0) {
     if (hiddenInput) hiddenInput.value = '';
-    if (selectedText) selectedText.innerText = 'No projects in Workspace yet';
+    if (selectedText) selectedText.innerText = 'В медиатеке пока нет проектов';
     if (selectedBadge) selectedBadge.classList.add('hidden');
     if (triggerBtn) triggerBtn.disabled = true;
 
     const emptyItem = document.createElement('div');
     emptyItem.className = 'px-3 py-3 text-center text-xs text-zinc-500 font-sans';
-    emptyItem.innerText = 'No projects in Workspace yet';
+    emptyItem.innerText = 'В медиатеке пока нет проектов';
     listContainer.appendChild(emptyItem);
     return;
   }
@@ -2476,7 +2476,7 @@ window.populateExistingWorkspacesSelect = function (preselectedName = null) {
   const activeCount = (activeProj && activeProj.files) ? activeProj.files.length : 0;
   if (selectedText) selectedText.innerText = activeProj.workspace_name;
   if (selectedBadge) {
-    selectedBadge.innerText = `${activeCount} file`;
+    selectedBadge.innerText = `${activeCount} файл(ов)`;
     selectedBadge.classList.remove('hidden');
   }
 
@@ -2740,7 +2740,7 @@ async function cancelActiveJob() {
     await fetch(`/api/cancel/${activeJobId}`, { method: 'POST' });
   } catch (e) {
     console.warn('Cancel error:', e);
-    showToast('The server could not be reached, but the job was stopped locally.', true);
+    showToast('Сервер недоступен, но задача остановлена локально.', true);
   }
 
   if (pollInterval) {
@@ -2802,7 +2802,7 @@ function startPolling(jobId) {
         progressStateCard.classList.add('hidden');
         mainActionBtn.disabled = false;
         mainActionBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-        showToast('This job was lost because the server restarted. Please start it again.', true);
+        showToast('Задача потеряна из-за перезапуска сервера. Запустите её заново.', true);
         return;
       }
       if (!res.ok) return;
@@ -2846,7 +2846,7 @@ function startPolling(jobId) {
         currentJobProjectId = data.project_id || null;
         currentJobWorkspaceName = data.workspace_name || null;
         const wsLabel = document.getElementById('completionWsLabel');
-        if (wsLabel) wsLabel.innerText = data.workspace_name || 'Workspace';
+        if (wsLabel) wsLabel.innerText = data.workspace_name || 'Медиатека';
 
         const compBanner = document.getElementById('progressCompletionBanner');
         if (compBanner) compBanner.classList.remove('hidden');
@@ -2915,37 +2915,37 @@ function updateProgressUI(stage, data) {
 
   if (currentActionType === 'type_yt_ai_clip') {
     if (stage === 'queued' || stage === 'downloading') {
-      stageMainTitle.innerText = 'Downloading source video';
-      stageSubTitle.innerText = `Downloading the ${activeTaskQuality}p video stream`;
+      stageMainTitle.innerText = 'Скачиваем исходное видео';
+      stageSubTitle.innerText = `Скачиваем видеопоток ${activeTaskQuality}p`;
       setTaskStatuses(['running', 'pending', 'pending', 'pending', 'pending'], pData, progressPct);
     } else if (stage === 'checking_transcript') {
-      stageMainTitle.innerText = 'Checking transcript';
-      stageSubTitle.innerText = 'Checking for auto-captions or official subtitles';
+      stageMainTitle.innerText = 'Проверяем транскрипт';
+      stageSubTitle.innerText = 'Ищем автосубтитры и официальные субтитры';
       setTaskStatuses(['done', 'running', 'pending', 'pending', 'pending'], pData, 0);
     } else if (stage === 'transcript_found') {
-      stageMainTitle.innerText = 'Official transcript found';
-      stageSubTitle.innerText = 'Built-in transcript extracted';
+      stageMainTitle.innerText = 'Найден готовый транскрипт';
+      stageSubTitle.innerText = 'Встроенная транскрипция извлечена';
       setTaskStatuses(['done', 'done', 'done', 'pending', 'pending'], pData, 0);
     } else if (stage === 'transcribing' || stage === 'transcribing_groq' || stage === 'transcribing_local' || stage === 'extracting_audio' || stage === 'uploading') {
-      stageMainTitle.innerText = 'Audio transcription';
-      stageSubTitle.innerText = 'Processing audio with AI speech-to-text';
+      stageMainTitle.innerText = 'Транскрибация аудио';
+      stageSubTitle.innerText = 'Распознаём речь с помощью ИИ';
       setTaskStatuses(['done', 'done', 'running', 'pending', 'pending'], pData, 0);
     } else if (stage === 'detecting_highlights' || stage === 'ranking_highlights') {
-      stageMainTitle.innerText = 'Viral Potential & Hook Analysis';
-      stageSubTitle.innerText = 'Finding the strongest moments';
+      stageMainTitle.innerText = 'Анализ вирусного потенциала';
+      stageSubTitle.innerText = 'Ищем самые сильные моменты';
       setTaskStatuses(['done', 'done', 'done', 'running', 'pending'], pData, 0);
     } else if (stage === 'clipping' || stage === 'rendering') {
       const ratioText = selectedRatio === '16:9' ? '16:9 Wide' : selectedRatio;
-      stageMainTitle.innerText = selectedRatio === '16:9' ? 'Render Clips' : 'Render Vertical Clips';
-      stageSubTitle.innerText = `Encoding ${ratioText} clips`;
+      stageMainTitle.innerText = selectedRatio === '16:9' ? 'Рендерим клипы' : 'Рендерим вертикальные клипы';
+      stageSubTitle.innerText = `Кодируем клипы ${ratioText}`;
       setTaskStatuses(['done', 'done', 'done', 'done', 'running'], pData, 0);
     } else if (stage === 'saving') {
-      stageMainTitle.innerText = 'Saving to Workspace';
-      stageSubTitle.innerText = 'Adding clips to the selected workspace';
+      stageMainTitle.innerText = 'Сохраняем в медиатеку';
+      stageSubTitle.innerText = 'Добавляем клипы в выбранную медиатеку';
       setTaskStatuses(['done', 'done', 'done', 'done', 'running'], pData, 0);
     } else if (stage === 'done') {
-      stageMainTitle.innerText = 'Clip generation complete';
-      stageSubTitle.innerText = 'Clips are ready to post';
+      stageMainTitle.innerText = 'Клипы готовы';
+      stageSubTitle.innerText = 'Клипы можно публиковать';
       setTaskStatuses(['done', 'done', 'done', 'done', 'done'], pData, 100);
     }
   } else {
@@ -2954,38 +2954,38 @@ function updateProgressUI(stage, data) {
     const isClip = currentActionType === 'type_yt_clip';
 
     if (stage === 'queued') {
-      stageMainTitle.innerText = 'Preparing download';
-      stageSubTitle.innerText = 'Connecting to the media source';
+      stageMainTitle.innerText = 'Готовим скачивание';
+      stageSubTitle.innerText = 'Подключаемся к источнику';
       setTaskStatuses(['running', 'pending'], pData, progressPct);
     } else if (stage === 'downloading') {
       stageMainTitle.innerText = isAudio
-        ? 'Downloading audio'
-        : (isClip ? 'Downloading source segments' : 'Downloading video');
+        ? 'Скачиваем аудио'
+        : (isClip ? 'Скачиваем фрагменты видео' : 'Скачиваем видео');
       stageSubTitle.innerText = isAudio
-        ? 'Downloading bitstream audio high fidelity'
-        : (isClip ? 'Downloading video segments from the source' : `Downloading the ${activeTaskQuality}p video`);
+        ? 'Скачиваем аудио в высоком качестве'
+        : (isClip ? 'Скачиваем фрагменты из источника' : `Скачиваем видео в ${activeTaskQuality}p`);
       setTaskStatuses(['running', 'pending'], pData, progressPct);
     } else if (stage === 'clipping') {
-      stageMainTitle.innerText = 'Trimming video segments';
-      stageSubTitle.innerText = 'Trimming timestamps with FFmpeg';
+      stageMainTitle.innerText = 'Нарезаем фрагменты';
+      stageSubTitle.innerText = 'Режем по таймкодам через FFmpeg';
       setTaskStatuses(['running', 'pending'], pData, progressPct);
     } else if (stage === 'rendering') {
-      stageMainTitle.innerText = 'Re-encoding video';
-      stageSubTitle.innerText = 'Re-encoding to the requested ratio and frame rate before saving';
+      stageMainTitle.innerText = 'Перекодируем видео';
+      stageSubTitle.innerText = 'Перекодируем в нужный формат и частоту кадров перед сохранением';
       const vaultRow = currentTaskRows[1];
       const vaultLabel = document.getElementById('task-label-vault');
-      if (vaultRow && vaultLabel) vaultLabel.innerText = 'Re-encoding video';
+      if (vaultRow && vaultLabel) vaultLabel.innerText = 'Перекодируем видео';
       setTaskStatuses(['done', 'running'], pData, 100);
     } else if (stage === 'saving') {
-      stageMainTitle.innerText = 'Saving to Workspace';
-      stageSubTitle.innerText = 'Finishing processing and organizing media';
+      stageMainTitle.innerText = 'Сохраняем в медиатеку';
+      stageSubTitle.innerText = 'Завершаем обработку и раскладываем файлы';
       const vaultRow = currentTaskRows[1];
       const vaultLabel = document.getElementById('task-label-vault');
       if (vaultRow && vaultLabel) vaultLabel.innerText = vaultRow.label;
       setTaskStatuses(['done', 'running'], pData, progressPct);
     } else if (stage === 'done') {
-      stageMainTitle.innerText = 'Download complete';
-      stageSubTitle.innerText = 'Files are saved and ready to play or download';
+      stageMainTitle.innerText = 'Скачивание завершено';
+      stageSubTitle.innerText = 'Файлы сохранены и готовы к просмотру';
       setTaskStatuses(['done', 'done'], pData, 100);
     }
   }
@@ -3018,7 +3018,7 @@ async function goToCurrentJobWorkspace() {
   if (targetProject) {
     await openProjectPage(targetProject.project_id);
   } else {
-    showToast('Saved to Workspace');
+    showToast('Сохранено в медиатеку');
   }
 }
 
@@ -3128,7 +3128,7 @@ function renderOpusResults(data) {
   if (items.length === 0) {
     batchZipDownloadBtn.classList.add('hidden');
     shortsGalleryGrid.classList.add('hidden');
-    resultsCountNotice.innerText = 'No files were produced. Check the job log and try again.';
+    resultsCountNotice.innerText = 'Файлы не созданы. Проверьте лог задачи и попробуйте снова.';
   } else {
     if (items.length > 1) {
       batchZipDownloadBtn.href = `/api/download-zip/${data.id}`;
@@ -3137,7 +3137,7 @@ function renderOpusResults(data) {
       batchZipDownloadBtn.classList.add('hidden');
     }
     shortsGalleryGrid.classList.remove('hidden');
-    resultsCountNotice.innerText = `${items.length} media files are ready to play and download.`;
+    resultsCountNotice.innerText = `Готово к просмотру и скачиванию: ${items.length}.`;
     shortsGalleryGrid.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start';
   }
 
@@ -3274,7 +3274,7 @@ function copyText(text, btn) {
     const span = btn.querySelector('span');
     if (span) {
       const original = span.innerText;
-      span.innerText = 'Copied! ✓';
+      span.innerText = 'Скопировано! ✓';
       setTimeout(() => { span.innerText = original; }, 2000);
       return;
     }
@@ -3556,7 +3556,7 @@ function switchMainTab(tab, options = {}) {
         pill.style.width = '0px';
       }
 
-      document.title = 'Luna: Settings';
+      document.title = 'Luna: Настройки';
       try {
         if (typeof loadSettingsData === 'function') loadSettingsData();
       } catch (e) {
@@ -3581,7 +3581,7 @@ function switchMainTab(tab, options = {}) {
         pill.style.width = '0px';
       }
 
-      document.title = 'Luna: User Guide';
+      document.title = 'Luna: Справка';
       if (typeof initGuidePill === 'function') {
         requestAnimationFrame(() => initGuidePill());
       }
@@ -3600,11 +3600,11 @@ function switchMainTab(tab, options = {}) {
       if (tab === 'studio') {
         if (sectionStudio) sectionStudio.classList.remove('hidden');
         if (sectionVault) sectionVault.classList.add('hidden');
-        document.title = 'Luna: AI Video Clipper & Downloader';
+        document.title = 'Luna: ИИ-нарезка видео и скачивание';
       } else if (tab === 'vault') {
         if (sectionStudio) sectionStudio.classList.add('hidden');
         if (sectionVault) sectionVault.classList.remove('hidden');
-        document.title = 'Luna: Workspace';
+        document.title = 'Luna: Медиатека';
 
         if (!currentActiveProjectId && !document.body.classList.contains('in-workspace')) {
           const listView = document.getElementById('vaultProjectsListView');
@@ -4055,7 +4055,7 @@ function updateProviderKeyUI(provider) {
   if (!state || !input) return;
   const locked = state.configured && !state.editing;
   input.disabled = locked;
-  input.placeholder = locked ? `Key saved ····${state.hint}` : providerKeyPlaceholders[provider];
+  input.placeholder = locked ? `Ключ сохранён ····${state.hint}` : providerKeyPlaceholders[provider];
   input.parentElement?.querySelector('button[title="Show / Hide"]')?.classList.toggle('hidden', locked);
   document.getElementById(`change${provider[0].toUpperCase()}${provider.slice(1)}Key`)?.classList.toggle('hidden', !state.configured || state.editing);
   const hasSecondaryAction = state.configured || state.validated;
@@ -4155,7 +4155,7 @@ async function saveProviderKey(provider, options = {}) {
       body: JSON.stringify(payload)
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.detail || 'Could not save API key');
+    if (!res.ok) throw new Error(data.detail || 'Не удалось сохранить API-ключ');
     const savedValue = input.value.trim();
     state.configured = true;
     state.hint = savedValue.slice(-4);
@@ -4169,12 +4169,12 @@ async function saveProviderKey(provider, options = {}) {
     }
     syncSettingsDirtyState();
     if (!options.silent) {
-      showToast(options.auto ? `${provider.toUpperCase()} API key verified & saved` : `${provider.toUpperCase()} API key saved`);
+      showToast(options.auto ? `API-ключ ${provider.toUpperCase()} проверен и сохранён` : `API-ключ ${provider.toUpperCase()} сохранён`);
     }
     if (provider === 'openai') loadOpenaiModels();
     return true;
   } catch (err) {
-    showToast(err.message || 'Could not save API key', true);
+    showToast(err.message || 'Не удалось сохранить API-ключ', true);
     return false;
   }
 }
@@ -4552,8 +4552,8 @@ function syncSettingsDirtyState() {
     if (!settingsPromptToastId || !lunaToast.has(settingsPromptToastId)) {
       settingsPromptToastId = lunaToast.add({
         type: 'default',
-        title: 'Save changes?',
-        description: 'Unsaved settings.',
+        title: 'Сохранить изменения?',
+        description: 'Есть несохранённые настройки.',
         timeout: 0,
         closable: false,
         actions: [
@@ -4693,7 +4693,7 @@ async function saveSettings() {
   const toastCancelBtn = document.getElementById('btnToastCancelSettings');
   if (toastSaveBtn) {
     toastSaveBtn.disabled = true;
-    toastSaveBtn.textContent = 'Saving...';
+    toastSaveBtn.textContent = 'Сохранение...';
   }
   if (toastCancelBtn) toastCancelBtn.disabled = true;
 
@@ -4742,7 +4742,7 @@ async function saveSettings() {
     });
     const data = await res.json();
     if (!res.ok) {
-      throw new Error(data.detail || 'Could not save settings');
+      throw new Error(data.detail || 'Не удалось сохранить настройки');
     }
 
     verifiedProviders.forEach(({ provider, candidateKey }) => {
@@ -4764,15 +4764,15 @@ async function saveSettings() {
     dismissSettingsPromptToast();
 
     if (data.migrated && data.migrated.migrated_files > 0) {
-      showToast(`Settings saved. ${data.migrated.migrated_files} files moved to the new folder.`);
+      showToast(`Настройки сохранены. Перемещено файлов: ${data.migrated.migrated_files}.`);
     } else {
-      showToast('Settings saved successfully');
+      showToast('Настройки сохранены');
     }
 
     if (data.stats) {
       const filesEl = document.getElementById('settingsTotalFiles');
       const sizeEl = document.getElementById('settingsTotalSize');
-      if (filesEl) filesEl.innerText = `${data.stats.total_files || 0} files`;
+      if (filesEl) filesEl.innerText = `${data.stats.total_files || 0} файлов`;
       if (sizeEl) sizeEl.innerText = `${data.stats.total_size_mb || 0} MB`;
     }
 
@@ -4790,7 +4790,7 @@ async function saveSettings() {
     if (err.message && err.message.toLowerCase().includes('directory')) {
       triggerInputError('wrapStorage', 'errStorage', err.message);
     }
-    showToast(err.message || 'Could not save settings', true);
+    showToast(err.message || 'Не удалось сохранить настройки', true);
   }
 }
 
@@ -4848,7 +4848,7 @@ function renderStudioBackgroundCards() {
     if (isSaving) {
       const savingLabel = document.createElement('span');
       savingLabel.className = 'text-[10px] font-sans text-emerald-400 shrink-0';
-      savingLabel.textContent = 'Saving...';
+      savingLabel.textContent = 'Сохранение...';
       meta.appendChild(savingLabel);
     } else if (isActive) {
       const checkSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -4886,7 +4886,7 @@ async function selectStudioBackground(bgId) {
     __studioBgStatusTimer = null;
   }
   if (statusEl) {
-    statusEl.textContent = 'Saving...';
+    statusEl.textContent = 'Сохранение...';
     statusEl.className = 'text-[11px] text-emerald-400 font-sans';
   }
   renderStudioBackgroundCards();
@@ -4912,14 +4912,14 @@ async function selectStudioBackground(bgId) {
     __studioBgSavingId = null;
     renderStudioBackgroundCards();
     if (statusEl) {
-      statusEl.textContent = 'Saved';
+      statusEl.textContent = 'Сохранено';
       statusEl.className = 'text-[11px] text-emerald-400 font-sans';
       __studioBgStatusTimer = setTimeout(() => {
         statusEl.textContent = 'Auto-saves on click';
         statusEl.className = 'text-[11px] text-zinc-500 font-sans';
       }, 2200);
     }
-    showToast(`Studio background set to ${applied.name || bgId}`);
+    showToast(`Фон студии: ${applied.name || bgId}`);
   } catch (err) {
     __studioBgSavingId = null;
     if (typeof window.applyStudioBackground === 'function') {
@@ -4930,7 +4930,7 @@ async function selectStudioBackground(bgId) {
       statusEl.textContent = 'Auto-saves on click';
       statusEl.className = 'text-[11px] text-zinc-500 font-sans';
     }
-    showToast(err.message || 'Could not save studio background', true);
+    showToast(err.message || 'Не удалось сохранить фон студии', true);
   }
 }
 
@@ -5087,14 +5087,14 @@ function renderSystemDependencyStatuses(data, { detailed = false } = {}) {
       statusId: 'statusFfmpeg',
       icon: data.ffmpeg ? 'check' : 'x',
       cls: data.ffmpeg ? 'w-4 h-4 text-emerald-400' : 'w-4 h-4 text-red-400',
-      text: detailed ? (data.ffmpeg_version || (data.ffmpeg ? 'Available' : 'Not found')) : (data.ffmpeg ? 'Available' : 'Not found')
+      text: detailed ? (data.ffmpeg_version || (data.ffmpeg ? 'Доступен' : 'Not found')) : (data.ffmpeg ? 'Доступен' : 'Not found')
     },
     {
       iconId: 'chkYtdlp',
       statusId: 'statusYtdlp',
       icon: 'check',
       cls: 'w-4 h-4 text-emerald-400',
-      text: data.ytdlp || 'Available'
+      text: data.ytdlp || 'Доступен'
     },
     {
       iconId: 'chkOpencv',
@@ -5123,7 +5123,7 @@ async function runSystemCheck(btn) {
   const label = document.getElementById('checkSystemLabel');
   const startIcon = document.getElementById('checkSystemIcon');
   if (btn) btn.disabled = true;
-  if (label) label.innerText = 'Checking...';
+  if (label) label.innerText = 'Проверка...';
   if (startIcon) startIcon.classList.add('animate-spin', 'text-amber-400');
 
   const depIconIds = ['chkFfmpeg', 'chkYtdlp', 'chkOpencv', 'chkStorage'];
@@ -6298,7 +6298,7 @@ function confirmBulkDeleteVaultProjects() {
   if (ids.length === 1) {
     const proj = vaultProjects.find(p => p.project_id === ids[0]);
     if (heading) heading.innerText = 'Delete this workspace?';
-    if (desc) desc.innerText = `Are you sure you want to delete workspace "${(proj && proj.workspace_name) || 'Workspace'}"? All files in it will be deleted and cannot be recovered.`;
+    if (desc) desc.innerText = `Are you sure you want to delete workspace "${(proj && proj.workspace_name) || 'Медиатека'}"? All files in it will be deleted and cannot be recovered.`;
   } else {
     if (heading) heading.innerText = `Delete ${ids.length} workspaces?`;
     if (desc) desc.innerText = `All files in the ${ids.length} selected workspaces will be deleted and cannot be recovered.`;
@@ -6554,7 +6554,7 @@ async function openProjectPage(projectId) {
   const files = proj.files || [];
   const totalSize = files.reduce((acc, f) => acc + (f.file_size || 0), 0);
 
-  if (titleEl) titleEl.innerText = proj.workspace_name || 'Workspace';
+  if (titleEl) titleEl.innerText = proj.workspace_name || 'Медиатека';
   if (idEl) idEl.innerText = `ID: ${proj.project_id}`;
   if (srcEl) {
     srcEl.innerHTML = '';
@@ -6591,7 +6591,7 @@ async function openProjectPage(projectId) {
     }
   });
 
-  if (clipperTitle) clipperTitle.innerText = proj.workspace_name || 'Workspace';
+  if (clipperTitle) clipperTitle.innerText = proj.workspace_name || 'Медиатека';
   if (clipperId) clipperId.innerText = `ID: ${proj.project_id}`;
   if (btnClipperRename) {
     btnClipperRename.onclick = () => promptRenameWorkspace(proj.project_id, proj.workspace_name);
@@ -6817,7 +6817,7 @@ function closeProjectPage(options = {}) {
   if (!options.preserveHash) {
     syncLocationHash(currentMainTab === 'vault' ? '#vault' : '', { replace: true });
   }
-  document.title = currentMainTab === 'vault' ? 'Luna: Workspace' : 'Luna: AI Video Clipper & Downloader';
+  document.title = currentMainTab === 'vault' ? 'Luna: Медиатека' : 'Luna: ИИ-нарезка видео и скачивание';
 
   const listView = document.getElementById('vaultProjectsListView');
   const clipContainer = document.getElementById('clipperWorkflowContainer');
@@ -8709,7 +8709,7 @@ function confirmDeleteVaultProject(projectId, wsName, event) {
   const confirmBtn = document.getElementById('deleteModalConfirmBtn');
 
   if (heading) heading.innerText = 'Delete this workspace?';
-  if (desc) desc.innerText = `Are you sure you want to delete workspace "${wsName || 'Workspace'}"? All files in it will be deleted and cannot be recovered.`;
+  if (desc) desc.innerText = `Are you sure you want to delete workspace "${wsName || 'Медиатека'}"? All files in it will be deleted and cannot be recovered.`;
   if (btnText) btnText.innerText = 'Delete';
   if (confirmBtn) {
     confirmBtn.disabled = false;
@@ -8957,8 +8957,8 @@ function openUpdateModal(data) {
     if (heading) heading.textContent = 'Update Available';
     if (desc) {
       desc.textContent = data.reason === 'untracked_install'
-        ? 'A Luna update is available. Updating once will also sync local version tracking.'
-        : 'A newer version of Luna is ready to install. Your settings and saved media will stay untouched.';
+        ? 'Доступно обновление Luna. Обновление также синхронизирует локальный учёт версии.'
+        : 'Готова к установке новая версия Luna. Настройки и сохранённые медиафайлы не пострадают.';
     }
     if (meta) meta.classList.remove('hidden');
     if (shaEl) shaEl.textContent = data.latest_short_sha || '-';
@@ -8974,7 +8974,7 @@ function openUpdateModal(data) {
     if (heading) heading.textContent = "You're up to date";
     if (desc) {
       const shaTag = data && data.current_short_sha ? ` (${data.current_short_sha})` : '';
-      desc.textContent = `Luna${shaTag} is already running the latest version.`;
+      desc.textContent = `Luna${shaTag}: уже установлена последняя версия.`;
     }
     if (meta) meta.classList.add('hidden');
     if (laterBtn) laterBtn.classList.add('hidden');
@@ -9013,7 +9013,7 @@ async function checkForLunaUpdates(btn) {
   if (trigger) trigger.disabled = true;
   if (icon) icon.classList.add('hidden');
   if (spinner) spinner.classList.remove('hidden');
-  if (label) label.textContent = 'Checking...';
+  if (label) label.textContent = 'Проверка...';
 
   try {
     const res = await fetch('/api/system/check-update');
@@ -9048,7 +9048,7 @@ async function waitForServerRestartAndReload() {
           lunaToast.update(__lunaUpdateToastId, {
             type: 'success',
             title: 'Update complete',
-            description: 'Reloading Luna...',
+            description: 'Перезапускаем Luna...',
             indeterminate: false,
             timeout: 3000,
           });
@@ -9065,7 +9065,7 @@ async function waitForServerRestartAndReload() {
     lunaToast.update(__lunaUpdateToastId, {
       type: 'warning',
       title: 'Restart pending',
-      description: 'Update finished. Please refresh or reopen Luna.',
+      description: 'Обновление завершено. Обновите страницу или откройте Luna заново.',
       indeterminate: false,
       timeout: 5000,
     });
@@ -9080,7 +9080,7 @@ async function startLunaUpdate() {
 
   __lunaUpdateToastId = lunaToast.add({
     type: 'info',
-    title: 'Updating Luna',
+    title: 'Обновляем Luna',
     description: 'Downloading latest update...',
     timeout: 0,
     closable: false,
@@ -9109,8 +9109,8 @@ async function startLunaUpdate() {
         // Connection reset during server restart — wait for the new process to come up.
         if (__lunaUpdateToastId) {
           lunaToast.update(__lunaUpdateToastId, {
-            title: 'Updating Luna',
-            description: 'Restarting Luna...',
+            title: 'Обновляем Luna',
+            description: 'Перезапускаем Luna...',
             indeterminate: true,
           });
         }
@@ -9121,7 +9121,7 @@ async function startLunaUpdate() {
       if (st.status === 'updating') {
         if (__lunaUpdateToastId && st.message) {
           lunaToast.update(__lunaUpdateToastId, {
-            title: 'Updating Luna',
+            title: 'Обновляем Luna',
             description: st.message,
             indeterminate: true,
           });
@@ -9132,8 +9132,8 @@ async function startLunaUpdate() {
       if (st.status === 'restarting') {
         if (__lunaUpdateToastId) {
           lunaToast.update(__lunaUpdateToastId, {
-            title: 'Updating Luna',
-            description: 'Restarting Luna...',
+            title: 'Обновляем Luna',
+            description: 'Перезапускаем Luna...',
             indeterminate: true,
           });
         }
@@ -9147,7 +9147,7 @@ async function startLunaUpdate() {
           lunaToast.update(__lunaUpdateToastId, {
             type: 'success',
             title: 'Update complete',
-            description: 'Luna has been updated to the latest version.',
+            description: 'Luna обновлена до последней версии.',
             indeterminate: false,
             timeout: 3000,
           });
@@ -9166,13 +9166,13 @@ async function startLunaUpdate() {
       lunaToast.update(__lunaUpdateToastId, {
         type: 'error',
         title: 'Update failed',
-        description: err.message || 'Could not update Luna.',
+        description: err.message || 'Не удалось обновить Luna.',
         indeterminate: false,
         timeout: 5500,
       });
       __lunaUpdateToastId = null;
     } else {
-      showToast(err.message || 'Could not update Luna.', true);
+      showToast(err.message || 'Не удалось обновить Luna.', true);
     }
   }
 }
@@ -9335,7 +9335,7 @@ document.addEventListener('DOMContentLoaded', () => {
       lunaToast.add({
         type: 'success',
         title: 'Update complete',
-        description: 'Luna has been updated to the latest version.',
+        description: 'Luna обновлена до последней версии.',
         timeout: 3000,
       });
     }

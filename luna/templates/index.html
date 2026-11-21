@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Luna: AI Video Clipper & Downloader</title>
+  <title>Luna: ИИ-нарезка видео и скачивание</title>
   <meta name="description"
     content="Luna: AI Video Clipper & Multi-Platform Downloader. Turn long videos into 9:16 short clips ranked by an AI model." />
   <meta name="theme-color" content="#000000" />
@@ -92,11 +92,11 @@
         <span class="t-tabs-pill" id="mainTabsPill" aria-hidden="true"></span>
         <button type="button" id="tabBtnStudio" role="tab" aria-selected="true" aria-controls="section-studio"
           onclick="switchMainTab('studio')" class="t-tab active">
-          <span>Studio</span>
+          <span>Студия</span>
         </button>
         <button type="button" id="tabBtnVault" role="tab" aria-selected="false" aria-controls="section-vault"
           onclick="switchMainTab('vault')" class="t-tab">
-          <span>Workspace</span>
+          <span>Медиатека</span>
         </button>
       </div>
 
@@ -106,7 +106,7 @@
       <div class="flex items-center">
         <button type="button" id="btnNavGuide" onclick="switchMainTab('guide')"
           class="nav-link">
-          Guide
+          Справка
         </button>
         <span class="nav-dot-divider" aria-hidden="true"></span>
         <button type="button" id="btnNavSettings" onclick="switchMainTab('settings')"
@@ -139,7 +139,7 @@
         <p id="heroSubtitleText"
           class="font-sans text-[12.5px] sm:text-[13.5px] md:text-[14px] text-zinc-400 font-normal leading-relaxed tracking-normal max-w-xl mx-auto select-none mt-1.5"
           style="color: rgba(212, 212, 216, 0.85);">
-          Local-first video downloader and AI clipper<br>for YouTube, Reels, and TikTok.
+          Локальный загрузчик видео и ИИ-нарезка клипов<br>для YouTube, Reels и TikTok.
         </p>
       </div>
 
@@ -147,7 +147,7 @@
       <div class="max-w-2xl mx-auto mb-2.5 relative z-40">
         <div class="hero-capsule rounded-full pl-4 pr-1.5 py-1.5 sm:pl-4.5 sm:pr-2 sm:py-2 flex items-center gap-2.5 sm:gap-3 transition-all">
           <i data-lucide="link-2" class="w-4 h-4 text-zinc-400 flex-shrink-0 ml-0.5"></i>
-          <input type="text" id="mainUrlInput" placeholder="Paste a YouTube link" autocomplete="off"
+          <input type="text" id="mainUrlInput" placeholder="Вставьте ссылку YouTube" autocomplete="off"
             class="w-full bg-transparent text-white placeholder-zinc-500 text-xs sm:text-[14px] font-sans focus:outline-none" />
 
           <!-- Integrated Platform Selector Dropdown (Rounded Pill) -->
@@ -194,7 +194,7 @@
             <div class="relative flex-shrink-0">
               <button type="button" id="subFeatureDropdownBtn" aria-expanded="false"
                 onclick="toggleSubFeatureDropdown(event)" class="pill-control">
-                <span id="currentSubFeatureLabel">AI Short Clips</span>
+                <span id="currentSubFeatureLabel">ИИ-клипы</span>
                 <i data-lucide="chevron-down" class="w-2.5 h-2.5 text-zinc-400 transition-transform duration-200"
                   id="subChevron"></i>
               </button>
@@ -241,7 +241,7 @@
               <div class="relative flex-shrink-0">
                 <button type="button" id="aspectRatioDropdownBtn" aria-expanded="false"
                   onclick="toggleAspectRatioDropdown(event)" class="pill-control">
-                  <span id="currentAspectRatioLabel">9:16 Vertical</span>
+                  <span id="currentAspectRatioLabel">9:16 вертикальный</span>
                   <i data-lucide="chevron-down" class="w-2.5 h-2.5 text-zinc-400 transition-transform duration-200"
                     id="aspectChevron"></i>
                 </button>
@@ -252,16 +252,16 @@
                   <span class="gliding-menu-indicator pointer-events-none absolute left-[3px] right-[3px] rounded-[6px] bg-white/[0.08] z-[1]" style="opacity: 0; transition: top 220ms cubic-bezier(0.23,1,0.32,1), height 220ms cubic-bezier(0.23,1,0.32,1), opacity 150ms ease;"></span>
                   <div onclick="selectRatioFromMenu('9:16', '9:16 Vertical')" class="aspect-menu-item active"
                     data-ratio="9:16">
-                    <span class="aspect-item-title truncate">9:16 Vertical</span>
+                    <span class="aspect-item-title truncate">9:16 вертикальный</span>
                   </div>
                   <div onclick="selectRatioFromMenu('16:9', '16:9 Wide')" class="aspect-menu-item" data-ratio="16:9">
-                    <span class="aspect-item-title truncate">16:9 Wide</span>
+                    <span class="aspect-item-title truncate">16:9 широкий</span>
                   </div>
                   <div onclick="selectRatioFromMenu('1:1', '1:1 Square')" class="aspect-menu-item" data-ratio="1:1">
-                    <span class="aspect-item-title truncate">1:1 Square</span>
+                    <span class="aspect-item-title truncate">1:1 квадрат</span>
                   </div>
                   <div onclick="selectRatioFromMenu('3:4', '3:4 Portrait')" class="aspect-menu-item" data-ratio="3:4">
-                    <span class="aspect-item-title truncate">3:4 Portrait</span>
+                    <span class="aspect-item-title truncate">3:4 портрет</span>
                   </div>
                 </div>
               </div>
@@ -270,7 +270,7 @@
               <div class="relative flex-shrink-0">
                 <button type="button" id="clipCountDropdownBtn" aria-expanded="false"
                   onclick="toggleClipCountDropdown(event)" class="pill-control">
-                  <span id="currentClipCountLabel">5 Clips</span>
+                  <span id="currentClipCountLabel">5 клипов</span>
                   <i data-lucide="chevron-down" class="w-2.5 h-2.5 text-zinc-400 transition-transform duration-200"
                     id="countChevron"></i>
                 </button>
@@ -280,13 +280,13 @@
                   class="popover-menu absolute left-0 top-full mt-1.5 w-[76px] z-50">
                   <span class="gliding-menu-indicator pointer-events-none absolute left-[3px] right-[3px] rounded-[6px] bg-white/[0.08] z-[1]" style="opacity: 0; transition: top 220ms cubic-bezier(0.23,1,0.32,1), height 220ms cubic-bezier(0.23,1,0.32,1), opacity 150ms ease;"></span>
                   <div onclick="selectClipCountFromMenu(3, '3 Clips')" class="count-menu-item" data-count="3">
-                    <span class="count-item-title truncate">3 Clips</span>
+                    <span class="count-item-title truncate">3 клипа</span>
                   </div>
                   <div onclick="selectClipCountFromMenu(5, '5 Clips')" class="count-menu-item active" data-count="5">
-                    <span class="count-item-title truncate">5 Clips</span>
+                    <span class="count-item-title truncate">5 клипов</span>
                   </div>
                   <div onclick="selectClipCountFromMenu(7, '7 Clips')" class="count-menu-item" data-count="7">
-                    <span class="count-item-title truncate">7 Clips</span>
+                    <span class="count-item-title truncate">7 клипов</span>
                   </div>
                 </div>
               </div>
@@ -298,7 +298,7 @@
                   <span id="currentFaceDetectIcon" class="text-zinc-400 flex items-center">
                     <i data-lucide="crop" class="w-3 h-3"></i>
                   </span>
-                  <span id="currentFaceDetectLabel">Center Crop</span>
+                  <span id="currentFaceDetectLabel">Обрезка по центру</span>
                   <i data-lucide="chevron-down" class="w-2.5 h-2.5 text-zinc-400 transition-transform duration-200"
                     id="faceChevron"></i>
                 </button>
@@ -310,11 +310,11 @@
                   <div onclick="selectFaceDetectFromMenu(false, 'Center Crop')" class="fd-menu-item active"
                     data-fd="false">
                     <i data-lucide="crop" class="w-3.5 h-3.5 fd-icon flex-shrink-0"></i>
-                    <span class="fd-item-title truncate">Center Crop</span>
+                    <span class="fd-item-title truncate">Обрезка по центру</span>
                   </div>
                   <div onclick="selectFaceDetectFromMenu(true, 'Face Track')" class="fd-menu-item" data-fd="true">
                     <i data-lucide="scan-face" class="w-3.5 h-3.5 fd-icon flex-shrink-0"></i>
-                    <span class="fd-item-title truncate">Face Track</span>
+                    <span class="fd-item-title truncate">Слежение за лицом</span>
                   </div>
                 </div>
               </div>
@@ -327,7 +327,7 @@
               <div class="relative flex-shrink-0">
                 <button type="button" id="videoRatioDropdownBtn" aria-expanded="false"
                   onclick="toggleVideoRatioDropdown(event)" class="pill-control">
-                  <span id="currentVideoRatioLabel">Original</span>
+                  <span id="currentVideoRatioLabel">Оригинал</span>
                   <i data-lucide="chevron-down" class="w-2.5 h-2.5 text-zinc-400 transition-transform duration-200"
                     id="videoRatioChevron"></i>
                 </button>
@@ -338,19 +338,19 @@
                   <span class="gliding-menu-indicator pointer-events-none absolute left-[3px] right-[3px] rounded-[6px] bg-white/[0.08] z-[1]" style="opacity: 0; transition: top 220ms cubic-bezier(0.23,1,0.32,1), height 220ms cubic-bezier(0.23,1,0.32,1), opacity 150ms ease;"></span>
                   <div onclick="selectVideoRatioFromMenu('original', 'Original')" class="quality-menu-item active"
                     data-vratio="original">
-                    <span class="quality-item-title truncate">Original</span>
+                    <span class="quality-item-title truncate">Оригинал</span>
                   </div>
                   <div onclick="selectVideoRatioFromMenu('9:16', '9:16 Vertical')" class="quality-menu-item"
                     data-vratio="9:16">
-                    <span class="quality-item-title truncate">9:16 Vertical</span>
+                    <span class="quality-item-title truncate">9:16 вертикальный</span>
                   </div>
                   <div onclick="selectVideoRatioFromMenu('3:4', '3:4 Portrait')" class="quality-menu-item"
                     data-vratio="3:4">
-                    <span class="quality-item-title truncate">3:4 Portrait</span>
+                    <span class="quality-item-title truncate">3:4 портрет</span>
                   </div>
                   <div onclick="selectVideoRatioFromMenu('1:1', '1:1 Square')" class="quality-menu-item"
                     data-vratio="1:1">
-                    <span class="quality-item-title truncate">1:1 Square</span>
+                    <span class="quality-item-title truncate">1:1 квадрат</span>
                   </div>
                 </div>
               </div>
@@ -359,7 +359,7 @@
               <div class="relative flex-shrink-0">
                 <button type="button" id="videoFpsDropdownBtn" aria-expanded="false"
                   onclick="toggleVideoFpsDropdown(event)" class="pill-control">
-                  <span id="currentVideoFpsLabel">Auto FPS</span>
+                  <span id="currentVideoFpsLabel">FPS: авто</span>
                   <i data-lucide="chevron-down" class="w-2.5 h-2.5 text-zinc-400 transition-transform duration-200"
                     id="videoFpsChevron"></i>
                 </button>
@@ -370,7 +370,7 @@
                   <span class="gliding-menu-indicator pointer-events-none absolute left-[3px] right-[3px] rounded-[6px] bg-white/[0.08] z-[1]" style="opacity: 0; transition: top 220ms cubic-bezier(0.23,1,0.32,1), height 220ms cubic-bezier(0.23,1,0.32,1), opacity 150ms ease;"></span>
                   <div onclick="selectVideoFpsFromMenu('auto', 'Auto FPS')" class="quality-menu-item active"
                     data-vfps="auto">
-                    <span class="quality-item-title truncate">Auto FPS</span>
+                    <span class="quality-item-title truncate">FPS: авто</span>
                   </div>
                   <div onclick="selectVideoFpsFromMenu('60', '60 FPS')" class="quality-menu-item"
                     data-vfps="60">
@@ -390,7 +390,7 @@
               <div class="relative flex-shrink-0">
                 <button type="button" id="trimRatioDropdownBtn" aria-expanded="false"
                   onclick="toggleTrimRatioDropdown(event)" class="pill-control">
-                  <span id="currentTrimRatioLabel">Original</span>
+                  <span id="currentTrimRatioLabel">Оригинал</span>
                   <i data-lucide="chevron-down" class="w-2.5 h-2.5 text-zinc-400 transition-transform duration-200"
                     id="trimRatioChevron"></i>
                 </button>
@@ -401,26 +401,26 @@
                   <span class="gliding-menu-indicator pointer-events-none absolute left-[3px] right-[3px] rounded-[6px] bg-white/[0.08] z-[1]" style="opacity: 0; transition: top 220ms cubic-bezier(0.23,1,0.32,1), height 220ms cubic-bezier(0.23,1,0.32,1), opacity 150ms ease;"></span>
                   <div onclick="selectTrimRatioFromMenu('original', 'Original')" class="quality-menu-item active"
                     data-tratio="original">
-                    <span class="quality-item-title truncate">Original</span>
+                    <span class="quality-item-title truncate">Оригинал</span>
                   </div>
                   <div onclick="selectTrimRatioFromMenu('9:16', '9:16 Vertical')" class="quality-menu-item"
                     data-tratio="9:16">
-                    <span class="quality-item-title truncate">9:16 Vertical</span>
+                    <span class="quality-item-title truncate">9:16 вертикальный</span>
                   </div>
                   <div onclick="selectTrimRatioFromMenu('3:4', '3:4 Portrait')" class="quality-menu-item"
                     data-tratio="3:4">
-                    <span class="quality-item-title truncate">3:4 Portrait</span>
+                    <span class="quality-item-title truncate">3:4 портрет</span>
                   </div>
                   <div onclick="selectTrimRatioFromMenu('1:1', '1:1 Square')" class="quality-menu-item"
                     data-tratio="1:1">
-                    <span class="quality-item-title truncate">1:1 Square</span>
+                    <span class="quality-item-title truncate">1:1 квадрат</span>
                   </div>
                 </div>
               </div>
 
               <!-- Segment #1 Start Pill -->
               <div id="trimStartPill_0" class="pill-control !py-0 !px-2.5 flex items-center gap-1 cursor-text flex-shrink-0" onclick="this.querySelector('input')?.focus()">
-                <span class="text-zinc-400 text-[11px] select-none pointer-events-none">Start:</span>
+                <span class="text-zinc-400 text-[11px] select-none pointer-events-none">Начало:</span>
                 <input type="text" maxlength="8" id="trimInputStart_0" value="00:00"
                   class="trim-input-field bg-transparent text-white text-xs font-mono text-center focus:outline-none w-[68px] selection:bg-white/20"
                   placeholder="00:00" data-seg-idx="0" data-field="start_time" />
@@ -428,7 +428,7 @@
 
               <!-- Segment #1 End Pill -->
               <div id="trimEndPill_0" class="pill-control !py-0 !px-2.5 flex items-center gap-1 cursor-text flex-shrink-0" onclick="this.querySelector('input')?.focus()">
-                <span class="text-zinc-400 text-[11px] select-none pointer-events-none">End:</span>
+                <span class="text-zinc-400 text-[11px] select-none pointer-events-none">Конец:</span>
                 <input type="text" maxlength="8" id="trimInputEnd_0" value="00:30"
                   class="trim-input-field bg-transparent text-white text-xs font-mono text-center focus:outline-none w-[68px] selection:bg-white/20"
                   placeholder="00:30" data-seg-idx="0" data-field="end_time" />
@@ -446,7 +446,7 @@
 
           <!-- Right: Action CTA Button (No logo, simple Generate or Download) -->
           <button type="button" id="mainActionBtn" onclick="triggerAction()" class="btn-luxe-cta ml-auto">
-            <span id="mainBtnText">Generate</span>
+            <span id="mainBtnText">Создать</span>
           </button>
 
         </div>
@@ -467,8 +467,7 @@
             <span id="previewBullet" class="text-[11px] text-zinc-600 hidden">•</span>
             <span id="previewDuration" class="font-sans text-[11px] text-zinc-400 font-mono hidden"></span>
           </div>
-          <h4 id="previewTitle" class="font-sans text-xs sm:text-sm font-medium text-zinc-200 truncate">Video Title
-            Preview</h4>
+          <h4 id="previewTitle" class="font-sans text-xs sm:text-sm font-medium text-zinc-200 truncate">Предпросмотр названия видео</h4>
         </div>
       </div>
 
@@ -478,8 +477,8 @@
         <div class="flex items-center justify-between gap-3 mb-4 px-1">
           <div>
             <h3 class="font-sans text-sm sm:text-base font-semibold text-white tracking-tight" id="stageMainTitle">
-              Processing media</h3>
-            <p class="font-sans text-xs text-zinc-400 mt-0.5" id="stageSubTitle">Preparing download pipeline</p>
+              Обработка медиа</h3>
+            <p class="font-sans text-xs text-zinc-400 mt-0.5" id="stageSubTitle">Готовим конвейер скачивания</p>
           </div>
           <div class="flex items-center gap-2">
             <span id="jobIdPill" class="text-[11px] text-zinc-500 font-mono">JOB-0000</span>
@@ -487,7 +486,7 @@
               class="px-2.5 py-1 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 border border-red-500/20 text-xs font-medium flex items-center gap-1.5 transition cursor-pointer active:scale-95"
               aria-label="Cancel the current process">
               <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
-              <span>Cancel</span>
+              <span>Отмена</span>
             </button>
           </div>
         </div>
@@ -498,9 +497,9 @@
         <div id="progressCompletionBanner"
           class="hidden mt-6 pt-5 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div class="text-left min-w-0 sm:pr-[108px]">
-            <h4 class="font-sans text-sm font-semibold text-white">Processing complete</h4>
-            <p class="font-sans text-xs text-zinc-400 mt-0.5">All tasks completed and were saved to workspace:
-              <strong class="text-white" id="completionWsLabel">Workspace</strong>.
+            <h4 class="font-sans text-sm font-semibold text-white">Обработка завершена</h4>
+            <p class="font-sans text-xs text-zinc-400 mt-0.5">Все задачи завершены и сохранены в медиатеку:
+              <strong class="text-white" id="completionWsLabel">Медиатека</strong>.
             </p>
           </div>
 
@@ -526,9 +525,9 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
           <div class="min-w-0 sm:pr-[100px]">
             <h2 class="font-sans text-2xl sm:text-3xl font-bold text-white">
-              Generated Results
+              Результаты
             </h2>
-            <p class="font-sans text-xs text-zinc-400 mt-1" id="resultsCountNotice">Media is ready to watch and download.
+            <p class="font-sans text-xs text-zinc-400 mt-1" id="resultsCountNotice">Медиа готово к просмотру и скачиванию.
             </p>
           </div>
 
@@ -559,7 +558,7 @@
         <!-- Vault Header -->
         <div class="flex items-center justify-between pb-1">
           <h2 class="font-sans text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Workspace
+            Медиатека
           </h2>
           <div class="hidden" aria-hidden="true">
             <span id="vaultStoragePath"></span>
@@ -575,7 +574,7 @@
             <span class="vault-underline-indicator" id="vaultPlatformUnderline" aria-hidden="true"></span>
             <button type="button" role="tab" aria-selected="true" onclick="setVaultFilter('all', this)"
               class="vault-u-tab active" data-filter="all" id="btn-vault-plat-all">
-              <span>All</span>
+              <span>Все</span>
               <span class="vault-u-count" id="vaultCountAll">0</span>
             </button>
             <button type="button" role="tab" aria-selected="false" onclick="setVaultFilter('youtube', this)"
@@ -603,7 +602,7 @@
                 <button type="button" id="vaultModeDropdownBtn" aria-expanded="false"
                   onclick="toggleVaultDropdown('vaultModeMenu', event)" class="vault-inline-trigger">
                   <i data-lucide="filter" class="w-3.5 h-3.5 vault-trigger-icon" aria-hidden="true"></i>
-                  <span id="vaultModeLabel">All Types</span>
+                  <span id="vaultModeLabel">Все типы</span>
                   <i data-lucide="chevron-down" class="w-2.5 h-2.5 vault-trigger-chevron"
                     id="vaultModeChevron" aria-hidden="true"></i>
                 </button>
@@ -611,19 +610,19 @@
                   class="popover-menu absolute left-0 top-full mt-1.5 w-[132px] z-50">
                   <span class="gliding-menu-indicator pointer-events-none absolute left-[3px] right-[3px] rounded-[6px] bg-white/[0.08] z-[1]" style="opacity: 0; transition: top 220ms cubic-bezier(0.23,1,0.32,1), height 220ms cubic-bezier(0.23,1,0.32,1), opacity 150ms ease;"></span>
                   <div onclick="setVaultModeFilter('all')" class="quality-menu-item active" data-vmode="all">
-                    <span class="quality-item-title truncate">All Types</span>
+                    <span class="quality-item-title truncate">Все типы</span>
                   </div>
                   <div onclick="setVaultModeFilter('clips')" class="quality-menu-item" data-vmode="clips">
-                    <span class="quality-item-title truncate">AI Clips</span>
+                    <span class="quality-item-title truncate">ИИ-клипы</span>
                   </div>
                   <div onclick="setVaultModeFilter('trim')" class="quality-menu-item" data-vmode="trim">
-                    <span class="quality-item-title truncate">Video Trimmer</span>
+                    <span class="quality-item-title truncate">Нарезка видео</span>
                   </div>
                   <div onclick="setVaultModeFilter('video')" class="quality-menu-item" data-vmode="video">
-                    <span class="quality-item-title truncate">Full Video</span>
+                    <span class="quality-item-title truncate">Полное видео</span>
                   </div>
                   <div onclick="setVaultModeFilter('audio')" class="quality-menu-item" data-vmode="audio">
-                    <span class="quality-item-title truncate">Audio MP3</span>
+                    <span class="quality-item-title truncate">Аудио MP3</span>
                   </div>
                 </div>
               </div>
@@ -633,7 +632,7 @@
                 <button type="button" id="vaultSortDropdownBtn" aria-expanded="false"
                   onclick="toggleVaultDropdown('vaultSortMenu', event)" class="vault-inline-trigger">
                   <i data-lucide="list-filter" class="w-3.5 h-3.5 vault-trigger-icon" aria-hidden="true"></i>
-                  <span id="vaultSortLabel">Newest</span>
+                  <span id="vaultSortLabel">Сначала новые</span>
                   <i data-lucide="chevron-down" class="w-2.5 h-2.5 vault-trigger-chevron"
                     id="vaultSortChevron" aria-hidden="true"></i>
                 </button>
@@ -641,16 +640,16 @@
                   class="popover-menu absolute left-0 top-full mt-1.5 w-[124px] z-50">
                   <span class="gliding-menu-indicator pointer-events-none absolute left-[3px] right-[3px] rounded-[6px] bg-white/[0.08] z-[1]" style="opacity: 0; transition: top 220ms cubic-bezier(0.23,1,0.32,1), height 220ms cubic-bezier(0.23,1,0.32,1), opacity 150ms ease;"></span>
                   <div onclick="setVaultSort('newest')" class="quality-menu-item active" data-vsort="newest">
-                    <span class="quality-item-title truncate">Newest</span>
+                    <span class="quality-item-title truncate">Сначала новые</span>
                   </div>
                   <div onclick="setVaultSort('oldest')" class="quality-menu-item" data-vsort="oldest">
-                    <span class="quality-item-title truncate">Oldest</span>
+                    <span class="quality-item-title truncate">Сначала старые</span>
                   </div>
                   <div onclick="setVaultSort('files')" class="quality-menu-item" data-vsort="files">
-                    <span class="quality-item-title truncate">Most Files</span>
+                    <span class="quality-item-title truncate">Больше файлов</span>
                   </div>
                   <div onclick="setVaultSort('alpha')" class="quality-menu-item" data-vsort="alpha">
-                    <span class="quality-item-title truncate">Name A-Z</span>
+                    <span class="quality-item-title truncate">Имя А-Я</span>
                   </div>
                 </div>
               </div>
@@ -660,7 +659,7 @@
             <div class="relative w-full sm:w-56 flex-shrink-0">
               <i data-lucide="search"
                 class="w-3.5 h-3.5 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-              <input type="text" id="vaultSearchInput" placeholder="Search videos, titles, captions..."
+              <input type="text" id="vaultSearchInput" placeholder="Поиск по видео, названиям, описаниям..."
                 oninput="onVaultSearchInput(this.value)"
                 class="w-full h-9 pl-9 pr-8 rounded-xl bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.09] focus:border-white/[0.09] text-white placeholder-zinc-500 text-xs font-sans focus:outline-none transition" />
               <button type="button" id="vaultSearchClearBtn" onclick="clearVaultSearch()"
@@ -676,14 +675,14 @@
 
         <!-- Polished Empty State -->
         <div id="vaultEmptyState" class="hidden text-center py-16 px-4 flex flex-col items-center justify-center">
-          <h3 class="font-sans text-base font-semibold text-white mb-1" id="vaultEmptyTitle">Empty Workspace
+          <h3 class="font-sans text-base font-semibold text-white mb-1" id="vaultEmptyTitle">Медиатека пуста
           </h3>
           <p class="font-sans text-xs text-zinc-400 max-w-sm mb-5 leading-relaxed" id="vaultEmptyDesc">
-            No projects in Workspace yet.
+            В медиатеке пока нет проектов.
           </p>
           <button type="button" id="btnOpenStudioEmpty" onclick="switchMainTab('studio')"
             class="coss-btn coss-btn-default">
-            Open Studio
+            Открыть студию
           </button>
         </div>
 
@@ -692,7 +691,7 @@
           <div
             class="inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-white/[0.04] border border-white/10 text-zinc-300 text-xs">
             <i data-lucide="loader-2" class="w-4 h-4 text-white animate-spin"></i>
-            <span>Loading Workspace...</span>
+            <span>Загружаем медиатеку...</span>
           </div>
         </div>
       </div>
@@ -715,7 +714,7 @@
                   <svg class="luna-back-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M10 4L6 8L10 12"></path>
                   </svg>
-                  <span>Back</span>
+                  <span>Назад</span>
                 </button>
                 <span class="text-zinc-600 font-mono">/</span>
                 <span id="detailViewBreadcrumb" class="text-zinc-500 font-mono text-[11px] truncate">proj_...</span>
@@ -724,15 +723,15 @@
               <!-- Workspace Title -->
               <div class="flex items-center gap-3 flex-wrap">
                 <h2 class="text-xl sm:text-2xl font-bold font-sans text-white tracking-tight" id="projectDetailPageTitle">
-                  Workspace
+                  Медиатека
                 </h2>
               </div>
 
               <!-- File and size information (source label removed as requested) -->
               <div class="flex items-center gap-2 text-xs font-sans text-zinc-400 flex-wrap">
-                <span id="projectDetailFileCount" class="font-mono text-zinc-200 font-medium">0 Media Files</span>
+                <span id="projectDetailFileCount" class="font-mono text-zinc-200 font-medium">0 медиафайлов</span>
                 <span class="text-zinc-600">•</span>
-                <span id="projectDetailTotalSize" class="font-mono text-zinc-200 font-medium">0 MB Total</span>
+                <span id="projectDetailTotalSize" class="font-mono text-zinc-200 font-medium">Всего 0 МБ</span>
                 <span class="text-zinc-600">•</span>
                 <span id="projectDetailCreatedDate" class="text-zinc-400">-</span>
                 <span id="projectDetailPageId" class="hidden"></span>
@@ -761,26 +760,26 @@
             <!-- Section Bar: Title + Inline Filter Tabs on the same row -->
             <div class="flex items-center justify-between gap-4 flex-wrap pb-1 pt-1">
               <div class="flex items-center gap-3">
-                <h3 class="text-xs font-semibold font-sans text-zinc-300 tracking-wide">Media File List</h3>
+                <h3 class="text-xs font-semibold font-sans text-zinc-300 tracking-wide">Список файлов</h3>
                 
                 <div class="t-tabs" role="tablist" id="vaultMediaFilterGroup">
                   <span class="t-tabs-pill" id="vaultMediaFilterPill" aria-hidden="true"></span>
                   <button type="button" class="t-tab" role="tab" aria-selected="true" onclick="setVaultMediaFilter('all')" id="btn-vault-filter-all">
-                    All (<span id="filterCountAll">0</span>)
+                    Все (<span id="filterCountAll">0</span>)
                   </button>
                   <button type="button" class="t-tab" role="tab" aria-selected="false" onclick="setVaultMediaFilter('landscape')" id="btn-vault-filter-landscape">
-                    Landscape (<span id="filterCountLandscape">0</span>)
+                    Горизонтальные (<span id="filterCountLandscape">0</span>)
                   </button>
                   <button type="button" class="t-tab" role="tab" aria-selected="false" onclick="setVaultMediaFilter('portrait')" id="btn-vault-filter-portrait">
-                    Portrait (<span id="filterCountPortrait">0</span>)
+                    Вертикальные (<span id="filterCountPortrait">0</span>)
                   </button>
                   <button type="button" class="t-tab" role="tab" aria-selected="false" onclick="setVaultMediaFilter('square')" id="btn-vault-filter-square">
-                    Square (<span id="filterCountSquare">0</span>)
+                    Квадратные (<span id="filterCountSquare">0</span>)
                   </button>
                 </div>
               </div>
 
-              <span id="vaultVisibleFileCount" class="text-[11px] font-mono text-zinc-500">0 Files Saved</span>
+              <span id="vaultVisibleFileCount" class="text-[11px] font-mono text-zinc-500">0 файлов сохранено</span>
             </div>
 
             <!-- Media Files Grid inside Project -->
@@ -792,7 +791,7 @@
                 class="w-12 h-12 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center mx-auto mb-3 text-zinc-400">
                 <i data-lucide="film" class="w-6 h-6 text-zinc-500"></i>
               </div>
-              <p class="text-xs text-zinc-400">There are no files in this workspace yet.</p>
+              <p class="text-xs text-zinc-400">В этой медиатеке пока нет файлов.</p>
             </div>
           </div>
         </div>
@@ -815,12 +814,12 @@
                   <svg class="luna-back-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M10 4L6 8L10 12"></path>
                   </svg>
-                  <span>Back</span>
+                  <span>Назад</span>
                 </button>
                 <span class="text-zinc-600 font-mono text-xs">/</span>
                 <div class="flex items-center gap-2 min-w-0">
                   <h2 class="text-sm sm:text-base font-bold text-white tracking-tight truncate drop-shadow-sm"
-                    id="clipperWorkspaceTitle">Workspace</h2>
+                    id="clipperWorkspaceTitle">Медиатека</h2>
                 </div>
               </div>
             </div>
@@ -882,7 +881,7 @@
           <svg class="luna-back-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M10 4L6 8L10 12"></path>
           </svg>
-          <span>Back</span>
+          <span>Назад</span>
         </button>
       </div>
 
@@ -890,26 +889,26 @@
       <div class="flex items-center justify-between gap-4 pb-6 border-b border-white/[0.08]">
         <div>
           <h1 class="font-sans text-2xl font-extrabold text-white tracking-tight">
-            Settings
+            Настройки
           </h1>
           <p class="font-sans text-xs text-zinc-400 mt-0.5">
-            Configure API keys, storage, and local dependencies.
+            Настройте API-ключи, хранилище и локальные зависимости.
           </p>
         </div>
         <button type="button" id="btnCheckUpdates" onclick="checkForLunaUpdates(this)"
           class="h-8 px-3 rounded-lg border border-white/[0.1] bg-white/[0.02] hover:bg-white/[0.06] hover:border-white/[0.16] text-xs font-normal text-zinc-300 hover:text-white inline-flex items-center gap-1.5 shrink-0 transition-colors cursor-pointer disabled:opacity-60">
           <span id="checkUpdatesIcon" class="inline-flex items-center justify-center w-3.5 h-3.5 text-zinc-400 shrink-0"><i data-lucide="arrow-down-to-line" stroke-width="1.6" class="w-3.5 h-3.5"></i></span>
           <span id="checkUpdatesSpinner" class="hidden w-3 h-3 rounded-full border border-zinc-500 border-t-zinc-200 animate-spin shrink-0" aria-hidden="true"></span>
-          <span id="checkUpdatesLabel">Check for Updates</span>
+          <span id="checkUpdatesLabel">Проверить обновления</span>
         </button>
       </div>
 
       <!-- Section: AI Providers -->
       <div class="pb-8 border-b border-white/[0.08] flex flex-col md:flex-row gap-6 md:gap-12">
                 <div class="w-full md:w-1/3 shrink-0">
-          <h2 class="font-sans text-sm font-semibold text-white tracking-wide">AI Providers</h2>
+          <h2 class="font-sans text-sm font-semibold text-white tracking-wide">ИИ-провайдеры</h2>
           <p class="font-sans text-xs text-zinc-400 leading-relaxed mt-1">
-            API key for clip analysis and transcription.
+            API-ключ для анализа клипов и транскрибации.
           </p>
         </div>
 
@@ -917,23 +916,23 @@
           <!-- Provider selection -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="space-y-1">
-              <label class="font-medium text-zinc-200 text-xs" for="llmProviderTrigger">Clip analysis provider</label>
+              <label class="font-medium text-zinc-200 text-xs" for="llmProviderTrigger">Провайдер анализа клипов</label>
               <div class="relative" id="llmProviderMenuWrap">
                 <input type="hidden" id="selectLlmProvider" value="">
                 <button type="button" id="llmProviderTrigger" onclick="toggleLlmProviderMenu()"
                   aria-haspopup="listbox" aria-expanded="false" aria-controls="llmProviderMenu"
                   class="t-input w-full px-3 text-xs text-white text-left cursor-pointer">
-                  <span id="llmProviderTriggerLabel" class="font-sans flex-1 min-w-0 truncate">Auto</span>
+                  <span id="llmProviderTriggerLabel" class="font-sans flex-1 min-w-0 truncate">Авто</span>
                   <svg class="ml-auto w-3.5 h-3.5 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
 
                 <div id="llmProviderMenu" role="listbox" aria-label="Clip analysis provider"
                   class="hidden fixed z-[140] rounded-xl border border-white/[0.08] bg-[#171717] p-1 shadow-[0_16px_36px_rgba(0,0,0,0.75)] max-h-[280px] overflow-y-auto">
-                  <div class="relative z-[2] px-2.5 py-1.5 text-[11px] font-sans text-zinc-500">Provider</div>
+                  <div class="relative z-[2] px-2.5 py-1.5 text-[11px] font-sans text-zinc-500">Провайдер</div>
 
-                  <button type="button" role="option" data-value="" data-label="Auto" onclick="setLlmProvider('')"
+                  <button type="button" role="option" data-value="" data-label="Авто" onclick="setLlmProvider('')"
                     class="settings-menu-item relative z-[2] w-full flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-zinc-200 transition cursor-pointer">
-                    <span>Auto</span>
+                    <span>Авто</span>
                     <svg class="select-check ml-auto w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
                   </button>
 
@@ -952,7 +951,7 @@
               </div>
             </div>
             <div class="space-y-1">
-              <label class="font-medium text-zinc-200 text-xs" for="transcribeTrigger">Transcription provider</label>
+              <label class="font-medium text-zinc-200 text-xs" for="transcribeTrigger">Провайдер транскрибации</label>
               <div class="relative" id="transcribeMenuWrap">
                 <input type="hidden" id="selectTranscribeProvider" value="groq">
                 <button type="button" id="transcribeTrigger" onclick="toggleMenu('transcribeTrigger', 'transcribeMenu')"
@@ -964,7 +963,7 @@
 
                 <div id="transcribeMenu" role="listbox" aria-label="Transcription provider"
                   class="hidden fixed z-[140] rounded-xl border border-white/[0.08] bg-[#171717] p-1 shadow-[0_16px_36px_rgba(0,0,0,0.75)] max-h-[280px] overflow-y-auto">
-                  <div class="relative z-[2] px-2.5 py-1.5 text-[11px] font-sans text-zinc-500">Provider</div>
+                  <div class="relative z-[2] px-2.5 py-1.5 text-[11px] font-sans text-zinc-500">Провайдер</div>
 
                   <button type="button" role="option" data-value="groq" data-label="Groq Whisper" onclick="selectTranscribe('groq')"
                     class="settings-menu-item relative z-[2] w-full flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-zinc-200 transition cursor-pointer">
@@ -987,13 +986,13 @@
               </div>
             </div>
           </div>
-          <p class="text-[11px] text-zinc-500 -mt-3">Auto uses OpenAI-compatible when its key is set, otherwise Gemini. Local Whisper needs <code class="font-mono text-zinc-400">requirements-whisper.txt</code> installed.</p>
+          <p class="text-[11px] text-zinc-500 -mt-3">«Авто» использует OpenAI-compatible, если задан его ключ, иначе Gemini. Для Local Whisper нужно установить <code class="font-mono text-zinc-400">requirements-whisper.txt</code> .</p>
 
           <!-- Clip Output Language Row -->
           <div class="space-y-1">
             <div class="flex items-center justify-between text-xs gap-2">
-              <label class="font-medium text-zinc-200" for="clipLanguageTrigger">Clip Title &amp; Caption Language</label>
-              <span class="text-[11px] text-zinc-500">AI Short Clips</span>
+              <label class="font-medium text-zinc-200" for="clipLanguageTrigger">Язык заголовков и описаний клипов</label>
+              <span class="text-[11px] text-zinc-500">ИИ-клипы</span>
             </div>
             <div class="relative" id="clipLanguageMenuWrap">
               <input type="hidden" id="selectClipLanguage" value="en">
@@ -1006,11 +1005,11 @@
 
               <div id="clipLanguageMenu" role="listbox" aria-label="Clip title and caption language"
                 class="hidden fixed z-[140] rounded-xl border border-white/[0.08] bg-[#171717] p-1 shadow-[0_16px_36px_rgba(0,0,0,0.75)] max-h-[280px] overflow-y-auto">
-                <div class="relative z-[2] px-2.5 py-1.5 text-[11px] font-sans text-zinc-500">Language</div>
+                <div class="relative z-[2] px-2.5 py-1.5 text-[11px] font-sans text-zinc-500">Язык</div>
 
-                <button type="button" role="option" data-value="ru" data-label="Russian" onclick="setClipLanguage('ru')"
+                <button type="button" role="option" data-value="ru" data-label="Русский" onclick="setClipLanguage('ru')"
                   class="settings-menu-item relative z-[2] w-full flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-zinc-200 transition cursor-pointer">
-                  <span>Russian</span>
+                  <span>Русский</span>
                   <svg class="select-check ml-auto w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
                 </button>
 
@@ -1021,27 +1020,27 @@
                 </button>
               </div>
             </div>
-            <p class="text-[11px] text-zinc-500">Default language for generated clip titles and captions. Source video and Workspace titles keep their original language.</p>
+            <p class="text-[11px] text-zinc-500">Язык по умолчанию для заголовков и описаний клипов, созданных ИИ. Названия исходных видео и медиатеки остаются на языке оригинала.</p>
           </div>
 
           <!-- Google Gemini Row -->
           <div class="space-y-1">
             <div class="flex items-center justify-between text-xs">
-              <label class="font-medium text-zinc-200">Gemini API Key</label>
+              <label class="font-medium text-zinc-200">API-ключ Gemini</label>
               <div class="flex items-center gap-3">
                 <button type="button" onclick="testApiKey('gemini', 'wrapGemini', 'inputGemini', 'statusGemini', this)"
                   class="text-[11px] text-zinc-400 hover:text-white transition flex items-center gap-1 font-sans cursor-pointer group">
                   <i data-lucide="activity" class="w-3 h-3 text-zinc-500 group-hover:text-emerald-400 transition-colors"></i>
-                  <span>Test Connection</span>
+                  <span>Проверить подключение</span>
                 </button>
                 <span class="text-zinc-700 select-none">•</span>
-                <button type="button" id="changeGeminiKey" onclick="beginKeyChange('gemini')" class="hidden text-[11px] text-zinc-400 hover:text-white transition font-sans">Change Key</button>
-                <button type="button" id="saveGeminiKey" onclick="saveProviderKey('gemini')" disabled class="hidden text-[11px] text-emerald-400/50 disabled:cursor-not-allowed hover:text-emerald-300 transition font-sans">Save Key</button>
-                <button type="button" id="cancelGeminiKey" onclick="cancelKeyChange('gemini')" class="hidden text-[11px] text-zinc-500 hover:text-white transition font-sans">Cancel</button>
+                <button type="button" id="changeGeminiKey" onclick="beginKeyChange('gemini')" class="hidden text-[11px] text-zinc-400 hover:text-white transition font-sans">Сменить ключ</button>
+                <button type="button" id="saveGeminiKey" onclick="saveProviderKey('gemini')" disabled class="hidden text-[11px] text-emerald-400/50 disabled:cursor-not-allowed hover:text-emerald-300 transition font-sans">Сохранить ключ</button>
+                <button type="button" id="cancelGeminiKey" onclick="cancelKeyChange('gemini')" class="hidden text-[11px] text-zinc-500 hover:text-white transition font-sans">Отмена</button>
                 <span id="geminiKeyActionDot" class="hidden text-zinc-700 select-none">•</span>
                 <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer"
                   class="text-[11px] text-zinc-400 hover:text-white transition font-mono">
-                  Get Key
+                  Получить ключ
                 </a>
               </div>
             </div>
@@ -1049,7 +1048,7 @@
             <div class="t-input-wrap" id="wrapGemini">
               <div class="t-input">
                 <input type="password" id="inputGemini" value="" oninput="providerKeyInputChanged('gemini')"
-                  placeholder="Enter your Gemini API key..."
+                  placeholder="Введите API-ключ Gemini..."
                   class="w-full h-full bg-transparent px-3 text-xs font-mono text-white placeholder-zinc-500 disabled:opacity-100 disabled:cursor-default outline-none" />
                 <button type="button" onclick="toggleSecret('inputGemini', 'iconGeminiEye')"
                   class="p-2 text-zinc-400 hover:text-white transition cursor-pointer shrink-0"
@@ -1057,13 +1056,13 @@
                   <i id="iconGeminiEye" data-lucide="eye" class="w-3.5 h-3.5"></i>
                 </button>
               </div>
-              <p class="t-error-msg" id="errGemini">This API key is invalid or has not been entered.</p>
+              <p class="t-error-msg" id="errGemini">API-ключ недействителен или не введён.</p>
             </div>
             <p id="geminiKeyState" class="text-[11px] text-zinc-500"></p>
 
             <!-- Compact model details below the input -->
             <div class="flex items-center justify-between text-[11px] text-zinc-500 pt-0.5">
-              <span>Model: <code class="font-mono text-zinc-400" id="labelGeminiModel">gemini-3.8-flash</code></span>
+              <span>Модель: <code class="font-mono text-zinc-400" id="labelGeminiModel">gemini-3.8-flash</code></span>
               <span id="statusGemini" class="font-mono transition-all"></span>
             </div>
           </div>
@@ -1071,21 +1070,21 @@
           <!-- Groq Key Row -->
           <div class="space-y-1 pt-1">
             <div class="flex items-center justify-between text-xs">
-              <label class="font-medium text-zinc-200">Groq Cloud API Key</label>
+              <label class="font-medium text-zinc-200">API-ключ Groq Cloud</label>
               <div class="flex items-center gap-3">
                 <button type="button" onclick="testApiKey('groq', 'wrapGroq', 'inputGroq', 'statusGroq', this)"
                   class="text-[11px] text-zinc-400 hover:text-white transition flex items-center gap-1 font-sans cursor-pointer group">
                   <i data-lucide="activity" class="w-3 h-3 text-zinc-500 group-hover:text-emerald-400 transition-colors"></i>
-                  <span>Test Connection</span>
+                  <span>Проверить подключение</span>
                 </button>
                 <span class="text-zinc-700 select-none">•</span>
-                <button type="button" id="changeGroqKey" onclick="beginKeyChange('groq')" class="hidden text-[11px] text-zinc-400 hover:text-white transition font-sans">Change Key</button>
-                <button type="button" id="saveGroqKey" onclick="saveProviderKey('groq')" disabled class="hidden text-[11px] text-emerald-400/50 disabled:cursor-not-allowed hover:text-emerald-300 transition font-sans">Save Key</button>
-                <button type="button" id="cancelGroqKey" onclick="cancelKeyChange('groq')" class="hidden text-[11px] text-zinc-500 hover:text-white transition font-sans">Cancel</button>
+                <button type="button" id="changeGroqKey" onclick="beginKeyChange('groq')" class="hidden text-[11px] text-zinc-400 hover:text-white transition font-sans">Сменить ключ</button>
+                <button type="button" id="saveGroqKey" onclick="saveProviderKey('groq')" disabled class="hidden text-[11px] text-emerald-400/50 disabled:cursor-not-allowed hover:text-emerald-300 transition font-sans">Сохранить ключ</button>
+                <button type="button" id="cancelGroqKey" onclick="cancelKeyChange('groq')" class="hidden text-[11px] text-zinc-500 hover:text-white transition font-sans">Отмена</button>
                 <span id="groqKeyActionDot" class="hidden text-zinc-700 select-none">•</span>
                 <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer"
                   class="text-[11px] text-zinc-400 hover:text-white transition font-mono">
-                  Get Key
+                  Получить ключ
                 </a>
               </div>
             </div>
@@ -1093,7 +1092,7 @@
             <div class="t-input-wrap" id="wrapGroq">
               <div class="t-input">
                 <input type="password" id="inputGroq" value="" oninput="providerKeyInputChanged('groq')"
-                  placeholder="Enter your Groq API key..."
+                  placeholder="Введите API-ключ Groq..."
                   class="w-full h-full bg-transparent px-3 text-xs font-mono text-white placeholder-zinc-500 disabled:opacity-100 disabled:cursor-default outline-none" />
                 <button type="button" onclick="toggleSecret('inputGroq', 'iconGroqEye')"
                   class="p-2 text-zinc-400 hover:text-white transition cursor-pointer shrink-0"
@@ -1101,13 +1100,13 @@
                   <i id="iconGroqEye" data-lucide="eye" class="w-3.5 h-3.5"></i>
                 </button>
               </div>
-              <p class="t-error-msg" id="errGroq">This API key is invalid or has not been entered.</p>
+              <p class="t-error-msg" id="errGroq">API-ключ недействителен или не введён.</p>
             </div>
             <p id="groqKeyState" class="text-[11px] text-zinc-500"></p>
 
             <!-- Compact model details below the input -->
             <div class="flex items-center justify-between text-[11px] text-zinc-500 pt-0.5">
-              <span>Model: <code class="font-mono text-zinc-400" id="labelGroqModel">whisper-large-v3-turbo</code></span>
+              <span>Модель: <code class="font-mono text-zinc-400" id="labelGroqModel">whisper-large-v3-turbo</code></span>
               <span id="statusGroq" class="font-mono transition-all"></span>
             </div>
           </div>
@@ -1115,7 +1114,7 @@
           <!-- OpenAI-compatible Row -->
           <div class="space-y-3">
             <div class="space-y-1">
-              <label class="font-medium text-zinc-200 text-xs" for="inputOpenaiBase">OpenAI-compatible Base URL</label>
+              <label class="font-medium text-zinc-200 text-xs" for="inputOpenaiBase">Base URL OpenAI-compatible</label>
               <div class="t-input-wrap">
                 <div class="t-input">
                   <input type="text" id="inputOpenaiBase" onchange="loadOpenaiModels()" oninput="providerKeyInputChanged('openai')" value="" placeholder="https://api.openai.com/v1"
@@ -1125,21 +1124,21 @@
             </div>
             <div class="space-y-1">
               <div class="flex items-center justify-between text-xs">
-                <label class="font-medium text-zinc-200" for="inputOpenai">OpenAI-compatible API Key</label>
+                <label class="font-medium text-zinc-200" for="inputOpenai">API-ключ OpenAI-compatible</label>
                 <button type="button" onclick="testApiKey('openai', 'wrapOpenai', 'inputOpenai', 'statusOpenai', this)"
                   class="text-[11px] text-zinc-400 hover:text-white transition flex items-center gap-1 font-sans cursor-pointer group">
                   <i data-lucide="activity" class="w-3 h-3 text-zinc-500 group-hover:text-emerald-400 transition-colors"></i>
-                  <span>Test Connection</span>
+                  <span>Проверить подключение</span>
                 </button>
                 <span id="openaiKeyActionDot" class="hidden text-zinc-700 select-none">•</span>
-                <button type="button" id="changeOpenaiKey" onclick="beginKeyChange('openai')" class="hidden text-[11px] text-zinc-400 hover:text-white transition font-sans">Change Key</button>
-                <button type="button" id="saveOpenaiKey" onclick="saveProviderKey('openai')" disabled class="hidden text-[11px] text-emerald-400/50 disabled:cursor-not-allowed hover:text-emerald-300 transition font-sans">Save Key</button>
-                <button type="button" id="cancelOpenaiKey" onclick="cancelKeyChange('openai')" class="hidden text-[11px] text-zinc-500 hover:text-white transition font-sans">Cancel</button>
+                <button type="button" id="changeOpenaiKey" onclick="beginKeyChange('openai')" class="hidden text-[11px] text-zinc-400 hover:text-white transition font-sans">Сменить ключ</button>
+                <button type="button" id="saveOpenaiKey" onclick="saveProviderKey('openai')" disabled class="hidden text-[11px] text-emerald-400/50 disabled:cursor-not-allowed hover:text-emerald-300 transition font-sans">Сохранить ключ</button>
+                <button type="button" id="cancelOpenaiKey" onclick="cancelKeyChange('openai')" class="hidden text-[11px] text-zinc-500 hover:text-white transition font-sans">Отмена</button>
               </div>
               <div class="t-input-wrap" id="wrapOpenai">
                 <div class="t-input">
                   <input type="password" id="inputOpenai" onchange="loadOpenaiModels()" oninput="providerKeyInputChanged('openai')" value=""
-                    placeholder="Enter your API key..."
+                    placeholder="Введите API-ключ..."
                     class="w-full h-full bg-transparent px-3 text-xs font-mono text-white placeholder-zinc-500 outline-none" />
                   <button type="button" onclick="toggleSecret('inputOpenai', 'iconOpenaiEye')"
                     class="p-2 text-zinc-400 hover:text-white transition cursor-pointer shrink-0"
@@ -1147,14 +1146,14 @@
                     <i id="iconOpenaiEye" data-lucide="eye" class="w-3.5 h-3.5"></i>
                   </button>
                 </div>
-                <p class="t-error-msg" id="errOpenai">This API key is invalid or has not been entered.</p>
+                <p class="t-error-msg" id="errOpenai">API-ключ недействителен или не введён.</p>
               </div>
               <p id="openaiKeyState" class="text-[11px] text-zinc-500"></p>
               <div class="text-right text-[11px] pt-0.5"><span id="statusOpenai" class="font-mono transition-all"></span></div>
             </div>
             <div class="space-y-1">
               <div class="flex items-center justify-between text-xs">
-                <label class="font-medium text-zinc-200" for="openaiModelTrigger">OpenAI-compatible Model</label>
+                <label class="font-medium text-zinc-200" for="openaiModelTrigger">Модель OpenAI-compatible</label>
                 <span id="statusOpenaiModels" class="text-[11px] text-zinc-500 font-mono"></span>
               </div>
               <div class="relative" id="openaiModelMenuWrap">
@@ -1162,19 +1161,19 @@
                 <button type="button" id="openaiModelTrigger" onclick="toggleMenu('openaiModelTrigger', 'openaiModelMenu')"
                   aria-haspopup="listbox" aria-expanded="false" aria-controls="openaiModelMenu"
                   class="t-input w-full px-3 text-xs text-white text-left cursor-pointer">
-                  <span id="openaiModelTriggerLabel" class="font-mono flex-1 min-w-0 truncate">Model</span>
+                  <span id="openaiModelTriggerLabel" class="font-mono flex-1 min-w-0 truncate">Модель</span>
                   <svg class="ml-auto w-3.5 h-3.5 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
 
                 <div id="openaiModelMenu" role="listbox" aria-label="OpenAI-compatible model"
                   class="hidden fixed z-[140] rounded-xl border border-white/[0.08] bg-[#171717] p-1 shadow-[0_16px_36px_rgba(0,0,0,0.75)] max-h-[280px] overflow-y-auto">
-                  <div class="relative z-[2] px-2.5 py-1.5 text-[11px] font-sans text-zinc-500">Model</div>
+                  <div class="relative z-[2] px-2.5 py-1.5 text-[11px] font-sans text-zinc-500">Модель</div>
                   <div id="openaiModelItems"></div>
                 </div>
               </div>
               <div class="t-input-wrap hidden pt-1" id="wrapOpenaiModelCustom">
                 <div class="t-input">
-                  <input type="text" id="inputOpenaiModel" value="" placeholder="Model name"
+                  <input type="text" id="inputOpenaiModel" value="" placeholder="Название модели"
                     aria-label="Custom model name"
                     class="w-full h-full bg-transparent px-3 text-xs font-mono text-white placeholder-zinc-500 outline-none" />
                 </div>
@@ -1187,27 +1186,27 @@
       <!-- Section: Media Storage -->
       <div class="pb-8 border-b border-white/[0.08] flex flex-col md:flex-row gap-6 md:gap-12">
                 <div class="w-full md:w-1/3 shrink-0">
-          <h2 class="font-sans text-sm font-semibold text-white tracking-wide">Media Storage</h2>
+          <h2 class="font-sans text-sm font-semibold text-white tracking-wide">Хранилище</h2>
           <p class="font-sans text-xs text-zinc-400 leading-relaxed mt-1">
-            Output directory for saved Workspace media. Move Folder transfers saved media only.
+            Папка для сохранённых файлов медиатеки. «Перенести папку» переносит только сохранённые медиафайлы.
           </p>
         </div>
 
                 <div class="w-full md:w-2/3 space-y-3">
           <div class="flex items-center justify-between text-xs">
-            <label class="font-medium text-zinc-200">Workspace Directory</label>
+            <label class="font-medium text-zinc-200">Папка медиатеки</label>
             <div class="flex items-center gap-3">
               <button type="button" onclick="browseStorageFolder()" id="btnBrowseFolder"
-                title="Choose a new directory and move saved Workspace media"
+                title="Выберите новую папку и перенесите сохранённые файлы"
                 class="text-[11px] text-zinc-400 hover:text-white transition flex items-center gap-1.5 font-sans cursor-pointer group">
                 <i data-lucide="folder" class="w-3.5 h-3.5 text-zinc-500 group-hover:text-white transition-colors"></i>
-                <span>Move Folder</span>
+                <span>Перенести папку</span>
               </button>
               <span class="text-zinc-700 select-none">•</span>
               <button type="button" onclick="openExplorer()"
                 class="text-[11px] text-zinc-400 hover:text-white transition flex items-center gap-1.5 font-sans cursor-pointer group">
                 <i data-lucide="folder-open" class="w-3.5 h-3.5 text-zinc-500 group-hover:text-white transition-colors"></i>
-                <span>Open Folder</span>
+                <span>Открыть папку</span>
               </button>
             </div>
           </div>
@@ -1215,16 +1214,16 @@
           <div class="t-input-wrap" id="wrapStorage">
             <div class="t-input">
               <input type="text" id="inputStorage" value=""
-                placeholder="Example: D:\Luna-Media"
+                placeholder="Например: D:\MyMedia"
                 class="w-full h-full bg-transparent px-3 text-xs font-mono text-white placeholder-zinc-500 outline-none" />
             </div>
-            <p class="t-error-msg" id="errStorage">Directory not found or inaccessible.</p>
+            <p class="t-error-msg" id="errStorage">Папка не найдена или недоступна.</p>
           </div>
 
           <!-- Storage summary below the input (matches the provider sections) -->
           <div class="flex items-center justify-between text-[11px] text-zinc-500 pt-0.5">
-            <span>File Count: <code class="font-mono text-zinc-400" id="settingsTotalFiles">0 files</code></span>
-            <span>Total Storage: <code class="font-mono text-zinc-400" id="settingsTotalSize">0 MB</code></span>
+            <span>Файлов: <code class="font-mono text-zinc-400" id="settingsTotalFiles">0 файлов</code></span>
+            <span>Занято: <code class="font-mono text-zinc-400" id="settingsTotalSize">0 MB</code></span>
           </div>
         </div>
       </div>
@@ -1232,20 +1231,20 @@
       <!-- Section: System Status -->
       <div class="pb-8 mb-8 border-b border-white/[0.06] flex flex-col md:flex-row gap-6 md:gap-12">
                 <div class="w-full md:w-1/3 shrink-0">
-          <h2 class="font-sans text-sm font-semibold text-white tracking-wide">System Status</h2>
+          <h2 class="font-sans text-sm font-semibold text-white tracking-wide">Состояние системы</h2>
           <p class="font-sans text-xs text-zinc-400 leading-relaxed mt-1">
-            Local utilities and processing dependencies.
+            Локальные утилиты и зависимости обработки.
           </p>
         </div>
 
                 <div class="w-full md:w-2/3 space-y-2">
           <div class="flex items-center justify-between pb-2 border-b border-white/[0.06]">
-            <span class="font-medium text-zinc-200 text-xs">Local Dependencies</span>
+            <span class="font-medium text-zinc-200 text-xs">Локальные зависимости</span>
 
             <button type="button" id="btnCheckSystem" onclick="runSystemCheck(this)"
               class="text-[11px] text-zinc-400 hover:text-white transition flex items-center gap-1 font-sans cursor-pointer group shrink-0">
               <i data-lucide="refresh-cw" id="checkSystemIcon" class="w-3 h-3 text-zinc-500 group-hover:text-emerald-400 transition-colors"></i>
-              <span id="checkSystemLabel">Check</span>
+              <span id="checkSystemLabel">Проверить</span>
             </button>
           </div>
 
@@ -1256,11 +1255,11 @@
               <div class="flex items-center gap-2.5">
                 <i data-lucide="check" class="w-4 h-4 text-emerald-400" id="chkFfmpeg"></i>
                 <div class="flex items-center gap-2">
-                  <span class="text-zinc-200 font-medium">FFmpeg & FFprobe</span>
-                  <span class="hidden text-[11px] text-amber-400 font-mono" data-sys-checking="ffmpeg">Checking...</span>
+                  <span class="text-zinc-200 font-medium">FFmpeg и FFprobe</span>
+                  <span class="hidden text-[11px] text-amber-400 font-mono" data-sys-checking="ffmpeg">Проверка...</span>
                 </div>
               </div>
-              <span class="font-mono text-[11px] text-zinc-400" id="statusFfmpeg">Loading...</span>
+              <span class="font-mono text-[11px] text-zinc-400" id="statusFfmpeg">Загрузка...</span>
             </div>
 
             <!-- yt-dlp -->
@@ -1268,11 +1267,11 @@
               <div class="flex items-center gap-2.5">
                 <i data-lucide="check" class="w-4 h-4 text-emerald-400" id="chkYtdlp"></i>
                 <div class="flex items-center gap-2">
-                  <span class="text-zinc-200 font-medium">yt-dlp Engine</span>
-                  <span class="hidden text-[11px] text-amber-400 font-mono" data-sys-checking="ytdlp">Checking...</span>
+                  <span class="text-zinc-200 font-medium">Движок yt-dlp</span>
+                  <span class="hidden text-[11px] text-amber-400 font-mono" data-sys-checking="ytdlp">Проверка...</span>
                 </div>
               </div>
-              <span class="font-mono text-[11px] text-zinc-400" id="statusYtdlp">Loading...</span>
+              <span class="font-mono text-[11px] text-zinc-400" id="statusYtdlp">Загрузка...</span>
             </div>
 
             <!-- OpenCV -->
@@ -1280,11 +1279,11 @@
               <div class="flex items-center gap-2.5">
                 <i data-lucide="check" class="w-4 h-4 text-emerald-400" id="chkOpencv"></i>
                 <div class="flex items-center gap-2">
-                  <span class="text-zinc-200 font-medium">OpenCV Face Tracker</span>
-                  <span class="hidden text-[11px] text-amber-400 font-mono" data-sys-checking="opencv">Checking...</span>
+                  <span class="text-zinc-200 font-medium">Трекер лиц OpenCV</span>
+                  <span class="hidden text-[11px] text-amber-400 font-mono" data-sys-checking="opencv">Проверка...</span>
                 </div>
               </div>
-              <span class="font-mono text-[11px] text-zinc-400" id="statusOpencv">Loading...</span>
+              <span class="font-mono text-[11px] text-zinc-400" id="statusOpencv">Загрузка...</span>
             </div>
 
             <!-- Storage Access -->
@@ -1292,11 +1291,11 @@
               <div class="flex items-center gap-2.5">
                 <i data-lucide="check" class="w-4 h-4 text-emerald-400" id="chkStorage"></i>
                 <div class="flex items-center gap-2">
-                  <span class="text-zinc-200 font-medium">Media Directory Access</span>
-                  <span class="hidden text-[11px] text-amber-400 font-mono" data-sys-checking="storage">Checking...</span>
+                  <span class="text-zinc-200 font-medium">Доступ к папке медиа</span>
+                  <span class="hidden text-[11px] text-amber-400 font-mono" data-sys-checking="storage">Проверка...</span>
                 </div>
               </div>
-              <span class="font-mono text-[11px] text-zinc-400" id="statusStorageAccess">Loading...</span>
+              <span class="font-mono text-[11px] text-zinc-400" id="statusStorageAccess">Загрузка...</span>
             </div>
 
             <!-- YouTube cookies (included in the dependency checklist) -->
@@ -1313,9 +1312,9 @@
                 <button type="button" id="btnChangeCookies" onclick="document.getElementById('cookieFileInput').click()"
                   class="text-[11px] text-zinc-400 hover:text-white transition flex items-center gap-1 font-sans cursor-pointer group shrink-0">
                   <i data-lucide="upload" class="w-3 h-3 text-zinc-500 group-hover:text-emerald-400 transition-colors"></i>
-                  <span>Change</span>
+                  <span>Сменить</span>
                 </button>
-                <span class="font-mono text-[11px] text-zinc-400" id="cookieStatusBadge">Checking</span>
+                <span class="font-mono text-[11px] text-zinc-400" id="cookieStatusBadge">Проверка</span>
               </div>
             </div>
           </div>
@@ -1325,16 +1324,16 @@
       <!-- Section: Studio Background -->
       <div class="pb-8 flex flex-col md:flex-row gap-6 md:gap-12" id="settingsStudioBackgroundSection">
         <div class="w-full md:w-1/3 shrink-0">
-          <h2 class="font-sans text-sm font-semibold text-white tracking-wide">Studio Background</h2>
+          <h2 class="font-sans text-sm font-semibold text-white tracking-wide">Фон студии</h2>
           <p class="font-sans text-xs text-zinc-400 leading-relaxed mt-1">
-            Choose the backdrop shown behind Studio. Static presets use zero GPU; changes apply and save automatically.
+            Выберите фон, который показывается за студией. Статичные пресеты не используют GPU; изменения применяются и сохраняются автоматически.
           </p>
         </div>
 
         <div class="w-full md:w-2/3 space-y-3">
           <div class="flex items-center justify-between text-xs">
-            <span class="font-medium text-zinc-200">Backdrop Preset</span>
-            <span id="studioBgSaveStatus" class="text-[11px] text-zinc-500 font-sans">Auto-saves on click</span>
+            <span class="font-medium text-zinc-200">Пресет фона</span>
+            <span id="studioBgSaveStatus" class="text-[11px] text-zinc-500 font-sans">Сохраняется автоматически</span>
           </div>
           <div id="studioBackgroundGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5" role="radiogroup" aria-label="Studio background preset">
           </div>
@@ -1352,7 +1351,7 @@
           <div role="tablist" id="guideTabsBar" aria-label="Documentation sections" class="flex md:flex-col gap-1.5 md:gap-5 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
             <div class="flex md:flex-col gap-1 shrink-0">
               <span class="hidden md:block text-[12px] font-semibold text-white px-3 mb-1">
-                Workflow
+                Рабочий процесс
               </span>
               <button type="button" class="docs-nav-item active" role="tab" aria-selected="true" data-guide-tab="wf-youtube" onclick="switchGuideTab('wf-youtube', this)">
                 <span>YouTube</span>
@@ -1367,25 +1366,25 @@
 
             <div class="flex md:flex-col gap-1 shrink-0">
               <span class="hidden md:block text-[12px] font-semibold text-white px-3 mb-1">
-                Documentation
+                Документация
               </span>
               <button type="button" class="docs-nav-item" role="tab" aria-selected="false" data-guide-tab="modes" onclick="switchGuideTab('modes', this)">
-                <span>Features &amp; Modes</span>
+                <span>Возможности и режимы</span>
               </button>
               <button type="button" class="docs-nav-item" role="tab" aria-selected="false" data-guide-tab="setup" onclick="switchGuideTab('setup', this)">
-                <span>Setup &amp; Requirements</span>
+                <span>Установка и требования</span>
               </button>
               <button type="button" class="docs-nav-item" role="tab" aria-selected="false" data-guide-tab="vault" onclick="switchGuideTab('vault', this)">
-                <span>Workspace</span>
+                <span>Медиатека</span>
               </button>
             </div>
 
             <div class="flex md:flex-col gap-1 shrink-0">
               <span class="hidden md:block text-[12px] font-semibold text-white px-3 mb-1">
-                Support
+                Поддержка
               </span>
               <button type="button" class="docs-nav-item" role="tab" aria-selected="false" data-guide-tab="faq" onclick="switchGuideTab('faq', this)">
-                <span>FAQ</span>
+                <span>Вопросы и ответы</span>
               </button>
             </div>
           </div>
@@ -1395,15 +1394,15 @@
         <div class="flex-1 min-w-0 w-full space-y-8 guide-docs-content" id="guideDocsContent">
           <div class="space-y-2.5 pb-5 border-b border-white/[0.08]">
             <div class="flex items-center gap-2 text-xs font-medium text-zinc-400">
-              <span class="text-zinc-300">Luna Docs</span>
+              <span class="text-zinc-300">Документация Luna</span>
               <span class="text-zinc-600">/</span>
               <span id="guideBreadcrumbCurrent" class="text-white">YouTube</span>
             </div>
             <h1 id="guidePageTitle" class="text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight">
-              YouTube Workflow
+              Сценарии работы с YouTube
             </h1>
             <p id="guidePageSubtitle" class="guide-subtitle text-sm text-zinc-400 leading-relaxed max-w-2xl">
-              Select a YouTube mode below to trace every node from URL input to Workspace output.
+              Выберите режим YouTube ниже и просмотрите весь путь от ссылки до файлов в медиатеке.
             </p>
           </div>
 
@@ -1411,10 +1410,10 @@
     <section id="tab-wf-youtube" class="guide-tab-pane space-y-5">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div class="guide-submode-bar" role="tablist" aria-label="YouTube modes">
-          <button type="button" class="guide-submode-btn active" onclick="setWorkflowSubmode('youtube', 'ai_clip', this)">AI Short Clips</button>
-          <button type="button" class="guide-submode-btn" onclick="setWorkflowSubmode('youtube', 'video', this)">Full HD Video</button>
-          <button type="button" class="guide-submode-btn" onclick="setWorkflowSubmode('youtube', 'mp3', this)">Audio MP3</button>
-          <button type="button" class="guide-submode-btn" onclick="setWorkflowSubmode('youtube', 'trim', this)">Video Trimmer</button>
+          <button type="button" class="guide-submode-btn active" onclick="setWorkflowSubmode('youtube', 'ai_clip', this)">ИИ-клипы</button>
+          <button type="button" class="guide-submode-btn" onclick="setWorkflowSubmode('youtube', 'video', this)">Видео Full HD</button>
+          <button type="button" class="guide-submode-btn" onclick="setWorkflowSubmode('youtube', 'mp3', this)">Аудио MP3</button>
+          <button type="button" class="guide-submode-btn" onclick="setWorkflowSubmode('youtube', 'trim', this)">Нарезка видео</button>
         </div>
       </div>
 
@@ -1436,8 +1435,8 @@
     <section id="tab-wf-tiktok" class="guide-tab-pane hidden space-y-5">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div class="guide-submode-bar" role="tablist" aria-label="TikTok modes">
-          <button type="button" class="guide-submode-btn active" onclick="setWorkflowSubmode('tiktok', 'video', this)">Video MP4</button>
-          <button type="button" class="guide-submode-btn" onclick="setWorkflowSubmode('tiktok', 'mp3', this)">Audio MP3</button>
+          <button type="button" class="guide-submode-btn active" onclick="setWorkflowSubmode('tiktok', 'video', this)">Видео MP4</button>
+          <button type="button" class="guide-submode-btn" onclick="setWorkflowSubmode('tiktok', 'mp3', this)">Аудио MP3</button>
         </div>
       </div>
 
@@ -1455,56 +1454,56 @@
         <table class="w-full text-left text-xs">
           <thead>
             <tr class="border-b border-white/[0.12] text-white font-semibold">
-              <th class="py-3 px-3">Operating Mode</th>
-              <th class="py-3 px-3">Platform</th>
-              <th class="py-3 px-3">Output Options</th>
-              <th class="py-3 px-3">API Key</th>
-              <th class="py-3 px-3">Use It For</th>
+              <th class="py-3 px-3">Режим работы</th>
+              <th class="py-3 px-3">Платформа</th>
+              <th class="py-3 px-3">Параметры вывода</th>
+              <th class="py-3 px-3">API-ключ</th>
+              <th class="py-3 px-3">Для чего нужно</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-white/[0.06] text-zinc-300">
             <tr class="hover:bg-white/[0.02]">
               <td class="py-3.5 px-3">
-                <div class="font-semibold text-white">AI Short Clips</div>
-                <span class="text-[11px] text-zinc-400">Auto Virality Ranking</span>
+                <div class="font-semibold text-white">ИИ-клипы</div>
+                <span class="text-[11px] text-zinc-400">Авто-рейтинг вирусности</span>
               </td>
               <td class="py-3.5 px-3 text-zinc-300">YouTube</td>
               <td class="py-3.5 px-3 font-mono text-zinc-200">9:16, 16:9, 1:1, 3:4</td>
-              <td class="py-3.5 px-3 text-zinc-300">Required (LLM + Speech fallback)</td>
-              <td class="py-3.5 px-3 text-zinc-400">Extract 3–7 ranked vertical or square clips with Center Crop or OpenCV Face Tracking.</td>
+              <td class="py-3.5 px-3 text-zinc-300">Требуется (LLM + распознавание речи)</td>
+              <td class="py-3.5 px-3 text-zinc-400">Нарезает 3–7 клипов 9:16 или 1:1 с рейтингом вирусности, обрезкой по центру или трекингом лица OpenCV.</td>
             </tr>
 
             <tr class="hover:bg-white/[0.02]">
               <td class="py-3.5 px-3">
-                <div class="font-semibold text-white">Video Trimmer</div>
-                <span class="text-[11px] text-zinc-400">Multi-Segment (1–20 ranges)</span>
+                <div class="font-semibold text-white">Нарезка видео</div>
+                <span class="text-[11px] text-zinc-400">Несколько фрагментов (1–20 диапазонов)</span>
               </td>
               <td class="py-3.5 px-3 text-zinc-300">YouTube</td>
               <td class="py-3.5 px-3 font-mono text-zinc-200">Original, 9:16, 3:4, 1:1</td>
-              <td class="py-3.5 px-3 text-zinc-300">Not needed</td>
-              <td class="py-3.5 px-3 text-zinc-400">Cut exact start/end timestamp ranges locally without using AI quota, bundled with batch .ZIP.</td>
+              <td class="py-3.5 px-3 text-zinc-300">Не требуется</td>
+              <td class="py-3.5 px-3 text-zinc-400">Точная нарезка по таймкодам локально, без расхода лимитов ИИ, с пакетной выгрузкой .ZIP.</td>
             </tr>
 
             <tr class="hover:bg-white/[0.02]">
               <td class="py-3.5 px-3">
-                <div class="font-semibold text-white">Full Video / Reels / Clean TikTok</div>
-                <span class="text-[11px] text-zinc-400">Direct Download &amp; Format</span>
+                <div class="font-semibold text-white">Полное видео / Reels / TikTok без водяного знака</div>
+                <span class="text-[11px] text-zinc-400">Прямое скачивание и форматы</span>
               </td>
               <td class="py-3.5 px-3 text-zinc-300">YouTube, Reels, TikTok</td>
-              <td class="py-3.5 px-3 font-mono text-zinc-200">1080p–480p, Ratio &amp; FPS</td>
-              <td class="py-3.5 px-3 text-zinc-300">Not needed</td>
-              <td class="py-3.5 px-3 text-zinc-400">Save YouTube videos (with optional crop &amp; Auto/60/30 FPS), Instagram Reels, or watermark-free TikTok MP4s.</td>
+              <td class="py-3.5 px-3 font-mono text-zinc-200">1080p–480p, формат и FPS</td>
+              <td class="py-3.5 px-3 text-zinc-300">Не требуется</td>
+              <td class="py-3.5 px-3 text-zinc-400">Сохраняет видео YouTube (с обрезкой и авто/60/30 FPS), Instagram Reels и TikTok MP4 без водяного знака.</td>
             </tr>
 
             <tr class="hover:bg-white/[0.02]">
               <td class="py-3.5 px-3">
-                <div class="font-semibold text-white">Audio MP3</div>
-                <span class="text-[11px] text-zinc-400">320 kbps Stereo MP3</span>
+                <div class="font-semibold text-white">Аудио MP3</div>
+                <span class="text-[11px] text-zinc-400">MP3 320 кбит/с стерео</span>
               </td>
               <td class="py-3.5 px-3 text-zinc-300">YouTube, TikTok</td>
-              <td class="py-3.5 px-3 font-mono text-zinc-200">320 kbps .MP3</td>
-              <td class="py-3.5 px-3 text-zinc-300">Not needed</td>
-              <td class="py-3.5 px-3 text-zinc-400">Extract high-bitrate audio tracks directly for podcasts, voiceovers, interviews, or music.</td>
+              <td class="py-3.5 px-3 font-mono text-zinc-200">.MP3 320 кбит/с</td>
+              <td class="py-3.5 px-3 text-zinc-300">Не требуется</td>
+              <td class="py-3.5 px-3 text-zinc-400">Извлекает аудио высокого битрейта для подкастов, озвучки, интервью и музыки.</td>
             </tr>
           </tbody>
         </table>
@@ -1513,25 +1512,25 @@
       <!-- Detail: Studio & Clipper Controls -->
       <div class="space-y-4">
         <h3 class="text-sm font-semibold text-white">
-          Studio &amp; Clipper Canvas Controls
+          Управление студией и холстом нарезки
         </h3>
         <div class="divide-y divide-white/[0.07] border-t border-white/[0.07]">
           <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-2 sm:gap-6 text-xs">
-            <span class="font-semibold text-white">Source Node (Left Side)</span>
+            <span class="font-semibold text-white">Узел источника (слева)</span>
             <p class="text-zinc-400 leading-relaxed">
-              Displays the fetched video title, channel/author metadata, source URL, and clip count anchoring the left side of the Clipper Canvas workspace.
+              Показывает название видео, автора, ссылку на источник и число клипов на левой стороне холста нарезки.
             </p>
           </div>
           <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-2 sm:gap-6 text-xs">
-            <span class="font-semibold text-white">Clip Cards (Right Side)</span>
+            <span class="font-semibold text-white">Карточки клипов (справа)</span>
             <p class="text-zinc-400 leading-relaxed">
-              Each rendered clip appears as an interactive card showing its virality score (0–100), timestamps, hook rationale, inline video preview, single download, and full batch <code class="font-mono text-zinc-300">Download .ZIP</code> export.
+              Каждый готовый клип — интерактивная карточка с рейтингом вирусности (0–100), таймкодами, обоснованием хука и кнопками скачивания. <code class="font-mono text-zinc-300">Скачать .ZIP</code> экспорт.
             </p>
           </div>
           <div class="py-3.5 grid grid-cols-[1fr] sm:grid-cols-[180px_1fr] gap-2 sm:gap-6 text-xs">
-            <span class="font-semibold text-white">Cancel &amp; Retry Failed</span>
+            <span class="font-semibold text-white">Отмена и повтор неудачных</span>
             <p class="text-zinc-400 leading-relaxed">
-              Running jobs can be cancelled mid-flight from the task tracker, and failed downloads or clips can be retried individually without re-running completed work.
+              Запущенные задачи можно отменить в трекере задач, а неудачные скачивания и клипы — повторить точечно.
             </p>
           </div>
         </div>
@@ -1547,11 +1546,11 @@
         <!-- Item 1: Installers & Runtimes -->
         <div class="pb-6 space-y-2.5">
           <div class="flex items-center justify-between gap-2 text-xs">
-            <span class="text-sm font-semibold text-white">1. FFmpeg, yt-dlp &amp; Deno Runtime</span>
-            <span class="text-zinc-400 font-mono text-[11px]">installed automatically</span>
+            <span class="text-sm font-semibold text-white">1. FFmpeg, yt-dlp и среда Deno</span>
+            <span class="text-zinc-400 font-mono text-[11px]">устанавливаются автоматически</span>
           </div>
           <p class="text-xs text-zinc-400 leading-relaxed">
-            Running <code class="font-mono text-zinc-300">install.ps1</code> (Windows), <code class="font-mono text-zinc-300">install.sh</code> (macOS/Linux), or Docker sets up Python dependencies, <code class="font-mono text-zinc-300">static-ffmpeg</code>, <code class="font-mono text-zinc-300">yt-dlp</code>, and the <code class="font-mono text-zinc-300">deno</code> JavaScript runtime required for modern YouTube streams.
+            Запустите <code class="font-mono text-zinc-300">install.ps1</code> (Windows), <code class="font-mono text-zinc-300">install.sh</code> или Docker — они установят Python-зависимости, <code class="font-mono text-zinc-300">static-ffmpeg</code>, <code class="font-mono text-zinc-300">yt-dlp</code>и <code class="font-mono text-zinc-300">deno</code> — среду JavaScript, нужную для современных потоков YouTube.
           </p>
           <div class="subpage-cmd-box" onclick="copySnippet('ffmpeg -version', this)">
             <div class="subpage-cmd-left">
@@ -1573,42 +1572,42 @@
             </button>
           </div>
           <p class="text-xs text-zinc-400 leading-relaxed">
-            Verify runtime health anytime under Settings &rarr; System Status &rarr; Check (FFmpeg &amp; FFprobe, yt-dlp Engine, OpenCV Face Tracker, Media Directory Access, and Cookies YouTube).
+            Состояние среды можно проверить в Настройки → Состояние системы → Проверить (FFmpeg и FFprobe, движок yt-dlp, трекер лиц OpenCV).
           </p>
         </div>
 
         <!-- Item 2: API keys -->
         <div class="py-6 space-y-2">
           <div class="flex items-center justify-between gap-2 text-xs">
-            <span class="text-sm font-semibold text-white">2. AI API Keys (AI Short Clips Only)</span>
+            <span class="text-sm font-semibold text-white">2. ИИ API-ключи (только для ИИ-клипов)</span>
             <span class="text-zinc-400 font-mono text-[11px]">Settings / .env</span>
           </div>
           <p class="text-xs text-zinc-400 leading-relaxed">
-            Full HD Video, Video Trimmer, Instagram Reels, TikTok Clean, and Audio MP3 work immediately with zero API keys. For AI Short Clips, configure your provider in Settings (with Fetch Models and Test Connection):
+            Видео Full HD, нарезка, Reels, TikTok и аудио MP3 работают сразу без ключей. Для ИИ-клипов нужен ключ LLM для рейтинга вирусности и провайдер транскрибации.
           </p>
           <ul class="guide-flow-step-points">
-            <li><strong>Virality Ranking LLM:</strong> Supports OpenAI-compatible endpoints (OpenAI, OpenRouter, custom base URLs) or Google Gemini.</li>
-            <li><strong>Speech Transcription Fallback:</strong> Checks local <code class="font-mono text-zinc-300">.srt</code> cache and YouTube captions first; uses Groq Cloud Whisper, Gemini, or local Faster-Whisper only when captions are unavailable.</li>
-            <li><strong>Privacy Boundary:</strong> Video downloads and FFmpeg cuts run locally; AI Short Clips only send transcripts (and audio when cloud transcription is used) to your configured provider.</li>
+            <li><strong>LLM рейтинга вирусности:</strong> Поддерживаются OpenAI-compatible (OpenAI, OpenRouter, свои base URL) и Google Gemini.</li>
+            <li><strong>Распознавание речи:</strong> Сначала проверяются локальный <code class="font-mono text-zinc-300">.srt</code> кэш и субтитры YouTube; Groq Cloud Whisper, Gemini или локальный Faster-Whisper включаются, только если субтитров нет.</li>
+            <li><strong>Приватность:</strong> Скачивание и нарезка через FFmpeg идут локально; ИИ-клипы отправляют наружу только транскрипт (и аудио — если выбрана облачная транскрибация).</li>
           </ul>
         </div>
 
         <!-- Item 3: Cookies.txt -->
         <div class="py-6 space-y-2">
           <div class="flex items-center justify-between gap-2 text-xs">
-            <span class="text-sm font-semibold text-white">3. YouTube Cookies (Bot &amp; Age-Restricted Bypass)</span>
-            <span class="text-zinc-400 font-mono text-[11px]">Settings upload / cookies.txt</span>
+            <span class="text-sm font-semibold text-white">3. Cookies YouTube (обход бота и возрастных ограничений)</span>
+            <span class="text-zinc-400 font-mono text-[11px]">Загрузка в Настройках / cookies.txt</span>
           </div>
           <p class="text-xs text-zinc-400 leading-relaxed">
-            If YouTube prompts sign-in verification or 403 throttling on restricted videos, export your browser cookies via <em>Get cookies.txt LOCALLY</em> and click Change next to Cookies YouTube in Settings (or place <code class="font-mono text-zinc-300">cookies.txt</code> in the Luna root folder).
+            Если YouTube просит подтвердить вход или отдаёт 403 на ограниченных видео, выгрузите cookies браузера через <em>Get cookies.txt LOCALLY</em> и нажмите Сменить рядом с Cookies YouTube в Настройках (или положите <code class="font-mono text-zinc-300">cookies.txt</code> в корневую папку Luna).
           </p>
         </div>
 
         <!-- Item 4: Optional Add-ons -->
         <div class="pt-6 space-y-2.5">
           <div class="flex items-center justify-between gap-2 text-xs">
-            <span class="text-sm font-semibold text-white">4. Optional Extras (Local Faster-Whisper &amp; MCP Server)</span>
-            <span class="text-zinc-400 font-mono text-[11px]">optional packages</span>
+            <span class="text-sm font-semibold text-white">4. Опциональные компоненты (локальный Faster-Whisper и MCP-сервер)</span>
+            <span class="text-zinc-400 font-mono text-[11px]">опциональные пакеты</span>
           </div>
           <div class="subpage-cmd-box" onclick="copySnippet('pip install -r requirements-whisper.txt', this)">
             <div class="subpage-cmd-left">
@@ -1630,7 +1629,7 @@
             </button>
           </div>
           <p class="text-xs text-zinc-400 leading-relaxed">
-            <code class="font-mono text-zinc-300">faster-whisper</code> is omitted from the default installer to keep downloads lightweight. Install <code class="font-mono text-zinc-300">requirements-whisper.txt</code> inside your <code class="font-mono text-zinc-300">.venv</code> to enable offline transcription, or <code class="font-mono text-zinc-300">requirements-mcp.txt</code> to expose Luna tools via <code class="font-mono text-zinc-300">luna/mcp_server.py</code>.
+            <code class="font-mono text-zinc-300">faster-whisper</code> не входит в установщик по умолчанию, чтобы не утяжелять загрузку. Установите <code class="font-mono text-zinc-300">requirements-whisper.txt</code> внутри вашего <code class="font-mono text-zinc-300">.venv</code> чтобы включить офлайн-транскрибацию, или <code class="font-mono text-zinc-300">requirements-mcp.txt</code> чтобы открыть инструменты Luna через <code class="font-mono text-zinc-300">luna/mcp_server.py</code>.
           </p>
         </div>
 
@@ -1643,45 +1642,45 @@
 
       <!-- Visual Tree Hierarchy -->
       <div class="vault-box p-4 font-mono text-xs text-zinc-300 space-y-1.5 leading-relaxed">
-        <div class="text-zinc-300">D:\Luna-Media\ <span class="text-zinc-500">(or local output\ fallback)</span></div>
-        <div class="pl-4 text-zinc-300">├── 01-AI-Clips\ <span class="text-zinc-500">// Rendered AI Short Clips workspaces</span></div>
+        <div class="text-zinc-300">D:\Luna-Media\ <span class="text-zinc-500">(или локальная папка output\)</span></div>
+        <div class="pl-4 text-zinc-300">├── 01-AI-Clips\ <span class="text-zinc-500">// рабочие папки готовых ИИ-клипов</span></div>
         <div class="pl-8 text-zinc-300">│   └── {Workspace_Name}\</div>
-        <div class="pl-12 text-zinc-300">│       ├── meta.json <span class="text-zinc-500">// Scores, timestamps &amp; workspace index</span></div>
-        <div class="pl-12 text-zinc-300">│       ├── short_00.mp4 <span class="text-zinc-500">// Generated clip #1</span></div>
-        <div class="pl-12 text-zinc-300">│       └── short_01.mp4 <span class="text-zinc-500">// Generated clip #2</span></div>
-        <div class="pl-4 text-zinc-300">├── 02-YouTube-Full\ <span class="text-zinc-500">// Full &amp; trimmed YouTube videos</span></div>
-        <div class="pl-4 text-zinc-300">├── 03-Instagram-Reels\ <span class="text-zinc-500">// Instagram Reels videos</span></div>
-        <div class="pl-4 text-zinc-300">├── 04-TikTok-Clean\ <span class="text-zinc-500">// TikTok videos without a watermark</span></div>
-        <div class="pl-4 text-zinc-300">└── 05-Audio-MP3\ <span class="text-zinc-500">// 320 kbps MP3 audio</span></div>
+        <div class="pl-12 text-zinc-300">│       ├── meta.json <span class="text-zinc-500">// рейтинги, таймкоды и индекс медиатеки</span></div>
+        <div class="pl-12 text-zinc-300">│       ├── short_00.mp4 <span class="text-zinc-500">// готовый клип №1</span></div>
+        <div class="pl-12 text-zinc-300">│       └── short_01.mp4 <span class="text-zinc-500">// готовый клип №2</span></div>
+        <div class="pl-4 text-zinc-300">├── 02-YouTube-Full\ <span class="text-zinc-500">// полные и нарезанные видео YouTube</span></div>
+        <div class="pl-4 text-zinc-300">├── 03-Instagram-Reels\ <span class="text-zinc-500">// видео из Instagram Reels</span></div>
+        <div class="pl-4 text-zinc-300">├── 04-TikTok-Clean\ <span class="text-zinc-500">// видео TikTok без водяного знака</span></div>
+        <div class="pl-4 text-zinc-300">└── 05-Audio-MP3\ <span class="text-zinc-500">// аудио MP3 320 кбит/с</span></div>
       </div>
 
       <!-- Vault Management Features (Cardless Docs Layout) -->
       <div class="divide-y divide-white/[0.08] border-t border-white/[0.08]">
         <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-2 sm:gap-6 text-xs">
-          <span class="font-semibold text-white">Rename Workspace</span>
+          <span class="font-semibold text-white">Переименование медиатеки</span>
           <p class="text-zinc-400 leading-relaxed">
-            Click the pencil icon on any workspace to update its display name in <code class="font-mono text-zinc-300">meta.json</code> and refresh the Workspace gallery instantly without breaking file links.
+            Нажмите иконку карандаша у любой медиатеки, чтобы изменить её название в <code class="font-mono text-zinc-300">meta.json</code> и мгновенно обновить галерею, не ломая ссылки на файлы.
           </p>
         </div>
 
         <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-2 sm:gap-6 text-xs">
-          <span class="font-semibold text-white">Move Storage Folder</span>
+          <span class="font-semibold text-white">Перенос папки хранилища</span>
           <p class="text-zinc-400 leading-relaxed">
-            Change the active storage root anytime from Settings &rarr; Media Storage &rarr; Move Folder to relocate or migrate future downloads to another drive.
+            Корневую папку хранения можно сменить в любой момент: Настройки → Хранилище → Перенести папку — новые загрузки пойдут туда.
           </p>
         </div>
 
         <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-2 sm:gap-6 text-xs">
-          <span class="font-semibold text-white">Open Folder &amp; Preview</span>
+          <span class="font-semibold text-white">Открытие папки и просмотр</span>
           <p class="text-zinc-400 leading-relaxed">
-            Play MP4 clips or 320 kbps MP3s directly inside Workspace, download individual files or batch <code class="font-mono text-zinc-300">.ZIP</code> archives, or open the workspace folder straight in your OS file explorer.
+            Проигрывайте MP4-клипы и MP3 прямо в медиатеке, скачивайте отдельные файлы или <code class="font-mono text-zinc-300">.ZIP</code> архивы целиком, или откройте папку медиатеки прямо в проводнике.
           </p>
         </div>
 
         <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-2 sm:gap-6 text-xs">
-          <span class="font-semibold text-white">Safe Deletion</span>
+          <span class="font-semibold text-white">Безопасное удаление</span>
           <p class="text-zinc-400 leading-relaxed">
-            Deleting a workspace opens a confirmation modal first, then safely clears only files inside the configured storage root directory.
+            Удаление медиатеки сначала спрашивает подтверждение, затем очищает только файлы внутри настроенной папки хранилища.
           </p>
         </div>
       </div>
@@ -1696,61 +1695,61 @@
         
         <div class="py-3.5 cursor-pointer select-none" onclick="toggleFaq(this)">
           <div class="flex items-center justify-between">
-            <span class="text-xs sm:text-sm font-medium text-white">Why do I see the warning "Invalid URL"?</span>
+            <span class="text-xs sm:text-sm font-medium text-white">Почему появляется предупреждение «Недопустимая ссылка»?</span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="faq-chevron transition-transform duration-200 text-zinc-400 shrink-0 ml-2">
               <path d="M6 9l6 6 6-6" />
             </svg>
           </div>
           <p class="text-xs text-zinc-400 mt-2 hidden leading-relaxed">
-            Luna checks that the link uses <code class="font-mono text-zinc-300">http://</code> or <code class="font-mono text-zinc-300">https://</code>, resolves to a public host, and comes from YouTube, Instagram, or TikTok. Check the link and try again.
+            Программа проверяет, что ссылка использует <code class="font-mono text-zinc-300">http://</code> or <code class="font-mono text-zinc-300">https://</code>, ведёт на публичный хост и происходит с YouTube, Instagram или TikTok. Проверьте ссылку и попробуйте снова.
           </p>
         </div>
 
         <div class="py-3.5 cursor-pointer select-none" onclick="toggleFaq(this)">
           <div class="flex items-center justify-between">
-            <span class="text-xs sm:text-sm font-medium text-white">What if my computer does not have a D:\ drive?</span>
+            <span class="text-xs sm:text-sm font-medium text-white">Что делать, если на компьютере нет диска D:\?</span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="faq-chevron transition-transform duration-200 text-zinc-400 shrink-0 ml-2">
               <path d="M6 9l6 6 6-6" />
             </svg>
           </div>
           <p class="text-xs text-zinc-400 mt-2 hidden leading-relaxed">
-            If the <code class="font-mono text-zinc-300">D:\</code> drive is unavailable (or on macOS/Linux/Docker), Luna automatically uses the local <code class="font-mono text-zinc-300">output/</code> folder. You can move and migrate files anytime using Move Folder in Settings.
+            Если <code class="font-mono text-zinc-300">D:\</code> недоступен (или на macOS/Linux/Docker), программа автоматически использует локальную папку <code class="font-mono text-zinc-300">output/</code> . Перенести файлы можно в любой момент через «Перенести папку» в Настройках.
           </p>
         </div>
 
         <div class="py-3.5 cursor-pointer select-none" onclick="toggleFaq(this)">
           <div class="flex items-center justify-between">
-            <span class="text-xs sm:text-sm font-medium text-white">YouTube shows "Sign in to confirm you're not a bot"?</span>
+            <span class="text-xs sm:text-sm font-medium text-white">YouTube показывает «Подтвердите, что вы не робот»?</span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="faq-chevron transition-transform duration-200 text-zinc-400 shrink-0 ml-2">
               <path d="M6 9l6 6 6-6" />
             </svg>
           </div>
           <p class="text-xs text-zinc-400 mt-2 hidden leading-relaxed">
-            This happens when YouTube blocks an IP or requests account verification. Export your YouTube cookies with <em>Get cookies.txt LOCALLY</em> and upload the file directly in Settings (or save it as <code class="font-mono text-zinc-300">cookies.txt</code> in the Luna root folder).
+            Так бывает, когда YouTube блокирует IP или просит подтвердить аккаунт. Выгрузите cookies YouTube через <em>Get cookies.txt LOCALLY</em> и загрузите файл прямо в Настройках (или сохраните как <code class="font-mono text-zinc-300">cookies.txt</code> в корневую папку Luna).
           </p>
         </div>
 
         <div class="py-3.5 cursor-pointer select-none" onclick="toggleFaq(this)">
           <div class="flex items-center justify-between">
-            <span class="text-xs sm:text-sm font-medium text-white">How do I configure an OpenAI-compatible API key?</span>
+            <span class="text-xs sm:text-sm font-medium text-white">Как настроить API-ключ OpenAI-compatible?</span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="faq-chevron transition-transform duration-200 text-zinc-400 shrink-0 ml-2">
               <path d="M6 9l6 6 6-6" />
             </svg>
           </div>
           <p class="text-xs text-zinc-400 mt-2 hidden leading-relaxed">
-            Create a key in your provider's dashboard, enter the key and base URL in Settings, click Fetch Models to pick a chat model, and verify with Test Connection. Keys are saved directly to <code class="font-mono text-zinc-300">.env</code>.
+            Создайте ключ в панели провайдера, введите ключ и base URL в Настройках, нажмите Fetch Models и выберите модель чата. <code class="font-mono text-zinc-300">.env</code>.
           </p>
         </div>
 
         <div class="py-3.5 cursor-pointer select-none" onclick="toggleFaq(this)">
           <div class="flex items-center justify-between">
-            <span class="text-xs sm:text-sm font-medium text-white">When should I choose Face Tracking or Center Crop?</span>
+            <span class="text-xs sm:text-sm font-medium text-white">Когда выбирать трекинг лица, а когда обрезку по центру?</span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="faq-chevron transition-transform duration-200 text-zinc-400 shrink-0 ml-2">
               <path d="M6 9l6 6 6-6" />
             </svg>
           </div>
           <p class="text-xs text-zinc-400 mt-2 hidden leading-relaxed">
-            Select Face Track for podcasts or interviews focused on one speaker so OpenCV keeps them centered. Leave the default Center Crop for faster rendering on vlogs with multiple moving people or screen recordings.
+            Для подкастов и интервью с одним спикером выбирайте Face Track — OpenCV держит его в центре. Для остального достаточно Center Crop.
           </p>
         </div>
 
@@ -1764,7 +1763,7 @@
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M15 18l-6-6 6-6" />
               </svg>
-              <span id="guidePrevTitle">Workflow</span>
+              <span id="guidePrevTitle">Рабочий процесс</span>
             </button>
             <button type="button" id="guideNextBtn" onclick="stepGuideTab(1)" class="docs-pager-btn">
               <span id="guideNextTitle">Instagram Reels</span>
@@ -1786,7 +1785,7 @@
     <div
       class="relative w-full max-w-md rounded-2xl bg-[#171717] border border-white/[0.08] p-6 shadow-[0_25px_70px_rgba(0,0,0,0.95)] overflow-visible">
             <div class="flex items-center justify-between pb-4 border-b border-white/[0.08] mb-4">
-        <h3 class="font-sans text-sm font-semibold text-white tracking-tight">Choose Workspace</h3>
+        <h3 class="font-sans text-sm font-semibold text-white tracking-tight">Выбор медиатеки</h3>
         <button type="button" onclick="closeWorkspaceModal()"
           class="w-7 h-7 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] flex items-center justify-center text-zinc-400 hover:text-white transition cursor-pointer"
           aria-label="Cancel / Close">
@@ -1799,12 +1798,12 @@
         <button type="button" id="wsModeNewBtn" onclick="setWorkspaceMode('new')"
           class="flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition cursor-pointer bg-white/[0.08] text-white shadow-sm flex items-center justify-center gap-1.5">
           <i data-lucide="plus-circle" class="w-3.5 h-3.5 text-white"></i>
-          <span>Create New</span>
+          <span>Создать новую</span>
         </button>
         <button type="button" id="wsModeExistingBtn" onclick="setWorkspaceMode('existing')"
           class="flex-1 py-1.5 px-3 rounded-lg text-xs font-medium transition cursor-pointer text-zinc-400 hover:text-white flex items-center justify-center gap-1.5">
           <i data-lucide="folder" class="w-3.5 h-3.5"></i>
-          <span>Use Existing</span>
+          <span>Выбрать существующую</span>
         </button>
       </div>
 
@@ -1812,11 +1811,11 @@
       <div class="space-y-4 mb-6">
         <!-- 1. Mode Create New Container -->
         <div id="wsNewContainer" class="space-y-2">
-          <label for="wsModalInput" class="block font-sans text-xs font-semibold text-zinc-300">New Workspace Name</label>
+          <label for="wsModalInput" class="block font-sans text-xs font-semibold text-zinc-300">Название новой медиатеки</label>
           <div class="relative">
             <i data-lucide="folder-plus"
               class="w-4 h-4 text-white absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-            <input type="text" id="wsModalInput" value="Workspace 01" placeholder="Video title or any name"
+            <input type="text" id="wsModalInput" value="Workspace 01" placeholder="Название видео или любое своё"
               class="w-full h-10 pl-10 pr-4 rounded-xl bg-[#202020] border border-white/[0.08] focus:border-white/[0.08] text-white placeholder-zinc-500 text-xs font-sans focus:outline-none transition"
               oninput="checkDuplicateWorkspaceName(this.value)"
               onkeydown="if(event.key === 'Enter') confirmAndStartProcess(); if(event.key === 'Escape') closeWorkspaceModal();" />
@@ -1825,26 +1824,25 @@
           <div id="wsDuplicateNotice"
             class="hidden p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[11px] flex items-center gap-2">
             <i data-lucide="info" class="w-3.5 h-3.5 shrink-0 text-amber-400"></i>
-            <span>This name already exists in Workspace. New files will be added to that workspace.</span>
+            <span>Такое название уже есть в медиатеке. Новые файлы добавятся в неё.</span>
           </div>
-          <p class="font-sans text-[11px] text-zinc-500">Defaults to the video title, and you can type any name. A new folder will be created for this download
-            in Workspace.</p>
+          <p class="font-sans text-[11px] text-zinc-500">По умолчанию — название видео, можно ввести своё. Для этого скачивания будет создана новая папка в медиатеке.</p>
         </div>
 
         <!-- 2. Use Existing mode container -->
         <div id="wsExistingContainer" class="hidden space-y-2">
-          <label class="block font-sans text-xs font-semibold text-zinc-300">Select an Available Workspace</label>
+          <label class="block font-sans text-xs font-semibold text-zinc-300">Выберите медиатеку</label>
           <input type="hidden" id="wsExistingSelect" value="" />
           <div class="relative" id="wsDropdownWrapper">
             <button type="button" id="wsDropdownTrigger" onclick="toggleWsDropdown(event)"
               class="w-full h-10 pl-3.5 pr-3 rounded-xl bg-[#202020] border border-white/[0.08] hover:border-white/20 focus:border-white/[0.08] text-white text-xs font-sans flex items-center justify-between transition cursor-pointer select-none">
               <div class="flex items-center gap-2.5 truncate min-w-0 pr-2">
                 <i data-lucide="folder" class="w-4 h-4 text-white shrink-0"></i>
-                <span id="wsDropdownSelectedText" class="truncate text-zinc-200 font-medium">Select a workspace...</span>
+                <span id="wsDropdownSelectedText" class="truncate text-zinc-200 font-medium">Выберите медиатеку...</span>
               </div>
               <div class="flex items-center gap-2 shrink-0">
                 <span id="wsDropdownSelectedBadge"
-                  class="hidden text-[10px] font-mono text-zinc-400 px-2 py-0.5 rounded bg-white/[0.06]">0 file</span>
+                  class="hidden text-[10px] font-mono text-zinc-400 px-2 py-0.5 rounded bg-white/[0.06]">0 файлов</span>
                 <i data-lucide="chevron-down" id="wsDropdownChevron"
                   class="w-4 h-4 text-zinc-400 transition-transform duration-200"></i>
               </div>
@@ -1858,20 +1856,18 @@
               </div>
             </div>
           </div>
-          <p class="font-sans text-[11px] text-zinc-500">New files will be added to the selected workspace folder
-            without creating a new folder.</p>
+          <p class="font-sans text-[11px] text-zinc-500">Новые файлы добавятся в выбранную папку без создания новой.</p>
         </div>
 
         <!-- Target Action Info Summary -->
         <div
           class="p-3 rounded-xl bg-[#202020]/60 border border-white/[0.06] flex items-center justify-between text-xs font-sans">
-          <span class="text-zinc-400">Target Pipeline</span>
-          <span id="wsModalPipelineSummary" class="text-white font-medium">AI Shorts 9:16</span>
+          <span class="text-zinc-400">Целевой конвейер</span>
+          <span id="wsModalPipelineSummary" class="text-white font-medium">ИИ-шортсы 9:16</span>
         </div>
 
         <p id="wsModalUsageNotice" class="text-[11px] leading-relaxed text-zinc-500">
-          Only process videos you have the rights to use. AI Clip sends the audio or transcript to the
-          providers chosen in Settings.
+          Обрабатывайте только видео, на которые у вас есть права. ИИ-клипы отправляют аудио или транскрипт в провайдеров, выбранных в Настройках.
         </p>
       </div>
 
@@ -1879,11 +1875,11 @@
       <div class="flex items-center justify-end gap-2.5">
         <button type="button" onclick="closeWorkspaceModal()"
           class="t-btn t-btn-secondary pill-btn pill-btn-charcoal px-4 py-1.5 text-xs font-medium cursor-pointer">
-          Cancel
+          Отмена
         </button>
         <button type="button" onclick="confirmAndStartProcess()"
           class="t-btn t-btn-primary pill-btn bg-white hover:bg-zinc-200 text-black px-4 py-1.5 text-xs font-semibold cursor-pointer">
-          <span>Start</span>
+          <span>Начать</span>
         </button>
       </div>
     </div>
@@ -1896,13 +1892,13 @@
       class="relative w-full max-w-md rounded-2xl bg-[#171717] border border-white/[0.08] p-6 shadow-[0_25px_70px_rgba(0,0,0,0.95)] overflow-hidden">
       <div class="flex items-center gap-2.5 pb-4 border-b border-white/[0.08] mb-5">
         <i data-lucide="pencil" class="w-4 h-4 text-white"></i>
-        <h3 id="renameModalHeading" class="font-sans text-sm font-bold text-white tracking-tight">Rename Workspace</h3>
+        <h3 id="renameModalHeading" class="font-sans text-sm font-bold text-white tracking-tight">Переименование медиатеки</h3>
       </div>
 
       <div class="mb-6">
-        <label for="renameWsInput" id="renameWsLabel" class="block font-sans text-xs font-semibold text-zinc-300 mb-1.5">New Name</label>
+        <label for="renameWsInput" id="renameWsLabel" class="block font-sans text-xs font-semibold text-zinc-300 mb-1.5">Новое название</label>
         <div class="flex items-center gap-2">
-          <input type="text" id="renameWsInput" placeholder="New workspace name"
+          <input type="text" id="renameWsInput" placeholder="Новое название медиатеки"
             class="flex-1 min-w-0 h-10 px-3.5 rounded-xl bg-[#202020] border border-white/[0.08] focus:border-white/[0.18] text-white placeholder-zinc-500 text-xs font-sans focus:outline-none transition"
             onkeydown="if(event.key === 'Enter') submitRenameWorkspace(); if(event.key === 'Escape') closeRenameModal();" />
           <span id="renameWsExtBadge"
@@ -1915,11 +1911,11 @@
       <div class="flex items-center justify-end gap-2.5">
         <button type="button" onclick="closeRenameModal()"
           class="t-btn t-btn-secondary pill-btn pill-btn-charcoal px-4 py-1.5 text-xs font-medium cursor-pointer">
-          Cancel
+          Отмена
         </button>
         <button type="button" onclick="submitRenameWorkspace()"
           class="t-btn t-btn-primary pill-btn bg-white hover:bg-zinc-200 text-black px-4 py-1.5 text-xs font-semibold cursor-pointer">
-          <span>Save</span>
+          <span>Сохранить</span>
         </button>
       </div>
     </div>
@@ -1932,14 +1928,14 @@
       class="bg-[#171717] border border-white/[0.08] rounded-2xl p-6 max-w-sm w-full shadow-[0_25px_70px_rgba(0,0,0,0.95)] transform transition-all duration-150 scale-95 opacity-0">
       <span id="deleteModalTitle" class="hidden"></span>
       <span id="deleteModalPath" class="hidden"></span>
-      <h3 id="deleteModalHeading" class="text-sm font-semibold text-white">Delete this item?</h3>
+      <h3 id="deleteModalHeading" class="text-sm font-semibold text-white">Удалить этот элемент?</h3>
       <p id="deleteModalDesc" class="text-xs text-zinc-400 mt-1.5 leading-relaxed">
-        Are you sure you want to delete this file? This action cannot be undone.
+        Точно удалить этот файл? Действие необратимо.
       </p>
       <div class="flex items-center justify-end gap-2.5 mt-6 pt-3 border-t border-white/[0.06]">
         <button type="button" onclick="closeDeleteModal()"
           class="pill-btn pill-btn-charcoal inline-flex items-center justify-center px-4 h-[32px] text-xs font-medium cursor-pointer whitespace-nowrap">
-          Cancel
+          Отмена
         </button>
         <button type="button" id="deleteModalConfirmBtn" onclick="executeDeleteVaultItem()"
           class="pill-btn pill-btn-danger inline-flex items-center justify-center gap-1.5 px-4 h-[32px] text-xs font-medium cursor-pointer whitespace-nowrap">
@@ -1949,7 +1945,7 @@
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
             </svg>
           </span>
-          <span id="deleteModalBtnText">Delete</span>
+          <span id="deleteModalBtnText">Удалить</span>
         </button>
       </div>
     </div>
@@ -1960,9 +1956,9 @@
     class="hidden fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/80 transition-all duration-150">
     <div id="noticeModalBox"
       class="bg-[#171717] border border-white/[0.08] rounded-2xl p-6 max-w-sm w-full shadow-[0_25px_70px_rgba(0,0,0,0.95)] transform transition-all duration-150 scale-95 opacity-0">
-      <h3 id="noticeModalHeading" class="text-sm font-semibold text-white">Invalid URL</h3>
+      <h3 id="noticeModalHeading" class="text-sm font-semibold text-white">Недопустимая ссылка</h3>
       <p id="noticeModalDesc" class="text-xs text-zinc-400 mt-1.5 leading-relaxed">
-        The video link is invalid. Make sure it starts with https:// and comes from YouTube, Instagram, or TikTok.
+        Ссылка недействительна. Она должна начинаться с https:// и вести на YouTube, Instagram или TikTok.
       </p>
       <div class="flex items-center justify-end gap-2.5 mt-6 pt-3 border-t border-white/[0.06]">
         <button type="button" onclick="closeNoticeModal()"
@@ -1978,18 +1974,18 @@
     class="hidden fixed inset-0 z-[115] flex items-center justify-center p-4 bg-black/80 transition-all duration-150">
     <div id="confirmModalBox"
       class="bg-[#171717] border border-white/[0.08] rounded-2xl p-6 max-w-sm w-full shadow-[0_25px_70px_rgba(0,0,0,0.95)] transform transition-all duration-150 scale-95 opacity-0">
-      <h3 id="confirmModalHeading" class="text-sm font-semibold text-white">Confirmation</h3>
+      <h3 id="confirmModalHeading" class="text-sm font-semibold text-white">Подтверждение</h3>
       <p id="confirmModalDesc" class="text-xs text-zinc-400 mt-2 leading-relaxed">
-        Description
+        Описание
       </p>
       <div class="flex items-center justify-end gap-2.5 mt-6 pt-3 border-t border-white/[0.06]">
         <button type="button" id="confirmModalCancelBtn"
           class="pill-btn pill-btn-charcoal px-4 py-1.5 text-xs font-medium cursor-pointer text-zinc-400 hover:text-white">
-          Cancel
+          Отмена
         </button>
         <button type="button" id="confirmModalProceedBtn"
           class="pill-btn pill-btn-charcoal px-5 py-1.5 text-xs font-medium cursor-pointer text-emerald-400 border border-emerald-500/30 hover:border-emerald-500/60">
-          Continue
+          Продолжить
         </button>
       </div>
     </div>
@@ -2003,9 +1999,9 @@
       class="bg-[#171717] border border-white/[0.08] rounded-2xl p-6 max-w-sm w-full shadow-[0_25px_70px_rgba(0,0,0,0.95)] transform transition-all duration-150 scale-95 opacity-0">
       <div class="flex items-start justify-between gap-3">
         <div class="min-w-0">
-          <h3 id="updateModalHeading" class="text-sm font-semibold text-white">Update Available</h3>
+          <h3 id="updateModalHeading" class="text-sm font-semibold text-white">Доступно обновление</h3>
           <p id="updateModalDesc" class="text-xs text-zinc-400 mt-1.5 leading-relaxed">
-            A newer version of Luna is ready to install.
+            Готова к установке новая версия Luna.
           </p>
         </div>
         <button type="button" id="updateModalCloseBtn" onclick="closeUpdateModal()" aria-label="Close update dialog"
@@ -2015,7 +2011,7 @@
       </div>
       <div id="updateModalMeta" class="hidden mt-3.5 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1 text-[11px] font-sans">
         <div class="flex items-center justify-between gap-2 text-zinc-400">
-          <span>Latest build</span>
+          <span>Последняя сборка</span>
           <code id="updateModalSha" class="font-mono text-zinc-200">-</code>
         </div>
         <p id="updateModalCommitMsg" class="text-zinc-300 truncate"></p>
@@ -2023,11 +2019,11 @@
       <div class="flex items-center justify-end gap-2.5 mt-6 pt-3 border-t border-white/[0.06]">
         <button type="button" id="updateModalLaterBtn" onclick="closeUpdateModal()"
           class="pill-btn pill-btn-charcoal px-4 py-1.5 text-xs font-medium cursor-pointer text-zinc-400 hover:text-white">
-          Later
+          Позже
         </button>
         <button type="button" id="updateModalActionBtn" onclick="startLunaUpdate()"
           class="pill-btn pill-btn-charcoal px-5 py-1.5 text-xs font-medium cursor-pointer text-emerald-400 border border-emerald-500/30 hover:border-emerald-500/60">
-          Update
+          Обновить
         </button>
         <button type="button" id="updateModalOkBtn" onclick="closeUpdateModal()"
           class="hidden pill-btn pill-btn-charcoal px-5 py-1.5 text-xs font-medium cursor-pointer text-white">
@@ -2045,14 +2041,14 @@
         <circle cx="12" cy="12" r="9"></circle>
         <path d="M8.5 12l2.5 2.5 4.5-5"></path>
       </svg>
-      <span id="vaultCardMenuSelectLabel">Select</span>
+      <span id="vaultCardMenuSelectLabel">Выбрать</span>
     </button>
     <button type="button" id="vaultCardMenuRenameBtn" role="menuitem" class="vault-card-menu-item" onclick="handleVaultCardMenuAction('rename')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path>
         <path d="M15 5l4 4"></path>
       </svg>
-      <span>Rename</span>
+      <span>Переименовать</span>
     </button>
     <div id="vaultCardMenuSep" class="vault-card-menu-sep" role="separator"></div>
     <button type="button" id="vaultCardMenuDeleteBtn" role="menuitem" class="vault-card-menu-item is-danger" onclick="handleVaultCardMenuAction('delete')">
@@ -2063,22 +2059,22 @@
         <path d="M10 11v6"></path>
         <path d="M14 11v6"></path>
       </svg>
-      <span>Delete</span>
+      <span>Удалить</span>
     </button>
   </div>
 
   <!-- Media Vault multi-select action bar -->
   <div id="vaultSelectionBar" class="vault-selection-bar" role="toolbar" aria-label="Selected items" aria-hidden="true" data-open="false">
-    <span id="vaultSelectionCount" class="vault-selection-count">0 selected</span>
+    <span id="vaultSelectionCount" class="vault-selection-count">Выбрано: 0</span>
     <span class="vault-selection-divider" aria-hidden="true"></span>
-    <button type="button" id="vaultSelectionSelectAllBtn" class="vault-selection-btn" onclick="handleSelectionSelectAll()">Select all</button>
+    <button type="button" id="vaultSelectionSelectAllBtn" class="vault-selection-btn" onclick="handleSelectionSelectAll()">Выбрать все</button>
     <button type="button" id="vaultSelectionDeleteBtn" class="vault-selection-btn is-danger" onclick="handleSelectionConfirmDelete()" disabled>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M3 6h18"></path>
         <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
         <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
       </svg>
-      <span>Delete</span>
+      <span>Удалить</span>
     </button>
     <button type="button" class="vault-selection-btn vault-selection-close" onclick="exitActiveSelectionMode()" aria-label="Cancel selection">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
