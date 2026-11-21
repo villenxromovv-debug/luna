@@ -81,7 +81,10 @@ class TestBurnIn(unittest.TestCase):
             during = self._frame(out, 1.5, os.path.join(tmp, "b.png"))
             after = self._frame(out, 2.5, os.path.join(tmp, "c.png"))
 
-        self.assertIsNone(ImageChops.difference(before, after).getbbox())
+        # Hardware encoders leave a few pixels of quantisation noise between frames,
+        # so compare with the same threshold the "during" check uses.
+        outside = ImageChops.difference(before, after).point(lambda v: 255 if v > 40 else 0)
+        self.assertIsNone(outside.getbbox())
         box = ImageChops.difference(before, during).point(lambda v: 255 if v > 40 else 0).getbbox()
         self.assertIsNotNone(box)
         self.assertGreater(box[3], during.height / 2)
