@@ -48,6 +48,37 @@ def clip_language() -> str:
     return normalize_clip_language(os.getenv("CLIP_OUTPUT_LANGUAGE", "")) or DEFAULT_CLIP_LANGUAGE
 
 
+DEFAULT_SUBTITLE_STYLE = "classic"
+SUPPORTED_SUBTITLE_STYLES = ("classic", "bold", "plate", "top", "accent")
+DEFAULT_CLIP_FRAMING = "auto"
+SUPPORTED_CLIP_FRAMING = ("auto", "face", "blur", "center")
+
+
+def normalize_subtitle_style(value: Optional[str]) -> Optional[str]:
+    """Return a known subtitle style name, or None when the name is unsupported."""
+    raw = str(value or "").strip().lower()
+    return raw if raw in SUPPORTED_SUBTITLE_STYLES else None
+
+
+def subtitle_style() -> str:
+    """Look of burned-in captions: classic, bold, plate, top or accent."""
+    return normalize_subtitle_style(os.getenv("SUBTITLE_STYLE", "")) or DEFAULT_SUBTITLE_STYLE
+
+
+def normalize_clip_framing(value: Optional[str]) -> Optional[str]:
+    """Return a known framing mode, or None when the name is unsupported."""
+    raw = str(value or "").strip().lower()
+    if raw in ("smart", "auto-switch"):
+        return DEFAULT_CLIP_FRAMING
+    return raw if raw in SUPPORTED_CLIP_FRAMING else None
+
+
+def clip_framing() -> str:
+    """How a 16:9 source becomes 9:16: auto, face, blur or center."""
+    return normalize_clip_framing(os.getenv("CLIP_FRAMING", "")) or DEFAULT_CLIP_FRAMING
+
+
+
 def normalize_studio_background(value: Optional[str]) -> Optional[str]:
     """Return canonical studio background preset id, or None when unsupported."""
     raw = str(value or "").strip().lower()

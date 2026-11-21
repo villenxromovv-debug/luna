@@ -161,6 +161,120 @@ class TestHighlights(unittest.TestCase):
         self.assertIn("strictly in natural English", seen_en[0])
         self.assertNotIn("Russian", seen_en[0])
 
+    def test_rerank_reorders_candidates_and_rescores_them(self):
+        calls = []
+
+        def llm(prompt):
+            calls.append(prompt)
+            if len(calls) == 1:
+                self.assertIn("strongest moments", prompt)
+                return json.dumps({"clips": [
+                    {"first": 0, "last": 4, "score": 90, "title": "A"},
+                    {"first": 8, "last": 12, "score": 85, "title": "B"},
+                    {"first": 16, "last": 20, "score": 80, "title": "C"},
+                    {"first": 24, "last": 28, "score": 75, "title": "D"},
+                ]})
+            self.assertIn("Candidates, one per line", prompt)
+            return json.dumps({"picks": [
+                {"id": 3, "score": 96, "reason": "concrete numbers"},
+                {"id": 1, "score": 70, "reason": "weak hook"},
+            ]})
+
+        out = get_highlights(transcript(40), num_clips=2, llm_fn=llm)
+        self.assertEqual(len(calls), 2)
+        best = out["highlights"][:2]
+        self.assertEqual([h["title"] for h in best], ["D", "B"])
+        self.assertEqual(best[0]["score"], 96)
+
+    def test_rerank_failure_keeps_first_pass_order(self):
+        calls = []
+
+        def llm(prompt):
+            calls.append(prompt)
+            if len(calls) == 1:
+                return json.dumps({"clips": [
+                    {"first": 0, "last": 4, "score": 90, "title": "A"},
+                    {"first": 8, "last": 12, "score": 85, "title": "B"},
+                    {"first": 16, "last": 20, "score": 80, "title": "C"},
+                ]})
+            return "no json here"
+
+        with patch("luna.clipper.highlights.time.sleep"):
+            out = get_highlights(transcript(40), num_clips=1, llm_fn=llm)
+        self.assertEqual([h["title"] for h in out["highlights"]], ["A", "B", "C"])
+
+    def test_snap_sentences_starts_where_the_sentence_starts(self):
+        segs = [
+            {"start": 0.0, "end": 8.0, "text": "Первое предложение завершено."},
+            {"start": 8.2, "end": 16.0, "text": "и вот тогда"},
+            {"start": 16.2, "end": 24.0, "text": "случилось важное."},
+            {"start": 24.0, "end": 32.0, "text": "Дальше другой текст."},
+        ]
+        clip = {"first": 2, "last": 2, "score": 80, "title": "T"}
+        plain = get_highlights({"duration": 32.0, "segments": segs}, num_clips=1, llm_fn=reply(clip))["highlights"][0]
+        snapped = get_highlights(
+            {"duration": 32.0, "segments": segs}, num_clips=1, llm_fn=reply(clip),
+            snap_sentences=True, rerank=False,
+        )["highlights"][0]
+        self.assertAlmostEqual(plain["start_time"], 16.2 - highlights.LEAD_IN)
+        self.assertAlmostEqual(snapped["start_time"], 8.2 - highlights.LEAD_IN)
+
+    def test_junk_and_repeated_caption_lines_do_not_reach_the_prompt(self):
+        repeated = "Полезная мысль о ценах и о работе кальянной в Москве."
+        segs = [
+            {"start": 0.0, "end": 5.0, "text": "[Музыка]"},
+            {"start": 5.0, "end": 10.0, "text": "Субтитры сделал DimaTorzok"},
+            {"start": 10.0, "end": 15.0, "text": repeated},
+            {"start": 15.0, "end": 20.0, "text": repeated},
+        ]
+        seen = []
+
+        def llm(prompt):
+            seen.append(prompt)
+            return json.dumps({"clips": [{"first": 0, "last": 0, "score": 50, "title": "ok"}]})
+
+        get_highlights({"duration": 20.0, "segments": segs}, num_clips=1, llm_fn=llm)
+        self.assertNotIn("Музыка", seen[0])
+        self.assertNotIn("DimaTorzok", seen[0])
+        self.assertEqual(seen[0].count(repeated), 1)
+
+    def test_sentence_trim_moves_start_past_the_mid_sentence_tail(self):
+        segs = [
+            {"start": 0.0, "end": 10.0, "text": "хвост прошлой мысли. И вот главное."},
+            {"start": 10.0, "end": 20.0, "text": "Продолжение важного."},
+            {"start": 20.0, "end": 30.0, "text": "Ещё одна фраза целиком."},
+        ]
+        clipped = get_highlights(
+            {"duration": 30.0, "segments": segs},
+            num_clips=1,
+            llm_fn=reply({"first": 0, "last": 2, "score": 70}),
+            snap_sentences=True,
+            rerank=False,
+        )["highlights"][0]
+        plain = get_highlights(
+            {"duration": 30.0, "segments": segs},
+            num_clips=1,
+            llm_fn=reply({"first": 0, "last": 2, "score": 70}),
+            rerank=False,
+        )["highlights"][0]
+        self.assertAlmostEqual(plain["start_time"], 0.0)
+        self.assertGreater(clipped["start_time"], segs[0]["start"] + 1.0)
+        self.assertLess(clipped["start_time"], segs[0]["end"] - 1.0)
+
+    def test_video_context_reaches_the_prompt(self):
+        seen = []
+
+        def llm(prompt):
+            seen.append(prompt)
+            return json.dumps({"clips": [{"first": 0, "last": 2, "score": 50, "title": "ok"}]})
+
+        get_highlights(
+            transcript(10), num_clips=1, llm_fn=llm,
+            context={"title": "Открываю кальянную", "channel": "АЙДЕН"},
+        )
+        self.assertIn('Video: "Открываю кальянную"', seen[0])
+        self.assertIn("Channel: АЙДЕН", seen[0])
+
 
 if __name__ == "__main__":
     unittest.main()

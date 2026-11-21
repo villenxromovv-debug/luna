@@ -21,6 +21,8 @@ def generate_shorts(
     language: Optional[str] = None,
     clip_language: Optional[str] = None,
     use_face_detect: bool = True,
+    framing: str = "auto",
+    subtitle_style: Optional[str] = None,
     on_status: Optional[Callable[[str], None]] = None,
     out_dir: Optional[str] = None,
     progress_hook: Optional[Callable] = None,
@@ -39,6 +41,14 @@ def generate_shorts(
 
     if cancel_event is not None and cancel_event.is_set():
         raise RuntimeError("CANCELLED_BY_USER")
+    # The title and channel tell the highlight model what the video is about, which is
+    # the difference between picking a random aside and picking the answer people came for.
+    download_info = get_last_download_info()
+    video_context = {
+        "title": download_info.get("title", ""),
+        "channel": download_info.get("channel") or download_info.get("uploader", ""),
+        "description": download_info.get("description", ""),
+    }
     transcript = transcribe_local(source_path, video_url=youtube_url, language=language, on_status=on_status)
     if not transcript["segments"]:
         raise RuntimeError(
@@ -55,6 +65,8 @@ def generate_shorts(
         llm_fn=call_llm,
         clip_language=clip_language,
         cancel_event=cancel_event,
+        context=video_context,
+        snap_sentences=True,
     )
     all_highlights: List[Dict] = highlights_result.get("highlights", [])
     if not all_highlights:
@@ -79,6 +91,8 @@ def generate_shorts(
         # transcript again so finished clips carry subtitles.
         transcript_segments=transcript.get("segments") or [],
         cancel_event=cancel_event,
+        framing=framing,
+        subtitle_style=subtitle_style,
     )
 
     # A job with no clips must fail visibly instead of reporting success with an empty result.
@@ -86,13 +100,12 @@ def generate_shorts(
         errors = [s["error"] for s in shorts if s.get("error")]
         raise RuntimeError(f"All clips failed to render: {errors[0] if errors else 'unknown error'}")
 
-    info = get_last_download_info()
     return {
         "source_video_url": source_path,
         "transcript": transcript,
         "highlights": all_highlights,
         "shorts": shorts,
-        "title": info.get("title", ""),
-        "channel": info.get("channel") or info.get("uploader", ""),
+        "title": download_info.get("title", ""),
+        "channel": download_info.get("channel") or download_info.get("uploader", ""),
         "transcribe_provider": transcript.get("provider", "Groq Cloud Whisper"),
     }
