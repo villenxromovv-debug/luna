@@ -99,6 +99,45 @@ SUBTITLE_STYLES: Dict[str, Dict] = {
         "plate_padding": 0.55,
         "plate_radius": 0.30,
     },
+    "shadow": {
+        "font_scale": 0.062,
+        "stroke_scale": 0.0,
+        "fill": "white",
+        "stroke_fill": "black",
+        "anchor_y": 0.86,
+        "uppercase": False,
+        "plate": False,
+        "plate_fill": (0, 0, 0, 170),
+        "plate_padding": 0.55,
+        "plate_radius": 0.30,
+        "shadow": True,
+    },
+    "mono": {
+        "font_scale": 0.048,
+        "stroke_scale": 0.08,
+        "fill": "white",
+        "stroke_fill": "black",
+        "anchor_y": 0.86,
+        "uppercase": True,
+        "plate": False,
+        "plate_fill": (0, 0, 0, 170),
+        "plate_padding": 0.55,
+        "plate_radius": 0.30,
+    },
+    "karaoke": {
+        "font_scale": 0.062,
+        "stroke_scale": 0.14,
+        "fill": "white",
+        "stroke_fill": "black",
+        "anchor_y": 0.86,
+        "uppercase": False,
+        "plate": False,
+        "plate_fill": (0, 0, 0, 170),
+        "plate_padding": 0.55,
+        "plate_radius": 0.30,
+        "karaoke": True,
+        "highlight_fill": (255, 226, 0),
+    },
 }
 STYLES = SUBTITLE_STYLES  # short alias for callers that list available presets
 
@@ -282,7 +321,7 @@ def _merge_short_chunks(chunks: List[List[str]], duration: float) -> List[List[s
 def _layout(text: str, size: int, preset: Dict) -> Tuple[ImageFont.ImageFont, int, int, int, int, int, int]:
     """Measure one line: font, stroke, plate pad, image width and height, bbox offsets."""
     font = _load_font(size)
-    stroke = max(1, int(round(size * preset["stroke_scale"])))
+    stroke = max(1, int(round(size * preset["stroke_scale"]))) if preset["stroke_scale"] > 0 else 0
     pad = max(0, int(round(size * preset["plate_padding"]))) if preset["plate"] else 0
     left, top, right, bottom = _MEASURE_PROBE.textbbox((0, 0), text, font=font, stroke_width=stroke)
     width = math.ceil(right - left) + 2 + 2 * pad
@@ -340,8 +379,19 @@ def _draw_line(text: str, size: int, preset: Dict) -> Image.Image:
         radius = max(1, int(round(size * preset["plate_radius"])))
         radius = min(radius, max(1, min(width, height) // 2))
         draw.rounded_rectangle((0, 0, width - 1, height - 1), radius=radius, fill=preset["plate_fill"])
+    position = (pad + 1 - left, pad + 1 - top)
+    if preset.get("shadow"):
+        offset = max(2, int(round(size * 0.06)))
+        draw.text(
+            (position[0] + offset, position[1] + offset),
+            text,
+            font=font,
+            fill=(0, 0, 0, 170),
+            stroke_width=offset,
+            stroke_fill=(0, 0, 0, 120),
+        )
     draw.text(
-        (pad + 1 - left, pad + 1 - top),
+        position,
         text,
         font=font,
         fill=preset["fill"],
@@ -349,6 +399,49 @@ def _draw_line(text: str, size: int, preset: Dict) -> Image.Image:
         stroke_fill=preset["stroke_fill"],
     )
     return image
+
+
+def _draw_karaoke(text: str, size: int, preset: Dict, active: int) -> Image.Image:
+    """Draw one line with the spoken word highlighted, the way karaoke captions read."""
+    font, stroke, pad, width, height, left, top = _layout(text, size, preset)
+    image = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(image)
+    if preset["plate"]:
+        radius = max(1, int(round(size * preset["plate_radius"])))
+        radius = min(radius, max(1, min(width, height) // 2))
+        draw.rounded_rectangle((0, 0, width - 1, height - 1), radius=radius, fill=preset["plate_fill"])
+    x = pad + 1 - left
+    y = pad + 1 - top
+    space = font.getlength(" ")
+    highlight = preset.get("highlight_fill", (255, 226, 0))
+    for index, word in enumerate(text.split(" ")):
+        draw.text(
+            (x, y),
+            word,
+            font=font,
+            fill=highlight if index == active else preset["fill"],
+            stroke_width=stroke,
+            stroke_fill=preset["stroke_fill"],
+        )
+        x += font.getlength(word) + space
+    return image
+
+
+def _karaoke_windows(start: float, end: float, words: Sequence[str]) -> List[Tuple[float, float]]:
+    """Split a screen into one window per word, weighted by word length."""
+    if not words:
+        return []
+    weights = [max(1, len(word)) for word in words]
+    weight_sum = sum(weights)
+    duration = max(0.0, end - start)
+    windows: List[Tuple[float, float]] = []
+    cursor = start
+    for index, weight in enumerate(weights):
+        step = duration * weight / weight_sum
+        window_end = end if index == len(weights) - 1 else min(end, cursor + step)
+        windows.append((cursor, window_end))
+        cursor = window_end
+    return windows
 
 
 def _allocate_windows(start: float, end: float, word_counts: Sequence[int]) -> List[Tuple[float, float]]:
@@ -422,6 +515,14 @@ def render_cues(
         screens = _fit_chunks(chunks, base_size, max_width, preset, bool(preset["uppercase"]))
         windows = _allocate_windows(cue_start, cue_end, [len(screen["words"]) for screen in screens])
         for screen, (start, end) in zip(screens, windows):
+            if preset.get("karaoke") and len(screen["words"]) > 1:
+                for word_index, (word_start, word_end) in enumerate(
+                    _karaoke_windows(start, end, screen["words"])
+                ):
+                    path = os.path.join(out_dir, f"cue_{len(rendered):04d}.png")
+                    _draw_karaoke(screen["text"], screen["size"], preset, word_index).save(path)
+                    rendered.append(RenderedScreen(word_start, word_end, path, overlay_y, screen["text"]))
+                continue
             path = os.path.join(out_dir, f"cue_{len(rendered):04d}.png")
             _draw_line(screen["text"], screen["size"], preset).save(path)
             rendered.append(RenderedScreen(start, end, path, overlay_y, screen["text"]))

@@ -1,4 +1,4 @@
-import os
+﻿import os
 import importlib
 import shutil
 import subprocess
@@ -10,7 +10,7 @@ from unittest.mock import patch
 from PIL import Image, ImageChops
 
 from luna.clipper.clipper import crop_clip_local, crop_highlights_local, _run_ffmpeg
-from luna.clipper.subtitles import overlay_args, segments_for_clip, split_cue
+from luna.clipper.subtitles import SUBTITLE_STYLES, overlay_args, render_cues, segments_for_clip, split_cue
 
 
 pipeline = importlib.import_module("luna.clipper.pipeline")
@@ -57,6 +57,42 @@ class TestCues(unittest.TestCase):
 
 
 @unittest.skipUnless(shutil.which("ffmpeg"), "ffmpeg is not installed")
+class TestSubtitleStyles(unittest.TestCase):
+    def _render(self, style, text="короткая фраза тут", start=0.0, end=2.0):
+        with tempfile.TemporaryDirectory() as tmp:
+            rendered = render_cues([{"start": start, "end": end, "text": text}], 1080, 1920, tmp, style=style)
+            boxes = []
+            for screen in rendered:
+                path = screen[2]
+                image = Image.open(path)
+                boxes.append((screen[0], screen[1], image.size, image.getbbox()))
+            return rendered, boxes
+
+    def test_every_preset_renders_visible_text(self):
+        for style in SUBTITLE_STYLES:
+            with self.subTest(style=style):
+                rendered, boxes = self._render(style)
+                self.assertTrue(rendered, f"{style} не дал ни одного экрана")
+                for start, end, size, bbox in boxes:
+                    self.assertLess(start, end)
+                    self.assertIsNotNone(bbox, f"{style}: пустая картинка")
+                    self.assertGreater(size[0], 0)
+
+    def test_karaoke_highlights_one_word_per_screen(self):
+        rendered, _ = self._render("karaoke", text="три слова тут", start=0.0, end=3.0)
+        self.assertEqual(len(rendered), 3)
+        starts = [screen[0] for screen in rendered]
+        self.assertEqual(starts, sorted(starts))
+        self.assertAlmostEqual(starts[0], 0.0)
+        self.assertAlmostEqual(rendered[-1][1], 3.0)
+
+    def test_unknown_style_falls_back_to_classic(self):
+        rendered, boxes = self._render("неон")
+        classic, classic_boxes = self._render("classic")
+        self.assertEqual(len(rendered), len(classic))
+        self.assertEqual([box[3] for box in boxes], [box[3] for box in classic_boxes])
+
+
 class TestBurnIn(unittest.TestCase):
     def _frame(self, video, second, out):
         subprocess.run(

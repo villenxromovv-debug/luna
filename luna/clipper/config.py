@@ -49,7 +49,16 @@ def clip_language() -> str:
 
 
 DEFAULT_SUBTITLE_STYLE = "classic"
-SUPPORTED_SUBTITLE_STYLES = ("classic", "bold", "plate", "top", "accent")
+SUPPORTED_SUBTITLE_STYLES = (
+    "classic",
+    "bold",
+    "plate",
+    "top",
+    "accent",
+    "shadow",
+    "mono",
+    "karaoke",
+)
 DEFAULT_CLIP_FRAMING = "auto"
 SUPPORTED_CLIP_FRAMING = ("auto", "face", "blur", "center")
 
