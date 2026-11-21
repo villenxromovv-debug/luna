@@ -131,24 +131,49 @@ def run_supervised_server(port: int, url: str, *, no_browser: bool = False) -> i
         return rc
 
 
+def wants_desktop_window() -> bool:
+    """Desktop window mode: the packaged build by default, or LUNA_DESKTOP=1 from source."""
+    value = os.getenv("LUNA_DESKTOP", "").strip().lower()
+    if value in ("0", "false", "no"):
+        return False
+    if value in ("1", "true", "yes"):
+        return True
+    return getattr(sys, "frozen", False)
+
+
 def main() -> int:
     raw = os.getenv("LUNA_PORT", "").strip()
     try:
         requested = int(raw) if raw else DEFAULT_PORT
     except ValueError:
         raise SystemExit(f"LUNA_PORT must be a number, got {raw!r}.")
+    desktop = wants_desktop_window()
     port, running = choose_port(requested, fixed=bool(raw))
     url = f"http://localhost:{port}"
-    no_browser = os.getenv("LUNA_NO_BROWSER", "").strip() == "1"
+    no_browser = os.getenv("LUNA_NO_BROWSER", "").strip() == "1" or desktop
     if running:
-        print(f"Luna is already running at {url}")
-        if not no_browser:
+        message = f"Luna is already running at {url}"
+        print(message)
+        if desktop:
+            from .desktop import show_error
+
+            show_error(f"Luna уже запущена: {url}")
+        elif not no_browser:
             webbrowser.open(url)
         return 0
     if port != requested:
         print(f"Port {requested} is busy, using {port} instead.")
-    print(f"Opening {url}. Add your API keys in Settings. Press Ctrl+C to stop.")
     os.environ["LUNA_PORT"] = str(port)  # the startup banner reads it
+    if desktop:
+        from .desktop import describe_error, run_desktop, show_error
+
+        try:
+            return run_desktop(port)
+        except Exception as exc:
+            print(f"[Luna] Desktop window failed: {exc}", flush=True)
+            show_error(f"Не удалось открыть окно Luna.\n\n{describe_error(exc)}")
+            return 1
+    print(f"Opening {url}. Add your API keys in Settings. Press Ctrl+C to stop.")
     return run_supervised_server(port, url, no_browser=no_browser)
 
 

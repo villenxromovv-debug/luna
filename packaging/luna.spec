@@ -24,6 +24,14 @@ hiddenimports = [
     "uvicorn.protocols.http.auto",
     "uvicorn.protocols.websockets.auto",
     "uvicorn.lifespan.on",
+    "webview",
+    "webview.platforms.winforms",
+    "webview.platforms.edgechromium",
+    "clr",
+    "clr_loader",
+    "pythonnet",
+    "bottle",
+    "proxy_tools",
 ]
 
 # Wheels that ship binaries, data files or lazy submodules need an explicit sweep.
@@ -43,6 +51,7 @@ for package in (
     "PIL",
     "cv2",
     "nh3",
+    "webview",
 ):
     try:
         package_datas, package_binaries, package_hidden = collect_all(package)
@@ -99,8 +108,8 @@ exe = EXE(
     bootloader_ignore_signals=False,
     strip=False,
     upx=False,
-    console=True,
-    icon=None,
+    console=False,
+    icon=os.path.join(ROOT, "luna", "assets", "logo-app.ico"),
 )
 
 coll = COLLECT(
