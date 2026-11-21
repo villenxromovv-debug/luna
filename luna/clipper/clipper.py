@@ -14,6 +14,7 @@ Optimizations:
      using ThreadPoolExecutor, speeding up 5-clip generation by 5x-10x.
 """
 import concurrent.futures
+import math
 import os
 import subprocess
 import tempfile
@@ -21,11 +22,22 @@ import threading
 import time
 from typing import Callable, Dict, List, Optional, Tuple
 
-from .config import local_output_dir
+from .config import local_output_dir, normalize_clip_framing
 from .subtitles import MAX_INLINE_OVERLAY_SCREENS, overlay_args, overlay_args_script, render_cues, segments_for_clip
 
 # Sample face position once per second (approx 30 frames) for tracking
 FACE_DETECT_SAMPLE_EVERY = 30
+
+# Detection runs on frames downscaled to this height: YuNet stays fast and faces
+# on a 1080p wide shot still land well above its minimum size.
+FACE_DETECT_HEIGHT = 480
+
+# Two speakers are far apart when their centres are more than half the vertical
+# crop width apart: one 9:16 window then starts cutting a head off.
+FAR_APART_RATIO = 0.5
+
+# Blur framing renders 1080 wide; height follows the target ratio (1080x1920 for 9:16).
+BLUR_OUTPUT_WIDTH = 1080
 
 # Ceiling for long/non-clip ffmpeg calls; individual clip encodes use a tighter duration-based budget.
 FFMPEG_TIMEOUT_SECONDS = 3600
@@ -172,104 +184,262 @@ def _apply_thread_budget(enc_flags: List[str], threads: int) -> List[str]:
     return flags
 
 
-def _sample_face_centers(
-    in_path: str, src_w: int, src_h: int, crop_w: int, crop_h: int, start_time: float, end_time: float, fps: float
-) -> List[Tuple[int, int]]:
-    """Fast face sampling on downscaled frames with linear interpolation."""
-    # same fallback the tracker already uses when the file cannot be opened:
-    # a missing cv2 or Haar cascade must not abort the clip, the static center
-    # crop still runs. The caller expects crop ORIGINS, not centres, so convert here.
-    static_origin = (
-        max(0, (src_w - crop_w) // 2),
-        max(0, (src_h - crop_h) // 2),
-    )
+def _face_model_path() -> str:
+    """Path to the bundled YuNet model, resolved from this file instead of the cwd."""
+    luna_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(luna_dir, "assets", "models", "face_detection_yunet.onnx")
+
+
+def _open_face_detector() -> Tuple[Optional[str], Optional[Callable], str]:
+    """Return (name, detect(frame) -> boxes, error), trying YuNet, then Haar, then none."""
     try:
         import cv2  # type: ignore
     except Exception as e:
-        print(f"[clip/local] face detect unavailable ({e}), using static center crop", flush=True)
-        return [static_origin]
+        return None, None, f"cv2 unavailable ({e})"
+
+    errors: List[str] = []
+    model_path = _face_model_path()
+    yunet_factory = getattr(cv2, "FaceDetectorYN", None)
+    if yunet_factory is None:
+        errors.append("cv2.FaceDetectorYN missing")
+    elif not os.path.isfile(model_path):
+        errors.append(f"YuNet model missing at {model_path}")
+    else:
+        try:
+            yunet = yunet_factory.create(model_path, "", (320, 320), 0.6, 0.3, 5000)
+
+            def detect_yunet(frame) -> List[Tuple[int, int, int, int, float]]:
+                height, width = frame.shape[:2]
+                yunet.setInputSize((width, height))
+                _, faces = yunet.detect(frame)
+                if faces is None:
+                    return []
+                return [(int(face[0]), int(face[1]), int(face[2]), int(face[3]), float(face[-1])) for face in faces]
+
+            return "yunet", detect_yunet, ""
+        except Exception as e:
+            errors.append(f"YuNet unavailable ({e})")
+
+    cascade_factory = getattr(cv2, "CascadeClassifier", None)
+    if cascade_factory is None:
+        errors.append("cv2.CascadeClassifier missing (OpenCV 5 dropped Haar cascades)")
+    else:
+        try:
+            data = getattr(cv2, "data", None)
+            cascade_path = os.path.join(data.haarcascades, "haarcascade_frontalface_default.xml") if data else ""
+            cascade = cascade_factory(cascade_path) if cascade_path else None
+            if cascade is not None and not cascade.empty():
+                def detect_haar(frame) -> List[Tuple[int, int, int, int, float]]:
+                    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                    faces = cascade.detectMultiScale(gray, scaleFactor=1.15, minNeighbors=4, minSize=(30, 30))
+                    return [(int(x), int(y), int(w), int(h), 1.0) for x, y, w, h in faces]
+
+                return "haar", detect_haar, ""
+            errors.append("Haar cascade file missing")
+        except Exception as e:
+            errors.append(f"Haar unavailable ({e})")
+    return None, None, "; ".join(errors)
+
+
+def _face_center(face: Tuple[int, int, int, int, float]) -> Tuple[float, float]:
+    return face[0] + face[2] / 2.0, face[1] + face[3] / 2.0
+
+
+def _sample_faces(
+    in_path: str, src_w: int, src_h: int, start_time: float, end_time: float, fps: float
+) -> Tuple[List[Tuple[int, List[Tuple[int, int, int, int, float]]]], str, str, int]:
+    """Detect every face once per second; boxes are in source-frame pixels."""
+    detector_name, detect, error = _open_face_detector()
+    if detect is None:
+        return [], "none", error, 0
+
+    import cv2  # type: ignore
 
     cap = cv2.VideoCapture(in_path)
     if not cap.isOpened():
-        return [static_origin]
-
-    try:
-        face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-        if face_cascade.empty():
-            print("[clip/local] Haar cascade missing, using static center crop", flush=True)
-            cap.release()
-            return [static_origin]
-    except Exception as e:
-        print(f"[clip/local] Haar cascade unavailable ({e}), using static center crop", flush=True)
         cap.release()
-        return [static_origin]
+        return [], detector_name, f"cannot open {in_path}", 0
 
-    cap.set(cv2.CAP_PROP_POS_MSEC, max(0.0, start_time * 1000.0))
-    # the seek lands on the nearest keyframe before start_time, so drop frames
-    # until the read head reaches the clip start; capped at ~10s of frames so a
-    # backend that never reports POS_MSEC cannot stall the whole encode
-    target_ms = max(0.0, start_time * 1000.0)
-    for _ in range(300):
-        if cap.get(cv2.CAP_PROP_POS_MSEC) >= target_ms:
-            break
-        if not cap.grab():
-            break
-
-    total_frames = int(max(1.0, (end_time - start_time) * (fps or 30.0)))
-    sample_idxs: List[int] = []
-    sample_centers: List[Tuple[int, int]] = []
-    default_center = (src_w // 2, src_h // 2)
-    last_center = default_center
-
+    step = max(1, int(round(fps))) if fps and fps > 0 else FACE_DETECT_SAMPLE_EVERY
+    scale = FACE_DETECT_HEIGHT / float(src_h) if src_h > FACE_DETECT_HEIGHT else 1.0
+    detect_w = max(2, int(round(src_w * scale)))
+    detect_h = max(2, int(round(src_h * scale)))
+    samples: List[Tuple[int, List[Tuple[int, int, int, int, float]]]] = []
     frame_idx = 0
-    scale = 360.0 / max(1, src_h) if src_h > 360 else 1.0
+    try:
+        cap.set(cv2.CAP_PROP_POS_MSEC, max(0.0, start_time * 1000.0))
+        # the seek lands on the nearest keyframe before start_time, so drop frames
+        # until the read head reaches the clip start; capped so a backend that
+        # never reports POS_MSEC cannot stall the whole encode
+        target_ms = max(0.0, start_time * 1000.0)
+        for _ in range(300):
+            if cap.get(cv2.CAP_PROP_POS_MSEC) >= target_ms:
+                break
+            if not cap.grab():
+                break
 
-    while frame_idx < total_frames:
-        ret, frame = cap.read()
-        if not ret:
-            break
-        if frame_idx % FACE_DETECT_SAMPLE_EVERY == 0:
-            if scale != 1.0:
-                small = cv2.resize(frame, (int(src_w * scale), int(src_h * scale)), interpolation=cv2.INTER_LINEAR)
+        total_frames = int(max(1.0, (end_time - start_time) * (fps or 30.0)))
+        while frame_idx < total_frames:
+            sampled = frame_idx % step == 0
+            if sampled:
+                ok, frame = cap.read()
             else:
-                small = frame
-            gray = cv2.cvtColor(small, cv2.COLOR_BGR2GRAY)
-            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.15, minNeighbors=4, minSize=(30, 30))
-            if len(faces) > 0:
-                x, y, w, h = max(faces, key=lambda f: f[2] * f[3])
-                last_center = (int((x + w // 2) / scale), int((y + h // 2) / scale))
-            sample_idxs.append(frame_idx)
-            sample_centers.append(last_center)
-        frame_idx += 1
-    cap.release()
+                ok = cap.grab()
+            if not ok:
+                break
+            if sampled:
+                if scale != 1.0:
+                    frame = cv2.resize(frame, (detect_w, detect_h), interpolation=cv2.INTER_LINEAR)
+                boxes: List[Tuple[int, int, int, int, float]] = []
+                for x, y, w, h, score in detect(frame):
+                    if scale != 1.0:
+                        x, y, w, h = (int(round(value / scale)) for value in (x, y, w, h))
+                    boxes.append((x, y, w, h, score))
+                samples.append((frame_idx, boxes))
+            frame_idx += 1
+    finally:
+        cap.release()
+    return samples, detector_name, "", frame_idx
 
-    if not sample_idxs:
-        sample_idxs = [0]
-        sample_centers = [default_center]
 
-    centers: List[Tuple[int, int]] = []
-    actual_frames = max(1, frame_idx)
-    for f in range(actual_frames):
-        if f <= sample_idxs[0]:
-            cx, cy = sample_centers[0]
-        elif f >= sample_idxs[-1]:
-            cx, cy = sample_centers[-1]
+def _choose_auto_layout(
+    samples: List[Tuple[int, List[Tuple[int, int, int, int, float]]]], crop_w: int
+) -> Tuple[str, str]:
+    """Pick blur for wide two-person shots, face when one head dominates, else centre."""
+    face_samples = [faces for _, faces in samples if faces]
+    if not face_samples:
+        return "center", "no_faces"
+    two_face_samples = [faces for faces in face_samples if len(faces) >= 2]
+    far_samples = 0
+    for faces in two_face_samples:
+        centres = sorted(_face_center(face)[0] for face in faces)
+        if centres[-1] - centres[0] > crop_w * FAR_APART_RATIO:
+            far_samples += 1
+    # Most frames showing people must show two of them, and most of those pairs
+    # must sit far enough apart that one 9:16 window would cut a head off.
+    if two_face_samples and len(two_face_samples) * 2 > len(face_samples) and far_samples * 2 > len(two_face_samples):
+        return "blur", "two_people_far_apart"
+    return "face", "single_subject"
+
+
+def _stable_face_track(
+    samples: List[Tuple[int, List[Tuple[int, int, int, int, float]]]], src_w: int, src_h: int
+) -> Optional[Dict]:
+    """Link detections into tracks and return the longest-lived, steadiest one."""
+    match_radius = max(60.0, min(src_w, src_h) * 0.15)
+    tracks: List[Dict] = []
+    for frame_idx, faces in samples:
+        matched = set()
+        for face in sorted(faces, key=lambda item: item[4], reverse=True):
+            cx, cy = _face_center(face)
+            best = None
+            best_dist = match_radius
+            for track_idx, track in enumerate(tracks):
+                if track_idx in matched:
+                    continue
+                last_x, last_y = track["points"][-1][1], track["points"][-1][2]
+                dist = math.hypot(cx - last_x, cy - last_y)
+                if dist < best_dist:
+                    best, best_dist = track_idx, dist
+            if best is None:
+                tracks.append({"points": [(frame_idx, cx, cy)], "score": face[4]})
+            else:
+                matched.add(best)
+                tracks[best]["points"].append((frame_idx, cx, cy))
+                tracks[best]["score"] = max(tracks[best]["score"], face[4])
+    if not tracks:
+        return None
+
+    def rank(track: Dict) -> Tuple[int, float, float]:
+        points = track["points"]
+        jitter = sum(abs(b[1] - a[1]) for a, b in zip(points, points[1:])) / max(1, len(points) - 1)
+        # Presence wins; a tie goes to the face that stays put horizontally.
+        return len(points), -jitter, track["score"]
+
+    return max(tracks, key=rank)
+
+
+def _face_clip_origins(
+    samples: List[Tuple[int, List[Tuple[int, int, int, int, float]]]],
+    track: Dict,
+    analyzed_frames: int,
+    src_w: int,
+    src_h: int,
+    crop_w: int,
+    crop_h: int,
+) -> List[Tuple[int, int]]:
+    """Interpolate the tracked face across frames and clamp the crop inside the source."""
+    sample_frames = [frame_idx for frame_idx, _ in samples]
+    if not sample_frames:
+        return []
+    analyzed_frames = max(1, analyzed_frames)
+    points = {frame_idx: (cx, cy) for frame_idx, cx, cy in track["points"]}
+    centres: List[Optional[Tuple[float, float]]] = []
+    last = None
+    for frame_idx in sample_frames:
+        point = points.get(frame_idx)
+        if point is not None:
+            last = point
+        centres.append(last)
+    first = next((centre for centre in centres if centre is not None), None)
+    if first is None:
+        return []
+    centres = [centre if centre is not None else first for centre in centres]
+
+    origins: List[Tuple[int, int]] = []
+    for frame in range(analyzed_frames):
+        if frame <= sample_frames[0]:
+            cx, cy = centres[0]
+        elif frame >= sample_frames[-1]:
+            cx, cy = centres[-1]
         else:
-            cx, cy = sample_centers[-1]
-            for i in range(len(sample_idxs) - 1):
-                a, b = sample_idxs[i], sample_idxs[i + 1]
-                if a <= f <= b:
-                    t = (f - a) / (b - a) if b != a else 0.0
-                    ax, ay = sample_centers[i]
-                    bx, by = sample_centers[i + 1]
-                    cx = int(ax + (bx - ax) * t)
-                    cy = int(ay + (by - ay) * t)
+            cx, cy = centres[-1]
+            for index in range(len(sample_frames) - 1):
+                left, right = sample_frames[index], sample_frames[index + 1]
+                if left <= frame <= right:
+                    t = (frame - left) / (right - left) if right != left else 0.0
+                    ax, ay = centres[index]
+                    bx, by = centres[index + 1]
+                    cx = ax + (bx - ax) * t
+                    cy = ay + (by - ay) * t
                     break
-        x0 = max(0, min(src_w - crop_w, cx - crop_w // 2))
-        y0 = max(0, min(src_h - crop_h, cy - crop_h // 2))
-        centers.append((x0, y0))
+        x0 = max(0, min(src_w - crop_w, int(cx) - crop_w // 2))
+        y0 = max(0, min(src_h - crop_h, int(cy) - crop_h // 2))
+        origins.append((x0, y0))
+    return origins
 
-    return centers
+
+def _blur_output_dims(aspect_ratio: str) -> Tuple[int, int]:
+    """1080-wide output whose height follows the requested ratio (1920 for 9:16)."""
+    width = BLUR_OUTPUT_WIDTH
+    height = max(2, int(round(width / _ratio(aspect_ratio))))
+    if height % 2:
+        height += 1
+    return width, height
+
+
+def _blur_filter(out_w: int, out_h: int) -> str:
+    """Fit the whole frame and fill the bars with a blurred zoomed copy of it."""
+    return (
+        "split=2[bg][fg];"
+        f"[bg]scale={out_w}:{out_h}:force_original_aspect_ratio=increase,"
+        f"crop={out_w}:{out_h},"
+        "boxblur=luma_radius=24:luma_power=2:chroma_radius=12:chroma_power=2[bgb];"
+        f"[fg]scale={out_w}:{out_h}:force_original_aspect_ratio=decrease:force_divisible_by=2[fgc];"
+        "[bgb][fgc]overlay=(W-w)/2:(H-h)/2"
+    )
+
+
+def _resolve_framing(framing: Optional[str], use_face_detect: Optional[bool]) -> str:
+    """Return the layout mode; an explicit framing value wins over the legacy flag."""
+    if framing is None or not str(framing).strip():
+        # Old callers only passed the boolean: False kept the static centre, True was auto.
+        return "center" if use_face_detect is False else "auto"
+    mode = normalize_clip_framing(framing)
+    if mode is None:
+        print(f"[clip/local] unknown framing={framing!r}, using auto", flush=True)
+        return "auto"
+    return mode
 
 
 _DETECTED_ENCODER_FLAGS: Optional[List[str]] = None
@@ -329,6 +499,7 @@ def _encode(
     frame_h: int,
     worker_threads: Optional[int] = None,
     cancel_event: Optional[threading.Event] = None,
+    subtitle_style: str = "classic",
 ) -> None:
     clip_dur = max(0.1, end_time - start_time)
     clip_timeout = max(75.0, clip_dur * 2.0 + 30.0)
@@ -352,7 +523,7 @@ def _encode(
             _run_ffmpeg([*cmd, *(["-vf", vf] if vf else []), *tail], timeout=clip_timeout, cancel_event=cancel_event)
             return
         with tempfile.TemporaryDirectory() as tmp:
-            rendered = render_cues(cues, frame_w, frame_h, tmp)
+            rendered = render_cues(cues, frame_w, frame_h, tmp, style=subtitle_style)
             if len(rendered) > MAX_INLINE_OVERLAY_SCREENS:
                 # one -i per cue plus the inline graph overruns the Windows command
                 # line; the graph goes in a script file that TemporaryDirectory clears
@@ -386,13 +557,23 @@ def crop_clip_local(
     end_time: float,
     aspect_ratio: str,
     out_path: str,
-    use_face_detect: bool = False,
+    use_face_detect: Optional[bool] = None,
     src_dims: Optional[Tuple[int, int, float]] = None,
     cues: Optional[List[Dict]] = None,
     worker_threads: Optional[int] = None,
     cancel_event: Optional[threading.Event] = None,
+    framing: Optional[str] = None,
+    subtitle_style: str = "classic",
 ) -> str:
-    """Cut + reframe one highlight in a single fast ffmpeg pass with hardware acceleration."""
+    """Cut + reframe one highlight in a single fast ffmpeg pass with hardware acceleration.
+
+    framing selects the vertical layout: auto, face, blur or center. auto picks blur
+    when the clip mostly shows two speakers too far apart for one 9:16 window, face
+    when a stable head can be followed, and center when no face is found.
+    When framing is omitted, the legacy use_face_detect flag decides: False keeps
+    the old static centre and True means auto. Any explicit framing, including
+    "auto", overrides that flag.
+    """
     if src_dims is None:
         src_w, src_h, fps = _probe_dims(source_path)
     else:
@@ -401,48 +582,98 @@ def crop_clip_local(
     padded_end = end_time + 0.25
     crop_w, crop_h = _crop_box(src_w, src_h, aspect_ratio)
     enc_flags = _get_encoder_flags()
+    mode = _resolve_framing(framing, use_face_detect)
 
     if aspect_ratio in ("16:9", "original"):
         # Native aspect ratio: subclip directly (face tracking has no crop slack)
+        print(f"[clip/local] layout=native faces=0 samples=0 target={src_w}x{src_h}", flush=True)
         _encode(
             source_path, start_time, padded_end, "", enc_flags, out_path, cues,
             src_w, src_h, worker_threads=worker_threads, cancel_event=cancel_event,
+            subtitle_style=subtitle_style,
         )
         return out_path
 
-    if use_face_detect:
-        centers = _sample_face_centers(source_path, src_w, src_h, crop_w, crop_h, start_time, end_time, fps)
-        sendcmd_path = out_path + ".sendcmd.txt"
-        with open(sendcmd_path, "w") as f:
-            for i, (x0, y0) in enumerate(centers):
-                t = i / fps if fps else 0.0
-                f.write(f"{t:.5f} crop@c x {x0}, crop@c y {y0};\n")
+    samples: List[Tuple[int, List[Tuple[int, int, int, int, float]]]] = []
+    analyzed_frames = 0
+    detector = "none"
+    detector_error = ""
+    if mode in ("auto", "face"):
+        samples, detector, detector_error, analyzed_frames = _sample_faces(
+            source_path, src_w, src_h, start_time, end_time, fps
+        )
+        if detector_error:
+            print(f"[clip/local] face detection unavailable ({detector_error})", flush=True)
 
-        crop_filter = f"crop@c={crop_w}:{crop_h}:{centers[0][0]}:{centers[0][1]}"
-        escaped_path = _escape_filter_path(sendcmd_path)
-        if "\n" in escaped_path or "\r" in escaped_path:
+    face_samples = sum(1 for _, faces in samples if faces)
+    max_faces = max((len(faces) for _, faces in samples), default=0)
+    layout = mode
+    reason = "requested"
+    if mode == "auto":
+        layout, reason = _choose_auto_layout(samples, crop_w)
+    elif mode == "face" and face_samples == 0:
+        layout, reason = "center", "no_faces"
+
+    face_origins: List[Tuple[int, int]] = []
+    if layout == "face":
+        track = _stable_face_track(samples, src_w, src_h)
+        if track is not None:
+            face_origins = _face_clip_origins(samples, track, analyzed_frames, src_w, src_h, crop_w, crop_h)
+        if not face_origins:
+            layout, reason = "center", "no_stable_face"
+
+    sendcmd_path = ""
+    if layout == "face":
+        sendcmd_path = out_path + ".sendcmd.txt"
+        escaped_sendcmd = _escape_filter_path(sendcmd_path)
+        if "\n" in escaped_sendcmd or "\r" in escaped_sendcmd:
             # a path we cannot express inside a filtergraph must not kill the clip
-            print("[clip/local] sendcmd path is not filter-safe, using static center crop", flush=True)
+            layout, reason = "center", "unsafe_sendcmd_path"
+
+    decision = f"layout={layout} faces={max_faces} samples={len(samples)}"
+    if samples:
+        decision += f" face_samples={face_samples}"
+    if detector != "none":
+        decision += f" detector={detector}"
+    print(f"[clip/local] {decision} reason={reason}", flush=True)
+
+    if layout == "blur":
+        out_w, out_h = _blur_output_dims(aspect_ratio)
+        _encode(
+            source_path, start_time, padded_end, _blur_filter(out_w, out_h), enc_flags, out_path, cues,
+            out_w, out_h, worker_threads=worker_threads, cancel_event=cancel_event,
+            subtitle_style=subtitle_style,
+        )
+        return out_path
+
+    if layout == "face":
+        try:
+            with open(sendcmd_path, "w") as f:
+                for i, (x0, y0) in enumerate(face_origins):
+                    t = i / fps if fps else 0.0
+                    f.write(f"{t:.5f} crop@c x {x0}, crop@c y {y0};\n")
+            crop_filter = f"crop@c={crop_w}:{crop_h}:{face_origins[0][0]}:{face_origins[0][1]}"
+            out_w, out_h = _blur_output_dims(aspect_ratio)
+            vf = f"{crop_filter},sendcmd=f={_escape_filter_path(sendcmd_path)},scale={out_w}:{out_h}:flags=lanczos"
+            _encode(
+                source_path, start_time, padded_end, vf, enc_flags, out_path, cues, out_w, out_h,
+                worker_threads=worker_threads, cancel_event=cancel_event,
+                subtitle_style=subtitle_style,
+            )
+        finally:
             if os.path.exists(sendcmd_path):
                 os.remove(sendcmd_path)
-        else:
-            vf = f"{crop_filter},sendcmd=f={escaped_path}"
-            try:
-                _encode(
-                    source_path, start_time, padded_end, vf, enc_flags, out_path, cues, crop_w, crop_h,
-                    worker_threads=worker_threads, cancel_event=cancel_event,
-                )
-            finally:
-                if os.path.exists(sendcmd_path):
-                    os.remove(sendcmd_path)
-            return out_path
+        return out_path
 
     # Static center crop (9:16, 1:1, 3:4, etc.) in a single fast pass
     x0 = max(0, (src_w - crop_w) // 2)
     y0 = max(0, (src_h - crop_h) // 2)
+    out_w, out_h = _blur_output_dims(aspect_ratio)
+    center_filter = f"crop={crop_w}:{crop_h}:{x0}:{y0},scale={out_w}:{out_h}:flags=lanczos"
     _encode(
-        source_path, start_time, padded_end, f"crop={crop_w}:{crop_h}:{x0}:{y0}", enc_flags, out_path, cues,
-        crop_w, crop_h, worker_threads=worker_threads, cancel_event=cancel_event,
+        source_path, start_time, padded_end, center_filter, enc_flags, out_path, cues,
+        out_w, out_h, worker_threads=worker_threads, cancel_event=cancel_event,
+        subtitle_style=subtitle_style,
     )
     return out_path
 
@@ -452,10 +683,12 @@ def crop_highlights_local(
     highlights: List[Dict],
     aspect_ratio: str = "9:16",
     out_dir: Optional[str] = None,
-    use_face_detect: bool = False,
+    use_face_detect: Optional[bool] = None,
     on_progress: Optional[Callable[[int, int], None]] = None,
     transcript_segments: Optional[List[Dict]] = None,
     cancel_event: Optional[threading.Event] = None,
+    framing: Optional[str] = None,
+    subtitle_style: Optional[str] = None,
 ) -> List[Dict]:
     out_dir = out_dir or local_output_dir()
     if "=" in str(out_dir) or not str(out_dir).strip():
@@ -464,10 +697,10 @@ def crop_highlights_local(
 
     src_dims = _probe_dims(source_path)
     enc_flags = _get_encoder_flags()
-    effective_face_detect = bool(use_face_detect and aspect_ratio not in ("16:9", "original"))
+    resolved_framing = _resolve_framing(framing, use_face_detect)
     print(
         f"[clip/local] source={src_dims[0]}x{src_dims[1]} @ {src_dims[2]:.1f}fps, "
-        f"target_ratio={aspect_ratio}, face_detect={effective_face_detect}, total_clips={len(highlights)}",
+        f"target_ratio={aspect_ratio}, framing={resolved_framing}, total_clips={len(highlights)}",
         flush=True,
     )
 
@@ -502,13 +735,14 @@ def crop_highlights_local(
                 float(h["end_time"]),
                 aspect_ratio,
                 out_path,
-                use_face_detect=effective_face_detect,
                 src_dims=src_dims,
                 cues=segments_for_clip(
                     transcript_segments or [], float(h["start_time"]), float(h["end_time"]) + 0.25
                 ),
                 worker_threads=worker_threads,
                 cancel_event=cancel_event,
+                framing=resolved_framing,
+                subtitle_style=subtitle_style or "classic",
             )
             print(f"[clip/local] finished clip {idx}/{len(highlights)} -> {out_path}", flush=True)
             return {**h, "clip_url": out_path}

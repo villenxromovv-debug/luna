@@ -20,6 +20,10 @@ Everything outside `luna/clipper/`, plus `luna/clipper/highlights.py`, is Copyri
 
 The license does not grant trademark rights. The Luna name and logo remain with the project and may not be used to promote a modified version or to suggest endorsement.
 
+## Face detection model (MIT)
+
+`luna/assets/models/face_detection_yunet.onnx` is YuNet from [OpenCV Zoo](https://github.com/opencv/opencv_zoo/tree/main/models/face_detection_yunet), licensed under the MIT License. The model detects faces for clip framing: a single speaker is followed by the camera, two speakers switch the clip to a blurred-background layout. The file ships unmodified.
+
 ## Dependencies
 
 Dependencies are installed from `requirements.txt` under their own licenses, and Luna does not relicense them. Published Docker images also include FFmpeg and FFprobe from Debian, under FFmpeg's own license terms. The optional local Whisper provider installs `faster-whisper` from `requirements-whisper.txt`, also under its own license.
