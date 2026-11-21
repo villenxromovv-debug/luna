@@ -2,7 +2,9 @@
 ; Build: "%LOCALAPPDATA%\Programs\Inno Setup 6\ISCC.exe" packaging\luna.iss
 
 #define AppName "Luna"
-#define AppVersion "0.1.0"
+#ifndef AppVersion
+  #define AppVersion "0.1.0"
+#endif
 #define AppPublisher "Luna"
 #define AppExe "Luna.exe"
 #define SourceDir "..\dist\Luna"
@@ -16,6 +18,8 @@ DefaultDirName={localappdata}\Programs\{#AppName}
 DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
+CloseApplications=yes
+RestartApplications=no
 OutputDir=..\dist\installer
 OutputBaseFilename=Luna-Setup-{#AppVersion}
 Compression=lzma2/max

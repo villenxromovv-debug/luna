@@ -39,24 +39,25 @@
 
 ## Сборка установщика (Windows)
 
-Нужны Windows x64, Python 3.12 и [Inno Setup 6](https://jrsoftware.org/isinfo.php).
+Нужны Windows x64, Python 3.12 и [Inno Setup 6](https://jrsoftware.org/isinfo.php). Одна команда пересобирает приложение и установщик:
+
+```powershell
+.\packaging\build.ps1 -Version 0.1.1
+```
+
+Скрипт сам прогоняет тесты, собирает папку приложения через PyInstaller, кладёт внутрь ffmpeg, ffprobe и deno (из `packaging\vendor` или из системы) и собирает `dist\installer\Luna-Setup-0.1.1.exe`. Флаг `-SkipTests` пропускает тесты, `-Version` задаёт версию.
+
+Установщик ставится без прав администратора в `%LOCALAPPDATA%\Programs\Luna`, ярлыки на рабочем столе и в меню Пуск. Настройки, cookies и готовая медиатека лежат в `%LOCALAPPDATA%\Luna`, поэтому переустановка и удаление приложения их не трогают.
+
+Важно: установщик это снимок кода. После правок пересобери его, сама собой сборка не обновится. Пока пишешь код, запускай `start.bat`, он берёт файлы прямо из репозитория.
+
+Шаги по отдельности, если нужен контроль:
 
 ```powershell
 uv pip install --python .venv\Scripts\python.exe -r requirements-build.txt
-
-# Инструменты кладутся внутрь сборки, чтобы чистая машина ничего не докачивала.
-New-Item -ItemType Directory -Force packaging\vendor
-Copy-Item .venv\Scripts\deno.exe packaging\vendor\deno.exe
-Copy-Item C:\ffmpeg\bin\ffmpeg.exe,C:\ffmpeg\bin\ffprobe.exe packaging\vendor\
-
 .venv\Scripts\pyinstaller.exe packaging\luna.spec --noconfirm
-& "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe" packaging\luna.iss
+& "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe" "/DAppVersion=0.1.1" packaging\luna.iss
 ```
-
-Результат: `dist\installer\Luna-Setup-0.1.0.exe`. Ставится без прав администратора в
-`%LOCALAPPDATA%\Programs\Luna`, ярлыки на рабочем столе и в меню Пуск. Настройки,
-cookies и готовая медиатека лежат в `%LOCALAPPDATA%\Luna`, поэтому переустановка и
-удаление приложения их не трогают.
 
 ## Requirements
 
