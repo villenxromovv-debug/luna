@@ -1163,7 +1163,7 @@ class ProcessRequest(BaseModel):
             return None
         normalized = normalize_clip_language(value)
         if not normalized:
-            raise ValueError("Unsupported clip language; use 'id' or 'en'")
+            raise ValueError("Unsupported clip language; use 'en' or 'ru'")
         return normalized
 
     @field_validator("workspace_name")
@@ -3026,7 +3026,7 @@ async def api_save_settings(req: SettingsUpdateRequest):
     if req.clip_language is not None:
         normalized_lang = normalize_clip_language(req.clip_language)
         if not normalized_lang:
-            raise HTTPException(status_code=400, detail="Unsupported clip language; use 'id' or 'en'")
+            raise HTTPException(status_code=400, detail="Unsupported clip language; use 'en' or 'ru'")
         updates["CLIP_OUTPUT_LANGUAGE"] = normalized_lang
     if req.studio_background is not None:
         normalized_bg = normalize_studio_background(req.studio_background)

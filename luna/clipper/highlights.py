@@ -67,20 +67,20 @@ Transcript:
 
 
 def clip_language_instruction(lang: Optional[str] = None) -> str:
-    """Build explicit title/caption output language guidance for 'id' or 'en'."""
+    """Build explicit title/caption output language guidance for 'en' or 'ru'."""
     resolved = normalize_clip_language(lang) or cfg_clip_language()
-    if resolved == "en":
+    if resolved == "ru":
         return (
             "Write every clip title (at most 8 words) and caption (1-2 plain sentences, "
-            "no hashtags, no emoji) strictly in natural English. Even if parts of the "
-            "transcript are in another language or non-Latin script, translate and adapt "
-            "the title and caption cleanly into natural English."
+            "no hashtags, no emoji) strictly in natural, engaging Russian. Even if parts "
+            "of the transcript are in another language or non-Latin script, translate and "
+            "adapt the title and caption cleanly into natural Russian."
         )
     return (
         "Write every clip title (at most 8 words) and caption (1-2 plain sentences, "
-        "no hashtags, no emoji) strictly in natural, engaging Indonesian (Bahasa Indonesia). "
-        "Even if the transcript is in English or uses non-Latin script, translate and adapt "
-        "every clip title and caption cleanly into natural Indonesian."
+        "no hashtags, no emoji) strictly in natural English. Even if parts of the "
+        "transcript are in another language or non-Latin script, translate and adapt "
+        "the title and caption cleanly into natural English."
     )
 
 _EMOJI = re.compile(

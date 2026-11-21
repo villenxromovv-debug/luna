@@ -13,8 +13,8 @@ load_dotenv(os.path.join(ROOT_DIR, ".env"))
 DEFAULT_OPENAI_BASE_URL = "https://api.openai.com/v1"
 DEFAULT_OPENAI_MODEL = "gpt-4o-mini"
 DEFAULT_GEMINI_MODEL = "gemini-3.8-flash"
-DEFAULT_CLIP_LANGUAGE = "id"
-SUPPORTED_CLIP_LANGUAGES = ("id", "en")
+DEFAULT_CLIP_LANGUAGE = "en"
+SUPPORTED_CLIP_LANGUAGES = ("en", "ru")
 DEFAULT_STUDIO_BACKGROUND = "obsidian"
 SUPPORTED_STUDIO_BACKGROUNDS = (
     "obsidian",
@@ -34,17 +34,17 @@ SUPPORTED_STUDIO_BACKGROUNDS = (
 
 
 def normalize_clip_language(value: Optional[str]) -> Optional[str]:
-    """Return canonical 'id'/'en' for valid clip language aliases, or None otherwise."""
+    """Return canonical 'en'/'ru' for valid clip language aliases, or None otherwise."""
     raw = str(value or "").strip().lower()
-    if raw in ("id", "indonesian", "indonesia", "bahasa indonesia"):
-        return "id"
     if raw in ("en", "english", "inggris"):
         return "en"
+    if raw in ("ru", "russian", "русский", "русский язык"):
+        return "ru"
     return None
 
 
 def clip_language() -> str:
-    """Preferred language ('id' or 'en') for AI-generated clip titles and captions."""
+    """Preferred language ('en' or 'ru') for AI-generated clip titles and captions."""
     return normalize_clip_language(os.getenv("CLIP_OUTPUT_LANGUAGE", "")) or DEFAULT_CLIP_LANGUAGE
 
 

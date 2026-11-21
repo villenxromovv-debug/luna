@@ -490,8 +490,8 @@ function selectTrimRatioFromMenu(r, label) {
   closeDropdownSmoothly('trimRatioMenu', 'trimRatioChevron', 'trimRatioDropdownBtn', 80);
   requestAnimationFrame(alignExtraTrimSegments);
 }
-var currentLang = 'id';
-var defaultClipLanguage = 'id';
+var currentLang = 'en';
+var defaultClipLanguage = 'en';
 
 var activeJobId = null;
 var pollInterval = null;
@@ -1582,12 +1582,12 @@ document.addEventListener('click', (e) => {
 });
 
 function setLang(lang) {
-  currentLang = lang || 'id';
+  currentLang = lang || 'en';
 }
 
 // Initialize Default Platform & Sub-features
 switchPlatform('youtube', false);
-setLang('id');
+setLang('en');
 
 // Task configurations and step rows per workflow action
 const TASK_CONFIGS = {
@@ -4354,7 +4354,7 @@ function selectTranscribe(value) {
 
 function setClipLanguage(value) {
   const input = document.getElementById('selectClipLanguage');
-  if (input) input.value = value || 'id';
+  if (input) input.value = value || 'en';
   syncClipLanguageUI();
   closeMenu('clipLanguageMenu');
   syncSettingsDirtyState();
@@ -4457,7 +4457,7 @@ function getSettingsSnapshot() {
     storage_dir: (document.getElementById('inputStorage')?.value || '').trim(),
     llm_provider: document.getElementById('selectLlmProvider')?.value || '',
     transcribe_provider: document.getElementById('selectTranscribeProvider')?.value || '',
-    clip_language: document.getElementById('selectClipLanguage')?.value || 'id',
+    clip_language: document.getElementById('selectClipLanguage')?.value || 'en',
     openai_base_url: (document.getElementById('inputOpenaiBase')?.value || '').trim(),
     openai_model: (document.getElementById('inputOpenaiModel')?.value || '').trim(),
   };
@@ -4604,11 +4604,11 @@ async function loadSettingsData() {
     const openaiFields = {
       selectLlmProvider: data.llm_provider,
       selectTranscribeProvider: data.transcribe_provider,
-      selectClipLanguage: data.clip_language || 'id',
+      selectClipLanguage: data.clip_language || 'en',
       inputOpenaiBase: data.openai_base_url,
       inputOpenaiModel: data.openai_model
     };
-    defaultClipLanguage = data.clip_language || 'id';
+    defaultClipLanguage = data.clip_language || 'en';
     if (data.studio_background && typeof window.applyStudioBackground === 'function') {
       window.applyStudioBackground(data.studio_background);
     }
@@ -4678,7 +4678,7 @@ async function saveSettings() {
   }
 
   const isPathChanged = Boolean(currentStorageDir && storageInput.value.trim().toLowerCase() !== currentStorageDir.toLowerCase());
-  const nextClipLang = document.getElementById('selectClipLanguage')?.value || 'id';
+  const nextClipLang = document.getElementById('selectClipLanguage')?.value || 'en';
   const payload = {
     storage_dir: storageInput.value.trim(),
     migrate_files: isPathChanged,

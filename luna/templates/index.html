@@ -996,11 +996,11 @@
               <span class="text-[11px] text-zinc-500">AI Short Clips</span>
             </div>
             <div class="relative" id="clipLanguageMenuWrap">
-              <input type="hidden" id="selectClipLanguage" value="id">
+              <input type="hidden" id="selectClipLanguage" value="en">
               <button type="button" id="clipLanguageTrigger" onclick="toggleMenu('clipLanguageTrigger', 'clipLanguageMenu')"
                 aria-haspopup="listbox" aria-expanded="false" aria-controls="clipLanguageMenu"
                 class="t-input w-full px-3 text-xs text-white text-left cursor-pointer">
-                <span id="clipLanguageTriggerLabel" class="font-sans flex-1 min-w-0 truncate">Indonesian</span>
+                <span id="clipLanguageTriggerLabel" class="font-sans flex-1 min-w-0 truncate">English</span>
                 <svg class="ml-auto w-3.5 h-3.5 text-zinc-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
               </button>
 
@@ -1008,9 +1008,9 @@
                 class="hidden fixed z-[140] rounded-xl border border-white/[0.08] bg-[#171717] p-1 shadow-[0_16px_36px_rgba(0,0,0,0.75)] max-h-[280px] overflow-y-auto">
                 <div class="relative z-[2] px-2.5 py-1.5 text-[11px] font-sans text-zinc-500">Language</div>
 
-                <button type="button" role="option" data-value="id" data-label="Indonesian" onclick="setClipLanguage('id')"
+                <button type="button" role="option" data-value="ru" data-label="Russian" onclick="setClipLanguage('ru')"
                   class="settings-menu-item relative z-[2] w-full flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs text-zinc-200 transition cursor-pointer">
-                  <span>Indonesian</span>
+                  <span>Russian</span>
                   <svg class="select-check ml-auto w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
                 </button>
 
