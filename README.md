@@ -25,6 +25,18 @@
 
 **Luna** is a local web app for downloading video and audio from YouTube, Instagram, and TikTok, organizing files in Workspace, and turning long videos into short clips with AI. Downloads need no API keys and run straight on your machine. For AI Short Clips, Luna uses YouTube captions first (or transcribes audio via Groq Whisper, Gemini, or local Faster-Whisper), ranks highlights with Gemini or any OpenAI-compatible model, and renders vertical or widescreen clips locally with FFmpeg.
 
+## Русская сборка
+
+Этот форк [miqdadbadjuber/luna](https://github.com/miqdadbadjuber/luna) подготовлен для русскоязычной аудитории:
+
+- интерфейс, справка и всплывающие сообщения переведены на русский, название остаётся Luna;
+- в настройках в блоке «Язык заголовков и описаний клипов» два варианта: «Русский» и «English», индонезийский убран, по умолчанию English;
+- с выбранным русским модель пишет заголовки и описания клипов по-русски, даже если речь в видео на другом языке;
+- субтитры вжигаются в готовые клипы: сегменты транскрипта передаются рендереру, при поиске субтитров YouTube приоритет у `ru` и `en`. Если оверлей субтитров ломается, клип сохраняется без них, а не теряется;
+- сообщения об ошибках на стороне сервера остаются английскими: их проверяют тесты апстрима дословно, а пользователю они приходят в журнал и в подсказки об ошибке.
+
+Синхронизация с апстримом: `git fetch upstream && git merge upstream/main`. Конфликты ожидаются в `luna/templates/index.html`, `luna/assets/ui/app.js`, `luna/assets/ui/background.js`.
+
 ## Requirements
 
 - Python 3.12 or newer (installed automatically by the installer).

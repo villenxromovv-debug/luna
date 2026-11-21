@@ -126,7 +126,7 @@ function renderTrimSegments() {
       row.innerHTML = `
         <!-- Start Pill -->
         <div class="pill-control !py-0 !px-2.5 flex items-center gap-1 cursor-text flex-shrink-0" onclick="this.querySelector('input')?.focus()">
-          <span class="text-zinc-400 text-[11px] select-none pointer-events-none">Start:</span>
+          <span class="text-zinc-400 text-[11px] select-none pointer-events-none">Начало:</span>
           <input type="text" maxlength="8" value="${escapeHtml(seg.start_time || '00:00')}"
             class="trim-input-field bg-transparent text-white text-xs font-mono text-center focus:outline-none w-[68px] selection:bg-white/20"
             placeholder="00:00" data-seg-id="${seg.id}" data-field="start_time" />
@@ -134,7 +134,7 @@ function renderTrimSegments() {
 
         <!-- End Pill -->
         <div class="pill-control !py-0 !px-2.5 flex items-center gap-1 cursor-text flex-shrink-0" onclick="this.querySelector('input')?.focus()">
-          <span class="text-zinc-400 text-[11px] select-none pointer-events-none">End:</span>
+          <span class="text-zinc-400 text-[11px] select-none pointer-events-none">Конец:</span>
           <input type="text" maxlength="8" value="${escapeHtml(seg.end_time || '00:30')}"
             class="trim-input-field bg-transparent text-white text-xs font-mono text-center focus:outline-none w-[68px] selection:bg-white/20"
             placeholder="00:30" data-seg-id="${seg.id}" data-field="end_time" />
@@ -143,7 +143,7 @@ function renderTrimSegments() {
         <!-- Delete Button -->
         <button type="button" onclick="removeTrimSegment('${seg.id}')"
           class="pill-control !w-7 !h-7 !p-0 flex items-center justify-center text-zinc-500 hover:text-red-400 hover:bg-white/[0.08] transition-colors flex-shrink-0"
-          aria-label="Delete this clip">
+          aria-label="Удалить фрагмент">
           <i data-lucide="x" class="w-3.5 h-3.5"></i>
         </button>
       `;
@@ -477,7 +477,7 @@ function toggleTrimRatioDropdown(e) {
 
 function selectTrimRatioFromMenu(r, label) {
   const nextRatio = isYoutubeShortLocked ? 'original' : r;
-  const nextLabel = isYoutubeShortLocked ? 'Original' : label;
+  const nextLabel = isYoutubeShortLocked ? 'Исходное' : label;
   selectedTrimRatio = nextRatio;
   const labelEl = document.getElementById('currentTrimRatioLabel');
   if (labelEl) labelEl.innerText = nextLabel;
@@ -512,7 +512,7 @@ const SUB_FEATURES = {
   ],
   tiktok: [
     { id: 'type_tt_video', label: 'Видео MP4', desc: 'HD-видео MP4', icon: 'film', btnText: 'Скачать', drawer: null },
-    { id: 'type_tt_mp3', label: 'Audio MP3', desc: 'Трек или саундтрек из TikTok', icon: 'music', btnText: 'Скачать', drawer: null }
+    { id: 'type_tt_mp3', label: 'Аудио MP3', desc: 'Трек или саундтрек из TikTok', icon: 'music', btnText: 'Скачать', drawer: null }
   ]
 };
 
@@ -722,8 +722,8 @@ mainUrlInput.addEventListener('keydown', (e) => {
 const LUNA_LOCK_ICON_PATHS = '<rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>';
 
 const YOUTUBE_SHORT_LOCKED_FEATURES = {
-  type_yt_ai_clip: 'AI Short Clips is unavailable for YouTube Shorts',
-  type_yt_clip: 'Video Trimmer is unavailable for YouTube Shorts',
+  type_yt_ai_clip: 'ИИ-клипы недоступны для YouTube Shorts',
+  type_yt_clip: 'Нарезка видео недоступна для YouTube Shorts',
 };
 
 function createLockBadgeElement(wrapperClass, svgClass) {
@@ -734,7 +734,7 @@ function createLockBadgeElement(wrapperClass, svgClass) {
   return badge;
 }
 
-function syncRatioControlLock(btnId, chevId, locked, lockTitle = 'YouTube Shorts always use Original ratio') {
+function syncRatioControlLock(btnId, chevId, locked, lockTitle = 'Для YouTube Shorts всегда используется исходное соотношение') {
   const btn = document.getElementById(btnId);
   const chev = document.getElementById(chevId);
   if (btn) {
@@ -759,8 +759,8 @@ function syncRatioControlLock(btnId, chevId, locked, lockTitle = 'YouTube Shorts
 function syncFaceDetectLockUI() {
   const locked = selectedRatio === '16:9' || selectedRatio === 'original';
   const lockTitle = selectedRatio === 'original'
-    ? 'Face Track is unavailable for Original ratio'
-    : 'Face Track is unavailable for 16:9 Wide ratio';
+    ? 'Отслеживание лица недоступно для исходного соотношения'
+    : 'Отслеживание лица недоступно для широкого соотношения 16:9';
   syncRatioControlLock(
     'faceDetectDropdownBtn',
     'faceChevron',
@@ -768,7 +768,7 @@ function syncFaceDetectLockUI() {
     lockTitle
   );
   if (locked) {
-    if (selectedFaceDetect) selectFaceDetectFromMenu(false, 'Center Crop');
+    if (selectedFaceDetect) selectFaceDetectFromMenu(false, 'Центральный кроп');
     const menu = document.getElementById('faceDetectMenu');
     const btn = document.getElementById('faceDetectDropdownBtn');
     if (menu) { menu.setAttribute('data-open', 'false'); menu.classList.remove('open'); }
@@ -805,8 +805,8 @@ function syncYoutubeShortLockUI() {
   syncSubFeatureShortLockUI();
 
   if (locked) {
-    if (selectedVideoRatio !== 'original') selectVideoRatioFromMenu('original', 'Original');
-    if (selectedTrimRatio !== 'original') selectTrimRatioFromMenu('original', 'Original');
+    if (selectedVideoRatio !== 'original') selectVideoRatioFromMenu('original', 'Исходное');
+    if (selectedTrimRatio !== 'original') selectTrimRatioFromMenu('original', 'Исходное');
     const vMenu = document.getElementById('videoRatioMenu');
     const tMenu = document.getElementById('trimRatioMenu');
     if (vMenu) { vMenu.setAttribute('data-open', 'false'); vMenu.classList.remove('open'); }
@@ -887,7 +887,7 @@ function fetchVideoInfo(url, delay = 150) {
       debounceTimer = setTimeout(() => {
         if (mainUrlInput.value.trim() !== cleanUrl) return;
         showUnavailablePreview(
-          'Invalid URL. Paste a link starting with https:// from YouTube, Instagram, or TikTok.',
+          'Неверная ссылка. Вставьте ссылку, начинающуюся с https://, с YouTube, Instagram или TikTok.',
           cleanUrl,
           false
         );
@@ -905,7 +905,7 @@ function fetchVideoInfo(url, delay = 150) {
       debounceTimer = setTimeout(() => {
         if (mainUrlInput.value.trim() !== cleanUrl) return;
         showUnavailablePreview(
-          'Unsupported URL. Only YouTube, Instagram, and TikTok links are supported.',
+          'Неподдерживаемая ссылка. Поддерживаются только ссылки YouTube, Instagram и TikTok.',
           cleanUrl,
           true
         );
@@ -950,12 +950,12 @@ function fetchVideoInfo(url, delay = 150) {
           videoInfoCard.classList.remove('hidden');
         } else {
           showUnavailablePreview(
-            data.warning || 'Could not read video details from this link. Check the URL and try again.',
+            data.warning || 'Не удалось прочитать данные видео по ссылке. Проверьте ссылку и попробуйте снова.',
             cleanUrl
           );
         }
       } else {
-        let detailMsg = 'Could not read this link. Make sure it is a supported YouTube, Instagram, or TikTok URL.';
+        let detailMsg = 'Не удалось прочитать ссылку. Убедитесь, что это поддерживаемая ссылка YouTube, Instagram или TikTok.';
         try {
           const errData = await res.json();
           if (errData && errData.detail) detailMsg = errData.detail;
@@ -965,7 +965,7 @@ function fetchVideoInfo(url, delay = 150) {
     } catch (e) {
       if (mainUrlInput.value.trim() !== cleanUrl) return;
       showUnavailablePreview(
-        'Could not read this link. Check the URL, or copy a fresh link from the app.',
+        'Не удалось прочитать ссылку. Проверьте адрес или скопируйте свежую ссылку из приложения.',
         cleanUrl
       );
     } finally {
@@ -1389,7 +1389,7 @@ function selectClipCountFromMenu(cnt, label) {
 }
 
 function setClipCount(cnt) {
-  selectClipCountFromMenu(cnt, `${cnt} Clips`);
+  selectClipCountFromMenu(cnt, `Клипов: ${cnt}`);
 }
 
 // Face Detect Dropdown Handlers
@@ -1416,7 +1416,7 @@ function toggleFaceDetectDropdown(e) {
 function selectFaceDetectFromMenu(val, label) {
   const locked = selectedRatio === '16:9' || selectedRatio === 'original';
   selectedFaceDetect = locked ? false : (val === true || val === 'true');
-  const displayLabel = selectedFaceDetect ? label : 'Center Crop';
+  const displayLabel = selectedFaceDetect ? label : 'Центральный кроп';
   const labelEl = document.getElementById('currentFaceDetectLabel');
   const iconEl = document.getElementById('currentFaceDetectIcon');
   if (labelEl) labelEl.innerText = displayLabel;
@@ -1443,7 +1443,7 @@ function selectFaceDetectFromMenu(val, label) {
 
 function setFaceDetect(val) {
   const isTrue = (val === true || val === 'true');
-  selectFaceDetectFromMenu(isTrue, isTrue ? 'Face Track' : 'Center Crop');
+  selectFaceDetectFromMenu(isTrue, isTrue ? 'Отслеживание лица' : 'Центральный кроп');
 }
 
 // Quality Dropdown Handlers
@@ -1502,7 +1502,7 @@ function toggleVideoRatioDropdown(e) {
 
 function selectVideoRatioFromMenu(r, label) {
   const nextRatio = isYoutubeShortLocked ? 'original' : r;
-  const nextLabel = isYoutubeShortLocked ? 'Original' : label;
+  const nextLabel = isYoutubeShortLocked ? 'Исходное' : label;
   selectedVideoRatio = nextRatio;
   const labelEl = document.getElementById('currentVideoRatioLabel');
   if (labelEl) labelEl.innerText = nextLabel;
@@ -1594,11 +1594,11 @@ const TASK_CONFIGS = {
   type_yt_ai_clip: [
     {
       key: 'ingest',
-      label: 'Ingest Video',
-      amount: 'Source Video',
+      label: 'Загрузка видео',
+      amount: 'Исходное видео',
       details: [
-        { label: 'Video and audio streams', meta: 'Chosen quality' },
-        { label: 'Demux audio and video streams', meta: 'Direct Stream' }
+        { label: 'Видео- и аудиопотоки', meta: 'Выбранное качество' },
+        { label: 'Разделение аудио- и видеопотоков', meta: 'Прямой поток' }
       ]
     },
     {
@@ -1606,26 +1606,26 @@ const TASK_CONFIGS = {
       label: 'Проверяем транскрипт',
       amount: 'YouTube API',
       details: [
-        { label: 'Searching for auto-captions and official subtitles', meta: 'Auto API' },
-        { label: 'Reading subtitle timestamps', meta: 'Per segment' }
+        { label: 'Поиск автосубтитров и официальных субтитров', meta: 'Авто API' },
+        { label: 'Чтение таймкодов субтитров', meta: 'По фрагментам' }
       ]
     },
     {
       key: 'whisper',
       label: 'Транскрибация аудио',
-      amount: 'Cloud API',
+      amount: 'Облачное API',
       details: [
-        { label: 'Speech-to-text fallback', meta: 'When no subtitles' },
-        { label: 'Groq, Gemini or local Faster-Whisper', meta: 'Many languages' }
+        { label: 'Резервное распознавание речи', meta: 'Без субтитров' },
+        { label: 'Groq, Gemini или локальный Faster-Whisper', meta: 'Много языков' }
       ]
     },
     {
       key: 'virality',
       label: 'Анализ вирусного потенциала',
-      amount: 'Hook Scoring',
+      amount: 'Оценка хуков',
       details: [
-        { label: 'Viral potential and retention score', meta: 'Top Hooks' },
-        { label: 'Vertical framing and hook detection', meta: '9:16' }
+        { label: 'Оценка вирусного потенциала и удержания', meta: 'Лучшие хуки' },
+        { label: 'Вертикальное кадрирование и поиск хуков', meta: '9:16' }
       ]
     },
     {
@@ -1633,8 +1633,8 @@ const TASK_CONFIGS = {
       label: 'Рендерим вертикальные клипы',
       amount: 'H.264',
       details: [
-        { label: 'Hardware encoder when available', meta: 'AMF, MF or x264' },
-        { label: 'Multi-clip MP4 encoding', meta: 'H.264 MP4' }
+        { label: 'Аппаратный кодировщик, если доступен', meta: 'AMF, MF или x264' },
+        { label: 'Кодирование нескольких клипов в MP4', meta: 'H.264 MP4' }
       ]
     }
   ],
@@ -1642,11 +1642,11 @@ const TASK_CONFIGS = {
   type_yt_video: [
     {
       key: 'download',
-      label: 'Downloading Video 1080p',
+      label: 'Скачивание видео 1080p',
       amount: '1080p FHD',
       details: [
-        { label: 'High-speed video and audio stream', meta: 'Direct Stream' },
-        { label: 'Lossless merge into MP4', meta: 'Lossless' }
+        { label: 'Быстрый видео- и аудиопоток', meta: 'Прямой поток' },
+        { label: 'Объединение в MP4 без потерь', meta: 'Без потерь' }
       ]
     },
     {
@@ -1654,8 +1654,8 @@ const TASK_CONFIGS = {
       label: 'Сохраняем в медиатеку',
       amount: 'Ожидание',
       details: [
-        { label: 'Adding to the local storage catalog', meta: 'Ожидание' },
-        { label: 'Files are ready to play or download', meta: 'Ready' }
+        { label: 'Добавление в каталог хранилища', meta: 'Ожидание' },
+        { label: 'Файлы готовы к просмотру и скачиванию', meta: 'Готово' }
       ]
     }
   ],
@@ -1663,20 +1663,20 @@ const TASK_CONFIGS = {
   type_yt_mp3: [
     {
       key: 'extract',
-      label: 'Downloading source audio',
-      amount: 'HQ Audio',
+      label: 'Скачивание исходного аудио',
+      amount: 'Аудио HQ',
       details: [
-        { label: 'Extracting full-resolution audio', meta: 'Opus/M4A' },
-        { label: 'Normalizing stereo channels', meta: 'Stereo' }
+        { label: 'Извлечение аудио в исходном качестве', meta: 'Opus/M4A' },
+        { label: 'Нормализация стереоканалов', meta: 'Стерео' }
       ]
     },
     {
       key: 'vault',
-      label: 'Convert to 320 kbps MP3 & Save',
+      label: 'Конвертация в MP3 320 кбит/с и сохранение',
       amount: 'Ожидание',
       details: [
-        { label: 'High-quality FFmpeg LAME encoding', meta: 'CBR 320k' },
-        { label: 'Saving to the local Workspace', meta: 'Ожидание' }
+        { label: 'Качественное кодирование FFmpeg LAME', meta: 'CBR 320k' },
+        { label: 'Сохранение в медиатеку', meta: 'Ожидание' }
       ]
     }
   ],
@@ -1685,10 +1685,10 @@ const TASK_CONFIGS = {
     {
       key: 'trim',
       label: 'Нарезаем фрагменты',
-      amount: 'Custom Range',
+      amount: 'Свой диапазон',
       details: [
-        { label: 'Validating clip time range', meta: 'Keyframe' },
-        { label: 'Hardware-accelerated segment extraction', meta: 'Fast Cut' }
+        { label: 'Проверка временного диапазона', meta: 'Ключевые кадры' },
+        { label: 'Аппаратное извлечение фрагментов', meta: 'Быстрая нарезка' }
       ]
     },
     {
@@ -1696,8 +1696,8 @@ const TASK_CONFIGS = {
       label: 'Сохраняем в медиатеку',
       amount: 'Ожидание',
       details: [
-        { label: 'Adding the trimmed video to the library', meta: 'Ожидание' },
-        { label: 'File is ready to share', meta: 'Ready' }
+        { label: 'Добавление нарезанного видео в медиатеку', meta: 'Ожидание' },
+        { label: 'Файл готов к публикации', meta: 'Готово' }
       ]
     }
   ],
@@ -1705,11 +1705,11 @@ const TASK_CONFIGS = {
   type_ig_reels: [
     {
       key: 'download',
-      label: 'Downloading Instagram Reels',
-      amount: 'Reel Stream',
+      label: 'Скачивание Instagram Reels',
+      amount: 'Поток Reels',
       details: [
-        { label: 'Download video without a watermark', meta: 'Lossless' },
-        { label: 'Verifying MP4 stream integrity', meta: 'Проверен' }
+        { label: 'Скачивание видео без водяного знака', meta: 'Без потерь' },
+        { label: 'Проверка целостности MP4', meta: 'Проверен' }
       ]
     },
     {
@@ -1717,8 +1717,8 @@ const TASK_CONFIGS = {
       label: 'Сохраняем в медиатеку',
       amount: 'Ожидание',
       details: [
-        { label: 'Saving to the Instagram folder', meta: 'Ожидание' },
-        { label: 'File is ready for offline viewing', meta: 'Ready' }
+        { label: 'Сохранение в папку Instagram', meta: 'Ожидание' },
+        { label: 'Файл готов к просмотру офлайн', meta: 'Готово' }
       ]
     }
   ],
@@ -1726,11 +1726,11 @@ const TASK_CONFIGS = {
   type_tt_video: [
     {
       key: 'download',
-      label: 'Downloading TikTok video (no watermark)',
+      label: 'Скачивание видео TikTok без водяного знака',
       amount: 'TikTok HD',
       details: [
-        { label: 'Bypass lapisan watermark TikTok', meta: 'HD Clean' },
-        { label: 'Mux into a full-resolution MP4 container', meta: 'Ready' }
+        { label: 'Обход водяного знака TikTok', meta: 'HD без знака' },
+        { label: 'Сборка MP4 в исходном разрешении', meta: 'Готово' }
       ]
     },
     {
@@ -1738,8 +1738,8 @@ const TASK_CONFIGS = {
       label: 'Сохраняем в медиатеку',
       amount: 'Ожидание',
       details: [
-        { label: 'Saving to the TikTok folder', meta: 'Ожидание' },
-        { label: 'File is ready to use', meta: 'Ready' }
+        { label: 'Сохранение в папку TikTok', meta: 'Ожидание' },
+        { label: 'Файл готов к использованию', meta: 'Готово' }
       ]
     }
   ],
@@ -1747,20 +1747,20 @@ const TASK_CONFIGS = {
   type_tt_mp3: [
     {
       key: 'extract',
-      label: 'Downloading TikTok audio',
-      amount: 'Sound Track',
+      label: 'Скачивание аудио TikTok',
+      amount: 'Саундтрек',
       details: [
-        { label: 'Extracting audio from the TikTok stream', meta: 'HQ Audio' },
-        { label: 'Normalizing dynamics and volume', meta: 'Balanced' }
+        { label: 'Извлечение аудио из потока TikTok', meta: 'Аудио HQ' },
+        { label: 'Нормализация динамики и громкости', meta: 'Сбалансировано' }
       ]
     },
     {
       key: 'vault',
-      label: 'Convert to 320 kbps MP3 & Save',
+      label: 'Конвертация в MP3 320 кбит/с и сохранение',
       amount: 'Ожидание',
       details: [
-        { label: 'Encoding FFmpeg LAME 320kbps', meta: 'MP3' },
-        { label: 'Saving to the local Workspace', meta: 'Ожидание' }
+        { label: 'Кодирование FFmpeg LAME 320 кбит/с', meta: 'MP3' },
+        { label: 'Сохранение в медиатеку', meta: 'Ожидание' }
       ]
     }
   ]
@@ -1787,7 +1787,7 @@ function initTaskRows(action, qualityOverride) {
     let label = t.label;
     let amount = t.amount;
     if (currentActionType === 'type_yt_video' && t.key === 'download') {
-      label = `Downloading Video ${activeTaskQuality}p`;
+      label = `Скачивание видео ${activeTaskQuality}p`;
       amount = qualityBadge;
     } else if (currentActionType === 'type_yt_ai_clip' && t.key === 'ingest') {
       amount = qualityBadge;
@@ -1859,10 +1859,10 @@ function initTaskRows(action, qualityOverride) {
           <div class="flex items-center justify-between text-[11px] mb-1.5 font-mono">
             <div class="flex items-center gap-2 min-w-0">
               <span id="task-progress-pct-${row.key}" class="text-emerald-400 font-semibold tabular-nums text-[11.5px] ${isDownloadProgressRow(row.key) ? '' : 'hidden'}">0%</span>
-              <span id="task-progress-stage-${row.key}" class="text-zinc-300 text-[11px] font-sans truncate ${isDownloadProgressRow(row.key) ? 'hidden' : ''}">Preparing...</span>
+              <span id="task-progress-stage-${row.key}" class="text-zinc-300 text-[11px] font-sans truncate ${isDownloadProgressRow(row.key) ? 'hidden' : ''}">Подготовка...</span>
             </div>
             <div class="flex items-center gap-2.5 text-zinc-400 tabular-nums text-[11px] shrink-0">
-              <span id="task-progress-meta-${row.key}">Connecting to stream...</span>
+              <span id="task-progress-meta-${row.key}">Подключение к потоку...</span>
               <span id="task-stopwatch-${row.key}" class="inline-flex items-center gap-1 text-zinc-300 font-mono text-[11px] pl-1.5 border-l border-white/10">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400 shrink-0">
                   <circle cx="12" cy="12" r="10"></circle>
@@ -1983,7 +1983,7 @@ function setTaskStatuses(statusArr, progressData, computedProgressPct) {
     } else if (newStatus === 'done') {
       if (taskStartTimestamps[row.key] && !taskDurations[row.key]) {
         const elapsedSec = Math.max(1, Math.round((Date.now() - taskStartTimestamps[row.key]) / 1000));
-        taskDurations[row.key] = elapsedSec < 60 ? `${elapsedSec}s` : `${Math.floor(elapsedSec / 60)}m ${elapsedSec % 60}s`;
+        taskDurations[row.key] = elapsedSec < 60 ? `${elapsedSec} с` : `${Math.floor(elapsedSec / 60)} мин ${elapsedSec % 60} с`;
         if (amountEl) {
           amountEl.innerText = taskDurations[row.key];
         }
@@ -2034,8 +2034,8 @@ function setTaskStatuses(statusArr, progressData, computedProgressPct) {
           if (progressPctEl) progressPctEl.innerText = pctFormatted;
 
           const speed = (progressData && progressData.download_speed) || '';
-          const eta = (progressData && progressData.download_eta) ? `ETA ${progressData.download_eta}` : '';
-          const metaStr = [speed, eta].filter(Boolean).join(' • ') || (pctVal >= 99 ? 'Finalizing stream...' : 'Connecting to stream...');
+          const eta = (progressData && progressData.download_eta) ? `Осталось: ${progressData.download_eta}` : '';
+          const metaStr = [speed, eta].filter(Boolean).join(' • ') || (pctVal >= 99 ? 'Завершение потока...' : 'Подключение к потоку...');
           if (progressMetaEl) {
             progressMetaEl.innerText = metaStr;
             progressMetaEl.classList.remove('hidden');
@@ -2115,13 +2115,13 @@ function getPillHtml(status) {
   if (status === 'done') {
     return `
       <span class="inline-flex h-5 items-center rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2 text-[10.5px] font-medium text-emerald-400" style="animation: pop-in 250ms ease-out both;">
-        Completed
+        Готово
       </span>
     `;
   } else if (status === 'failed') {
     return `
       <span class="inline-flex h-5 items-center gap-1.5 rounded-full bg-rose-500/15 border border-rose-500/25 px-2 text-[10.5px] font-medium text-rose-400" style="animation: pop-in 200ms ease-out both;">
-        Failed
+        Ошибка
       </span>
     `;
   }
@@ -2227,10 +2227,10 @@ function showMissingApiKeyToast(message) {
   lunaToast.add({
     type: 'warning',
     title: 'Нужен API-ключ',
-    description: message || 'Gemini and Groq API keys are required for AI Short Clips.',
+    description: message || 'Для ИИ-клипов нужны API-ключи Gemini и Groq.',
     timeout: 6500,
     link: {
-      label: 'Go to Settings',
+      label: 'Перейти в настройки',
       onClick: (toastId) => {
         lunaToast.close(toastId);
         switchMainTab('settings');
@@ -2269,9 +2269,9 @@ async function checkAiClipApiKeysBeforeGenerate() {
     if (missing.length === 0) return { ok: true };
     const message = missing.length === 1
       ? (missing[0] === 'Groq'
-        ? 'Groq API key is required for audio transcription in AI Short Clips.'
-        : `${missing[0]} API key is required for AI Short Clips.`)
-      : `${missing.join(' and ')} API keys are required for AI Short Clips.`;
+        ? 'Для транскрибации аудио в ИИ-клипах нужен API-ключ Groq.'
+        : `Для ИИ-клипов нужен API-ключ ${missing[0]}.`)
+      : `Для ИИ-клипов нужны API-ключи ${missing.join(' и ')}.`;
     return { ok: false, message };
   } catch (e) {
     return { ok: true };
@@ -2280,7 +2280,7 @@ async function checkAiClipApiKeysBeforeGenerate() {
 
 async function triggerAction() {
   if (activeJobId || isProcessStarting) {
-    showNoticeModal('A job is in progress', 'Another job is running. Wait for it to finish or cancel it before starting a new one.');
+    showNoticeModal('Задача уже выполняется', 'Другая задача ещё выполняется. Дождитесь завершения или отмените её, прежде чем запускать новую.');
     return;
   }
   const url = mainUrlInput.value.trim();
@@ -2288,7 +2288,7 @@ async function triggerAction() {
     mainUrlInput.focus();
     mainUrlInput.classList.add('ring-2', 'ring-red-500/60');
     setTimeout(() => mainUrlInput.classList.remove('ring-2', 'ring-red-500/60'), 1500);
-    showNoticeModal('URL is required', 'Enter a YouTube, Instagram, or TikTok video URL.');
+    showNoticeModal('Нужна ссылка', 'Вставьте ссылку на видео YouTube, Instagram или TikTok.');
     return;
   }
 
@@ -2296,7 +2296,7 @@ async function triggerAction() {
     mainUrlInput.focus();
     mainUrlInput.classList.add('ring-2', 'ring-red-500/60');
     setTimeout(() => mainUrlInput.classList.remove('ring-2', 'ring-red-500/60'), 1500);
-    showNoticeModal('Invalid URL', 'The video URL is invalid or incomplete. Make sure it starts with https:// and belongs to a supported platform.');
+    showNoticeModal('Неверная ссылка', 'Ссылка на видео неверна или неполна. Проверьте, что она начинается с https:// и ведёт на поддерживаемую платформу.');
     return;
   }
 
@@ -2542,7 +2542,7 @@ async function openWorkspaceModal(action) {
     if (wsInput) {
       const currentUrl = mainUrlInput.value.trim();
       // shortcut: falls back to the numbered name if the preview has not loaded yet
-      wsInput.value = latestVideoTitle.url === currentUrl ? latestVideoTitle.title : `Workspace ${nextNumStr}`;
+      wsInput.value = latestVideoTitle.url === currentUrl ? latestVideoTitle.title : `Медиатека ${nextNumStr}`;
       checkDuplicateWorkspaceName(wsInput.value);
     }
   } catch (err) {
@@ -2581,7 +2581,7 @@ async function confirmAndStartProcess() {
     chosenWs = wsInput ? wsInput.value.trim() : '';
   }
   if (!chosenWs) {
-    chosenWs = `Workspace ${String(nextWorkspaceIndex || 1).padStart(2, '0')}`;
+    chosenWs = `Медиатека ${String(nextWorkspaceIndex || 1).padStart(2, '0')}`;
   }
   closeWorkspaceModal();
   await executeActualProcess(chosenWs);
@@ -2594,7 +2594,7 @@ async function executeActualProcess(workspaceName) {
   try {
     const url = mainUrlInput.value.trim();
     if (!url || !isValidMediaUrl(url)) {
-      showNoticeModal('Invalid URL', 'The video URL is invalid or incomplete. Make sure it starts with https:// and belongs to a supported platform.');
+      showNoticeModal('Неверная ссылка', 'Ссылка на видео неверна или неполна. Проверьте, что она начинается с https:// и ведёт на поддерживаемую платформу.');
       return;
     }
 
@@ -2606,15 +2606,15 @@ async function executeActualProcess(workspaceName) {
     if (action === 'type_yt_ai_clip') {
       const origBtnText = mainBtnText ? mainBtnText.innerText : mainActionBtn.textContent;
       mainActionBtn.disabled = true;
-      setMainActionLabel('Checking transcript...');
+      setMainActionLabel('Проверяем субтитры...');
       try {
         const chkRes = await fetch(`/api/check-transcript?url=${encodeURIComponent(url)}`);
         if (chkRes.ok) {
           const chkData = await chkRes.json();
           if (chkData.has_transcript === false) {
             const proceed = await showConfirmModal(
-              'No built-in transcript available',
-              'This YouTube video has no official transcript. AI audio transcription will take longer. Continue?'
+              'Встроенных субтитров нет',
+              'У этого видео YouTube нет официальных субтитров. ИИ-транскрибация займёт больше времени. Продолжить?'
             );
             if (!proceed) {
               mainActionBtn.disabled = false;
@@ -2638,7 +2638,7 @@ async function executeActualProcess(workspaceName) {
     mainActionBtn.classList.add('opacity-50', 'cursor-not-allowed');
 
     progressStateCard.classList.remove('hidden');
-    setCancelButtonVisible(true, 'Cancel');
+    setCancelButtonVisible(true, 'Отмена');
     progressStateCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
     resultsShowcase.classList.add('hidden');
 
@@ -2682,7 +2682,7 @@ async function executeActualProcess(workspaceName) {
           showMissingApiKeyToast(err.detail);
           return;
         }
-        throw new Error(err.detail || 'Could not start the job');
+        throw new Error(err.detail || 'Не удалось запустить задачу');
       }
 
       const data = await res.json();
@@ -2701,7 +2701,7 @@ async function executeActualProcess(workspaceName) {
       mainActionBtn.disabled = false;
       mainActionBtn.classList.remove('opacity-50', 'cursor-not-allowed');
       progressStateCard.classList.add('hidden');
-      showNoticeModal('Could not start processing', err.message || 'An error occurred while processing the request.');
+      showNoticeModal('Не удалось запустить обработку', err.message || 'При обработке запроса произошла ошибка.');
     }
   } finally {
     isProcessStarting = false;
@@ -2865,7 +2865,7 @@ function startPolling(jobId) {
         }
         activeJobId = null;
         // Keep a way out: the job is gone, but the failed card must be dismissable.
-        setCancelButtonVisible(true, 'Close');
+        setCancelButtonVisible(true, 'Закрыть');
         currentTaskRows.forEach(r => {
           if (r.status === 'running') {
             r.status = 'failed';
@@ -2879,17 +2879,17 @@ function startPolling(jobId) {
         });
         mainActionBtn.disabled = false;
         mainActionBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-        let errMsg = data.error || 'An error occurred during processing. Check your connection or the link.';
+        let errMsg = data.error || 'Во время обработки произошла ошибка. Проверьте подключение или ссылку.';
         if (errMsg.includes('This video is unavailable') || errMsg.includes('This video is unavailable')) {
-          errMsg = 'This YouTube video may be private, deleted, or restricted. Try another video.';
+          errMsg = 'Возможно, видео YouTube закрыто, удалено или ограничено. Попробуйте другое видео.';
         }
         if (/getaddrinfo|name resolution|name or service|timed out|timeout|urlopen|unable to download|connection (was )?(reset|aborted|refused)|network is unreachable|errno 2\]/i.test(errMsg)) {
-          errMsg = 'The download was interrupted. Check your internet connection and try again.';
+          errMsg = 'Скачивание прервалось. Проверьте интернет и попробуйте снова.';
         }
         if (data.retryable) {
           offerRetry(data.id, errMsg);
         } else {
-          showNoticeModal('Processing failed', errMsg);
+          showNoticeModal('Обработка не удалась', errMsg);
         }
       }
     } catch (e) {
@@ -3112,12 +3112,12 @@ function buildStudioVideoMetaParts(item, idx) {
 
   const parts = [];
   // Check hasClip explicitly because numeric 0s start_time is falsy in JS.
-  if (hasClip) parts.push(`Clip #${idx + 1}`);
+  if (hasClip) parts.push(`Клип #${idx + 1}`);
   if (item.quality) {
     const qStr = String(item.quality).trim();
     parts.push(/^\d+$/.test(qStr) ? `${qStr}p` : qStr);
   }
-  if (hasRange) parts.push(`${Math.round(endSec - startSec)}s`);
+  if (hasRange) parts.push(`${Math.round(endSec - startSec)} с`);
   return parts;
 }
 
@@ -3157,18 +3157,18 @@ function renderOpusResults(data) {
         <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
           <div>
             <h4 class="text-xs sm:text-sm font-semibold font-sans text-white line-clamp-2 leading-snug mb-1">
-              ${escapeHtml(item.title || item.filename || 'Audio')}
+              ${escapeHtml(item.title || item.filename || 'Аудио')}
             </h4>
             <div class="flex items-center gap-2 text-[11px] text-zinc-400 font-mono">
-              <span>320 kbps</span>
+              <span>320 кбит/с</span>
               <span>• MP3</span>
             </div>
           </div>
 
           <div class="flex items-center justify-between pt-2.5 border-t border-white/[0.06]">
-            <span class="text-[10.5px] font-mono text-zinc-500">MP3 Audio</span>
+            <span class="text-[10.5px] font-mono text-zinc-500">Аудио MP3</span>
             <div class="vault-file-actions flex items-center gap-2">
-              <a href="${escapeHtml(encodeMediaUrl(downloadUrl))}" download="${escapeHtml(item.filename || 'audio.mp3')}" class="luna-download-icon-link" aria-label="Download File">
+              <a href="${escapeHtml(encodeMediaUrl(downloadUrl))}" download="${escapeHtml(item.filename || 'audio.mp3')}" class="luna-download-icon-link" aria-label="Скачать файл">
                 <i data-lucide="download" class="w-4 h-4"></i>
               </a>
             </div>
@@ -3200,7 +3200,7 @@ function renderOpusResults(data) {
           type="button"
           onclick="copyText('${escapeQuotes(item.caption)}', this)"
           class="caption-copy-btn w-7 h-7 flex items-center justify-center text-zinc-400 hover:text-white cursor-pointer"
-          aria-label="Copy caption">
+          aria-label="Копировать подпись">
           <i data-lucide="copy" class="w-3.5 h-3.5"></i>
         </button>
         <span class="vault-card-action-sep" aria-hidden="true"></span>
@@ -3241,7 +3241,7 @@ function renderOpusResults(data) {
             </div>
             <div class="vault-file-actions flex items-center gap-2">
               ${copyBtn}
-              <a href="${escapeHtml(encodeMediaUrl(downloadUrl))}" download="${escapeHtml(item.filename || 'video.mp4')}" class="luna-download-icon-link" aria-label="Download File">
+              <a href="${escapeHtml(encodeMediaUrl(downloadUrl))}" download="${escapeHtml(item.filename || 'video.mp4')}" class="luna-download-icon-link" aria-label="Скачать файл">
                 <i data-lucide="download" class="w-4 h-4"></i>
               </a>
             </div>
@@ -3900,7 +3900,7 @@ const lunaToast = (() => {
       const closeBtn = document.createElement('button');
       closeBtn.type = 'button';
       closeBtn.className = 'luna-toast-close';
-      closeBtn.setAttribute('aria-label', 'Close notification');
+      closeBtn.setAttribute('aria-label', 'Закрыть уведомление');
       closeBtn.innerHTML = '<i data-lucide="x" class="w-3.5 h-3.5" aria-hidden="true"></i>';
       closeBtn.onclick = (e) => {
         e.stopPropagation();
@@ -4047,7 +4047,7 @@ const providerKeyUi = {
   groq: { configured: false, editing: true, validated: false, hint: '' }
 };
 const providerKeyFields = { openai: 'inputOpenai', gemini: 'inputGemini', groq: 'inputGroq' };
-const providerKeyPlaceholders = { openai: 'Enter your API key...', gemini: 'Enter your Gemini API key...', groq: 'Enter your Groq API key...' };
+const providerKeyPlaceholders = { openai: 'Введите API-ключ...', gemini: 'Введите API-ключ Gemini...', groq: 'Введите API-ключ Groq...' };
 
 function updateProviderKeyUI(provider) {
   const state = providerKeyUi[provider];
@@ -4079,23 +4079,23 @@ function updateProviderKeyUI(provider) {
     stateLabel.className = 'text-[11px]';
     if (locked) {
       stateLabel.classList.add('text-zinc-500');
-      stateLabel.textContent = 'API key is saved. Use Test Connection to check it, or Change Key to replace it.';
+      stateLabel.textContent = 'API-ключ сохранён. Проверьте его кнопкой «Проверить подключение» или замените кнопкой «Сменить ключ».';
     } else if (state.validated) {
       stateLabel.classList.add('text-emerald-400');
-      stateLabel.textContent = 'Key verified — click Save Key above to apply.';
+      stateLabel.textContent = 'Ключ проверен: нажмите «Сохранить ключ» выше.';
     } else if (hasUnsavedTypedKey) {
       stateLabel.classList.add('text-amber-400');
       stateLabel.textContent = state.configured
-        ? 'Unsaved replacement key — click Test Connection to verify before saving.'
-        : 'Unsaved key entered — click Test Connection to verify and enable Save Key.';
+        ? 'Новый ключ не сохранён: проверьте его кнопкой «Проверить подключение» перед сохранением.'
+        : 'Ключ введён, но не сохранён: проверьте его кнопкой «Проверить подключение», чтобы стала доступна кнопка «Сохранить ключ».';
       if (statusEl && !statusEl.textContent.trim()) {
-        statusEl.innerHTML = '<span class="text-amber-400">Unsaved • Test to save</span>';
+        statusEl.innerHTML = '<span class="text-amber-400">Не сохранён • проверьте</span>';
       }
     } else {
       stateLabel.classList.add('text-zinc-500');
       stateLabel.textContent = state.configured
-        ? 'Enter a replacement key. The current key stays active until you save.'
-        : 'No API key saved yet. Test the key, then save it.';
+        ? 'Введите новый ключ. Текущий действует, пока вы не сохраните новый.'
+        : 'API-ключ ещё не сохранён. Проверьте ключ, затем сохраните.';
     }
   }
 }
@@ -4443,7 +4443,7 @@ if (customModelInput) {
     const hidden = document.getElementById('selectOpenaiModel');
     if (hidden && hidden.value === CUSTOM_MODEL) {
       const label = document.getElementById('openaiModelTriggerLabel');
-      if (label) label.textContent = customModelInput.value.trim() || 'Custom...';
+      if (label) label.textContent = customModelInput.value.trim() || 'Другое...';
     }
     syncSettingsDirtyState();
   });
@@ -4493,7 +4493,7 @@ function guardUnsavedSettingsLeave() {
   if (settingsPromptToastId) {
     lunaToast.attention(
       settingsPromptToastId,
-      'Save or cancel your changes before leaving Settings.'
+      'Сохраните или отмените изменения, прежде чем уйти из настроек.'
     );
   }
   return true;
@@ -4559,12 +4559,12 @@ function syncSettingsDirtyState() {
         actions: [
           {
             id: 'btnToastCancelSettings',
-            children: 'Cancel',
+            children: 'Отмена',
             onClick: () => revertSettingsToSnapshot()
           },
           {
             id: 'btnToastSaveSettings',
-            children: 'Save',
+            children: 'Сохранить',
             variant: 'primary',
             onClick: () => saveSettings()
           }
@@ -4598,7 +4598,7 @@ function captureSettingsSnapshot() {
 async function loadSettingsData() {
   try {
     const res = await fetch('/api/settings');
-    if (!res.ok) throw new Error('Could not load settings');
+    if (!res.ok) throw new Error('Не удалось загрузить настройки');
     const data = await res.json();
 
     const openaiFields = {
@@ -4673,7 +4673,7 @@ async function loadSettingsData() {
 async function saveSettings() {
   const storageInput = document.getElementById('inputStorage');
   if (!storageInput || !storageInput.value.trim()) {
-    triggerInputError('wrapStorage', 'errStorage', 'Storage directory is required.');
+    triggerInputError('wrapStorage', 'errStorage', 'Укажите папку хранилища.');
     return;
   }
 
@@ -4723,13 +4723,13 @@ async function saveSettings() {
         const testData = await testRes.json();
         const stEl = document.getElementById(meta.statusId);
         if (!testRes.ok || !testData.valid) {
-          const errMsg = testData.message || 'Invalid key';
+          const errMsg = testData.message || 'Неверный ключ';
           if (stEl) stEl.innerHTML = `<span class="text-red-400">✗ ${escapeHtml(errMsg)}</span>`;
-          triggerInputError(meta.wrapId, meta.wrapId.replace('wrap', 'err'), `Key ${provider} is invalid: ${errMsg}`);
-          throw new Error(`Key ${provider.toUpperCase()} is invalid: ${errMsg}`);
+          triggerInputError(meta.wrapId, meta.wrapId.replace('wrap', 'err'), `Ключ ${provider} неверен: ${errMsg}`);
+          throw new Error(`Ключ ${provider.toUpperCase()} неверен: ${errMsg}`);
         }
         state.validated = true;
-        if (stEl) stEl.innerHTML = '<span class="text-emerald-400">✓ Connection valid · Saved</span>';
+        if (stEl) stEl.innerHTML = '<span class="text-emerald-400">✓ Подключение работает · сохранено</span>';
       }
       payload[meta.field] = candidateKey;
       verifiedProviders.push({ provider, candidateKey });
@@ -4784,7 +4784,7 @@ async function saveSettings() {
   } catch (err) {
     if (toastSaveBtn) {
       toastSaveBtn.disabled = false;
-      toastSaveBtn.textContent = 'Save';
+      toastSaveBtn.textContent = 'Сохранить';
     }
     if (toastCancelBtn) toastCancelBtn.disabled = false;
     if (err.message && err.message.toLowerCase().includes('directory')) {
@@ -4825,7 +4825,7 @@ function renderStudioBackgroundCards() {
 
     const badge = document.createElement('span');
     badge.className = 'bg-preset-badge absolute top-1.5 left-1.5 font-sans font-medium' + (preset.type === 'webgl' ? ' is-animated' : '');
-    badge.textContent = preset.badge || 'Static';
+    badge.textContent = preset.badge || 'Статичный';
     swatch.appendChild(badge);
 
     if (isSaving) {
@@ -4900,7 +4900,7 @@ async function selectStudioBackground(bgId) {
     });
     const data = await res.json();
     if (!res.ok) {
-      throw new Error(data.detail || 'Could not save background');
+      throw new Error(data.detail || 'Не удалось сохранить фон студии');
     }
     const elapsed = Date.now() - startedAt;
     if (elapsed < 260) {
@@ -4915,7 +4915,7 @@ async function selectStudioBackground(bgId) {
       statusEl.textContent = 'Сохранено';
       statusEl.className = 'text-[11px] text-emerald-400 font-sans';
       __studioBgStatusTimer = setTimeout(() => {
-        statusEl.textContent = 'Auto-saves on click';
+        statusEl.textContent = 'Сохраняется по клику';
         statusEl.className = 'text-[11px] text-zinc-500 font-sans';
       }, 2200);
     }
@@ -4927,7 +4927,7 @@ async function selectStudioBackground(bgId) {
     }
     renderStudioBackgroundCards();
     if (statusEl) {
-      statusEl.textContent = 'Auto-saves on click';
+      statusEl.textContent = 'Сохраняется по клику';
       statusEl.className = 'text-[11px] text-zinc-500 font-sans';
     }
     showToast(err.message || 'Не удалось сохранить фон студии', true);
@@ -4950,7 +4950,7 @@ window.loadOpenaiModels = async function () {
 
   // With no typed key the server uses the saved one, for the saved base URL only.
   if (apiKey || providerKeyUi.openai.configured) {
-    status.innerText = 'Loading models...';
+    status.innerText = 'Загружаем модели...';
     try {
       const res = await fetch('/api/settings/openai-models', {
         method: 'POST',
@@ -4962,14 +4962,14 @@ window.loadOpenaiModels = async function () {
       });
       if (!res.ok) throw new Error(String(res.status));
       models = (await res.json()).models || [];
-      status.innerText = `${models.length} models`;
+      status.innerText = `Моделей: ${models.length}`;
     } catch (err) {
-      status.innerText = 'Could not load models';
+      status.innerText = 'Не удалось загрузить модели';
     }
   } else {
     status.innerText = providerKeyUi.openai.configured
-      ? 'Saved key is hidden; change it to refresh models'
-      : 'Add an API key to list models';
+      ? 'Сохранённый ключ скрыт. Смените его, чтобы обновить список моделей'
+      : 'Добавьте API-ключ, чтобы увидеть модели';
   }
 
   const names = current && !models.includes(current) ? [current, ...models] : models;
@@ -4988,7 +4988,7 @@ async function testApiKey(provider, wrapId, inputId, statusElId, btn) {
   const candidateKey = inputEl?.value.trim() || '';
 
   if (!inputEl || !state || (state.editing && !candidateKey) || (!state.editing && !state.configured)) {
-    triggerInputError(wrapId, wrapId.replace('wrap', 'err'), `Key ${provider} cannot be empty.`);
+    triggerInputError(wrapId, wrapId.replace('wrap', 'err'), `Ключ ${provider} не может быть пустым.`);
     if (statusEl) statusEl.innerHTML = '';
     return;
   }
@@ -4999,7 +4999,7 @@ async function testApiKey(provider, wrapId, inputId, statusElId, btn) {
   }
 
   if (icon) icon.classList.add('animate-pulse', 'text-amber-400');
-  if (statusEl) statusEl.innerHTML = '<span class="text-zinc-500">Testing...</span>';
+  if (statusEl) statusEl.innerHTML = '<span class="text-zinc-500">Проверка...</span>';
 
   try {
     const res = await fetch('/api/settings/test-key', {
@@ -5020,25 +5020,25 @@ async function testApiKey(provider, wrapId, inputId, statusElId, btn) {
         updateProviderKeyUI(provider);
         const savedOk = await saveProviderKey(provider, { auto: true });
         if (savedOk) {
-          if (statusEl) statusEl.innerHTML = '<span class="text-emerald-400">✓ Connection valid · Saved</span>';
+          if (statusEl) statusEl.innerHTML = '<span class="text-emerald-400">✓ Подключение работает · сохранено</span>';
         } else if (statusEl) {
-          statusEl.innerHTML = '<span class="text-emerald-400">✓ Connection valid · click Save Key to apply</span>';
+          statusEl.innerHTML = '<span class="text-emerald-400">✓ Подключение работает · нажмите «Сохранить ключ»</span>';
         }
       } else {
-        if (statusEl) statusEl.innerHTML = '<span class="text-emerald-400">✓ Saved key connection is valid</span>';
-        showToast(`${provider.toUpperCase()} saved key connection is valid`);
+        if (statusEl) statusEl.innerHTML = '<span class="text-emerald-400">✓ Сохранённый ключ работает</span>';
+        showToast(`Сохранённый ключ ${provider.toUpperCase()} работает`);
       }
       if (provider === 'openai') loadOpenaiModels();
     } else {
-      const errMsg = data.message || 'Invalid key';
+      const errMsg = data.message || 'Неверный ключ';
       if (statusEl) statusEl.innerHTML = `<span class="text-red-400">✗ ${escapeHtml(errMsg)}</span>`;
-      triggerInputError(wrapId, wrapId.replace('wrap', 'err'), `Key ${provider} is invalid: ${errMsg}`);
-      showToast(`Key ${provider.toUpperCase()} is invalid`, true);
+      triggerInputError(wrapId, wrapId.replace('wrap', 'err'), `Ключ ${provider} неверен: ${errMsg}`);
+      showToast(`Ключ ${provider.toUpperCase()} неверен`, true);
     }
   } catch (err) {
     if (icon) icon.classList.remove('animate-pulse', 'text-amber-400');
-    if (statusEl) statusEl.innerHTML = '<span class="text-red-400">✗ Network error</span>';
-    showToast(`Could not reach the server: ${err.message}`, true);
+    if (statusEl) statusEl.innerHTML = '<span class="text-red-400">✗ Ошибка сети</span>';
+    showToast(`Сервер недоступен: ${err.message}`, true);
   }
 }
 
@@ -5048,11 +5048,11 @@ function renderCookieStatus(cookiesData) {
   if (cookiesData && cookiesData.exists) {
     setDependencyIcon('chkCookies', 'check', 'w-4 h-4 text-emerald-400');
     if (cookieFileDetail) cookieFileDetail.innerText = `(${cookiesData.name || 'cookies.txt'} • ${cookiesData.size || ''})`;
-    if (cookieStatusBadge) cookieStatusBadge.innerText = 'Installed';
+    if (cookieStatusBadge) cookieStatusBadge.innerText = 'Установлено';
   } else {
     setDependencyIcon('chkCookies', 'alert-circle', 'w-4 h-4 text-zinc-500');
-    if (cookieFileDetail) cookieFileDetail.innerText = '(cookies.txt not found)';
-    if (cookieStatusBadge) cookieStatusBadge.innerText = 'Empty';
+    if (cookieFileDetail) cookieFileDetail.innerText = '(cookies.txt не найден)';
+    if (cookieStatusBadge) cookieStatusBadge.innerText = 'Пусто';
   }
 }
 
@@ -5087,7 +5087,7 @@ function renderSystemDependencyStatuses(data, { detailed = false } = {}) {
       statusId: 'statusFfmpeg',
       icon: data.ffmpeg ? 'check' : 'x',
       cls: data.ffmpeg ? 'w-4 h-4 text-emerald-400' : 'w-4 h-4 text-red-400',
-      text: detailed ? (data.ffmpeg_version || (data.ffmpeg ? 'Доступен' : 'Not found')) : (data.ffmpeg ? 'Доступен' : 'Not found')
+      text: detailed ? (data.ffmpeg_version || (data.ffmpeg ? 'Доступен' : 'Не найден')) : (data.ffmpeg ? 'Доступен' : 'Не найден')
     },
     {
       iconId: 'chkYtdlp',
@@ -5101,14 +5101,14 @@ function renderSystemDependencyStatuses(data, { detailed = false } = {}) {
       statusId: 'statusOpencv',
       icon: data.opencv ? 'check' : 'alert-circle',
       cls: data.opencv ? 'w-4 h-4 text-emerald-400' : 'w-4 h-4 text-amber-400',
-      text: detailed ? (data.opencv_version || (data.opencv ? 'Active' : 'Inactive')) : (data.opencv ? 'Active' : 'Inactive')
+      text: detailed ? (data.opencv_version || (data.opencv ? 'Активен' : 'Неактивен')) : (data.opencv ? 'Активен' : 'Неактивен')
     },
     {
       iconId: 'chkStorage',
       statusId: 'statusStorageAccess',
       icon: data.storage ? 'check' : 'x',
       cls: data.storage ? 'w-4 h-4 text-emerald-400' : 'w-4 h-4 text-red-400',
-      text: data.storage ? (detailed ? 'Read/write ready' : 'Writable') : 'Access denied'
+      text: data.storage ? (detailed ? 'Чтение и запись' : 'Запись доступна') : 'Нет доступа'
     }
   ];
 
@@ -5145,7 +5145,7 @@ async function runSystemCheck(btn) {
 
   try {
     const res = await fetch('/api/settings/check-system', { method: 'POST' });
-    if (!res.ok) throw new Error('Could not check the system');
+    if (!res.ok) throw new Error('Не удалось проверить систему');
     const data = await res.json();
 
     renderSystemDependencyStatuses(data, { detailed: true });
@@ -5155,27 +5155,27 @@ async function runSystemCheck(btn) {
 
     const missingCritical = [];
     if (!data.ffmpeg) missingCritical.push('FFmpeg');
-    if (!data.storage) missingCritical.push('Storage access');
+    if (!data.storage) missingCritical.push('Доступ к хранилищу');
     const cookiesReady = Boolean(data.cookies && data.cookies.exists);
 
     if (missingCritical.length) {
-      showToast(`Dependency check incomplete: missing ${missingCritical.join(' & ')}`, true);
+      showToast(`Проверка зависимостей не завершена, не найдено: ${missingCritical.join(', ')}`, true);
     } else if (!cookiesReady && !data.opencv) {
-      showToast('Core utilities ready (OpenCV inactive & YouTube cookies empty)', 'info');
+      showToast('Основные утилиты готовы (OpenCV неактивен, cookies YouTube не загружены)', 'info');
     } else if (!cookiesReady) {
-      showToast('Core utilities ready (YouTube cookies not uploaded)', 'info');
+      showToast('Основные утилиты готовы (cookies YouTube не загружены)', 'info');
     } else if (!data.opencv) {
-      showToast('Core utilities & cookies ready (OpenCV Face Tracker inactive)', 'info');
+      showToast('Утилиты и cookies готовы (OpenCV Face Tracker неактивен)', 'info');
     } else {
-      showToast('All utilities & YouTube cookies are ready');
+      showToast('Все утилиты и cookies YouTube готовы');
     }
   } catch (e) {
     previousIcons.forEach(({ id, icon, cls }) => setDependencyIcon(id, icon, cls));
-    showToast(`Dependency check failed: ${e.message}`, true);
+    showToast(`Проверка зависимостей не прошла: ${e.message}`, true);
   } finally {
     checkingBadges.forEach((el) => el.classList.add('hidden'));
     if (btn) btn.disabled = false;
-    if (label) label.innerText = 'Check';
+    if (label) label.innerText = 'Проверить';
     const currentIcon = document.getElementById('checkSystemIcon');
     if (currentIcon) currentIcon.classList.remove('animate-spin', 'text-amber-400');
   }
@@ -5186,7 +5186,7 @@ async function browseStorageFolder() {
   const originalHtml = btn ? btn.innerHTML : '';
   try {
     if (btn) {
-      btn.innerHTML = '<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin text-white"></i><span>Opening...</span>';
+      btn.innerHTML = '<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin text-white"></i><span>Открываем...</span>';
       lucide.createIcons({ root: btn });
     }
     const res = await fetch('/api/settings/browse-folder', { method: 'POST' });
@@ -5201,11 +5201,11 @@ async function browseStorageFolder() {
 
         // Immediately move the files and save the settings
         if (btn) {
-          btn.innerHTML = '<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin text-white"></i><span>Moving...</span>';
+          btn.innerHTML = '<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin text-white"></i><span>Перемещаем...</span>';
           lucide.createIcons({ root: btn });
         }
 
-        showToast(`Moving saved Workspace media to ${newPath}...`, 'info');
+        showToast(`Перенос медиатеки в ${newPath}...`, 'info');
 
         const saveRes = await fetch('/api/settings', {
           method: 'POST',
@@ -5218,7 +5218,7 @@ async function browseStorageFolder() {
 
         const saveResult = await saveRes.json();
         if (!saveRes.ok) {
-          throw new Error(saveResult.detail || 'Could not move files to the new folder');
+          throw new Error(saveResult.detail || 'Не удалось переместить файлы в новую папку');
         }
 
         currentStorageDir = newPath;
@@ -5226,25 +5226,25 @@ async function browseStorageFolder() {
         if (saveResult.stats) {
           const filesEl = document.getElementById('settingsTotalFiles');
           const sizeEl = document.getElementById('settingsTotalSize');
-          if (filesEl) filesEl.innerText = `${saveResult.stats.total_files || 0} files`;
+          if (filesEl) filesEl.innerText = `Файлов: ${saveResult.stats.total_files || 0}`;
           if (sizeEl) sizeEl.innerText = `${saveResult.stats.total_size_mb || 0} MB`;
         }
 
         const migratedCount = saveResult.migrated ? (saveResult.migrated.migrated_files || 0) : 0;
         showToast(
           migratedCount > 0
-            ? `Workspace media moved to ${newPath} (${migratedCount} files)`
-            : `Workspace folder updated to ${newPath}`
+            ? `Медиатека перенесена в ${newPath} (файлов: ${migratedCount})`
+            : `Папка медиатеки изменена на ${newPath}`
         );
 
         // Sync the Media Vault list.
         if (typeof loadVaultItems === 'function') loadVaultItems();
       }
     } else {
-      showToast('Could not open the folder picker', true);
+      showToast('Не удалось открыть выбор папки', true);
     }
   } catch (err) {
-    showToast(`Could not move files: ${err.message}`, true);
+    showToast(`Не удалось переместить файлы: ${err.message}`, true);
   } finally {
     if (btn) {
       btn.innerHTML = originalHtml;
@@ -5263,12 +5263,12 @@ async function openExplorer() {
       body: JSON.stringify({ folder: folderVal })
     });
     if (res.ok) {
-      showToast('Opening the storage folder', 'info');
+      showToast('Открываем папку хранилища', 'info');
     } else {
-      showToast('Could not open the folder in Explorer', true);
+      showToast('Не удалось открыть папку в проводнике', true);
     }
   } catch (err) {
-    showToast('Could not open the folder in Explorer', true);
+    showToast('Не удалось открыть папку в проводнике', true);
   }
 }
 
@@ -5283,17 +5283,17 @@ async function handleCookieUpload(input) {
         body: JSON.stringify({ filename: file.name, content: text })
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.detail || 'Could not upload cookies');
+      if (!res.ok) throw new Error(data.detail || 'Не удалось загрузить cookies');
 
       const detailEl = document.getElementById('cookieFileDetail');
       const badgeEl = document.getElementById('cookieStatusBadge');
 
       if (detailEl) detailEl.innerText = `(${data.filename || file.name} • ${data.size || ''})`;
-      if (badgeEl) badgeEl.innerText = 'Installed';
+      if (badgeEl) badgeEl.innerText = 'Установлено';
       setDependencyIcon('chkCookies', 'check', 'w-4 h-4 text-emerald-400');
-      showToast(`File ${file.name} uploaded successfully`);
+      showToast(`Файл ${file.name} загружен`);
     } catch (err) {
-      showToast(`Could not load cookies: ${err.message}`, true);
+      showToast(`Не удалось загрузить cookies: ${err.message}`, true);
     }
   }
 }
@@ -5305,7 +5305,7 @@ async function loadVaultItems() {
 
   try {
     const res = await fetch('/api/vault/projects');
-    if (!res.ok) throw new Error('Could not load Workspace');
+    if (!res.ok) throw new Error('Не удалось загрузить медиатеку');
     const data = await res.json();
     vaultProjects = data.projects || [];
     nextWorkspaceIndex = data.next_workspace_index || 1;
@@ -5355,7 +5355,7 @@ function updateVaultStatsUI() {
   if (totalFiles) totalFiles.innerText = totalCount;
 
   const settingsFiles = document.getElementById('settingsTotalFiles');
-  if (settingsFiles) settingsFiles.innerText = `${totalCount} files`;
+  if (settingsFiles) settingsFiles.innerText = `Файлов: ${totalCount}`;
 
   let sizeStr = '0 MB';
   if (vaultStats.total_gb && vaultStats.total_gb >= 1.0) {
@@ -5385,32 +5385,32 @@ function updateVaultStatsUI() {
 
 const VAULT_MODE_OPTIONS_BY_PLATFORM = {
   all: [
-    { id: 'all', label: 'All Types' },
-    { id: 'clips', label: 'AI Clips' },
-    { id: 'trim', label: 'Video Trimmer' },
-    { id: 'video', label: 'Full Video' },
-    { id: 'audio', label: 'Audio MP3' },
+    { id: 'all', label: 'Все типы' },
+    { id: 'clips', label: 'ИИ-клипы' },
+    { id: 'trim', label: 'Нарезка видео' },
+    { id: 'video', label: 'Полное видео' },
+    { id: 'audio', label: 'Аудио MP3' },
   ],
   youtube: [
-    { id: 'all', label: 'All Types' },
-    { id: 'clips', label: 'AI Clips' },
-    { id: 'trim', label: 'Video Trimmer' },
-    { id: 'video', label: 'Full Video' },
-    { id: 'audio', label: 'Audio MP3' },
+    { id: 'all', label: 'Все типы' },
+    { id: 'clips', label: 'ИИ-клипы' },
+    { id: 'trim', label: 'Нарезка видео' },
+    { id: 'video', label: 'Полное видео' },
+    { id: 'audio', label: 'Аудио MP3' },
   ],
   tiktok: [
-    { id: 'all', label: 'All Types' },
-    { id: 'video', label: 'Video MP4' },
-    { id: 'audio', label: 'Audio MP3' },
+    { id: 'all', label: 'Все типы' },
+    { id: 'video', label: 'Видео MP4' },
+    { id: 'audio', label: 'Аудио MP3' },
   ],
   instagram: null,
 };
 
 const VAULT_SORT_LABELS = {
-  newest: 'Newest',
-  oldest: 'Oldest',
-  files: 'Most Files',
-  alpha: 'Name A-Z',
+  newest: 'Сначала новые',
+  oldest: 'Сначала старые',
+  files: 'Больше файлов',
+  alpha: 'По имени (A-Z)',
 };
 
 const VAULT_DROPDOWN_META = {
@@ -5777,10 +5777,10 @@ function getProjectMeter(proj) {
   const act = (proj.action || '').toLowerCase();
   const plat = (proj.platform || '').toLowerCase();
   if (act.includes('ai_clip')) {
-    return { signal: 3, tone: '#ffffff', label: 'AI Clipper' };
+    return { signal: 3, tone: '#ffffff', label: 'ИИ-клипы' };
   }
   if (act.includes('clip') || act.includes('trim')) {
-    return { signal: 3, tone: '#a1a1aa', label: 'Video Trimmer' };
+    return { signal: 3, tone: '#a1a1aa', label: 'Нарезка видео' };
   }
   // Match the platform before the action: "type_tt_video" contains "video", which
   // used to label TikTok workspaces as YouTube.
@@ -5794,9 +5794,9 @@ function getProjectMeter(proj) {
     return { signal: 3, tone: '#ef4444', label: 'YouTube' };
   }
   if (act.includes('mp3') || plat.includes('audio')) {
-    return { signal: 3, tone: '#f59e0b', label: 'Audio MP3' };
+    return { signal: 3, tone: '#f59e0b', label: 'Аудио MP3' };
   }
-  return { signal: 2, tone: '#a1a1aa', label: 'Workspace' };
+  return { signal: 2, tone: '#a1a1aa', label: 'Медиатека' };
 }
 
 function renderVaultGallery() {
@@ -5828,14 +5828,14 @@ function renderVaultGallery() {
     if (emptyState) {
       emptyState.classList.remove('hidden');
       if (currentVaultSearch) {
-        if (emptyTitle) emptyTitle.innerText = 'Not found';
-        if (emptyDesc) emptyDesc.innerText = `No projects match the search "${currentVaultSearch}".`;
+        if (emptyTitle) emptyTitle.innerText = 'Ничего не найдено';
+        if (emptyDesc) emptyDesc.innerText = `По запросу "${currentVaultSearch}" ничего не найдено.`;
       } else if (currentVaultFilter !== 'all' || currentVaultModeFilter !== 'all') {
-        if (emptyTitle) emptyTitle.innerText = 'Empty Category';
-        if (emptyDesc) emptyDesc.innerText = 'No projects match this filter yet.';
+        if (emptyTitle) emptyTitle.innerText = 'Пустая категория';
+        if (emptyDesc) emptyDesc.innerText = 'По этому фильтру пока ничего нет.';
       } else {
-        if (emptyTitle) emptyTitle.innerText = 'Empty Workspace';
-        if (emptyDesc) emptyDesc.innerText = 'No projects in Workspace yet.';
+        if (emptyTitle) emptyTitle.innerText = 'Пустая медиатека';
+        if (emptyDesc) emptyDesc.innerText = 'В медиатеке пока нет проектов.';
       }
     }
     return;
@@ -5874,7 +5874,7 @@ function renderVaultGallery() {
           ${escapeHtml(proj.workspace_name)}
         </span>
         <p class="mt-1.5 min-h-[44px] text-[13px] leading-relaxed text-zinc-400 line-clamp-2">
-          ${escapeHtml(proj.source_title || 'Media Project')}
+          ${escapeHtml(proj.source_title || 'Медиапроект')}
         </p>
       </div>
 
@@ -5894,7 +5894,7 @@ function renderVaultGallery() {
             type="button" 
             onclick="toggleVaultCardMenu('${proj.project_id}', this, event)" 
             class="t-card-btn-more${isVirtualProj ? ' hidden' : ''}"
-            aria-label="More actions"
+            aria-label="Действия"
             aria-haspopup="menu"
             aria-expanded="false"
             ${isVirtualProj ? 'disabled aria-disabled="true"' : ''}>
@@ -5909,7 +5909,7 @@ function renderVaultGallery() {
             type="button" 
             onclick="openProjectPage('${proj.project_id}')" 
             class="luna-open-link">
-            <span>Open</span>
+            <span>Открыть</span>
             <svg class="luna-open-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M6 4L10 8L6 12"></path>
             </svg>
@@ -5977,7 +5977,7 @@ function configureVaultCardMenu(context) {
   if (renameBtn) renameBtn.classList.remove('hidden');
   if (sepEl) sepEl.classList.remove('hidden');
   if (deleteBtn) deleteBtn.classList.remove('hidden');
-  if (selectLabel) selectLabel.textContent = context.type === 'workspace-header' ? 'Select Files' : 'Select';
+  if (selectLabel) selectLabel.textContent = context.type === 'workspace-header' ? 'Выбрать файлы' : 'Выбрать';
 
   if (context.type === 'workspace-header') {
     const proj = vaultProjects.find(p => p.project_id === context.id);
@@ -6101,11 +6101,11 @@ function updateSelectionToolbar({ isOpen, selectedCount, allSelected, ariaLabel 
     if (ariaLabel) bar.setAttribute('aria-label', ariaLabel);
   }
   const countEl = document.getElementById('vaultSelectionCount');
-  if (countEl) countEl.textContent = `${selectedCount} selected`;
+  if (countEl) countEl.textContent = `Выбрано: ${selectedCount}`;
   const deleteBtn = document.getElementById('vaultSelectionDeleteBtn');
   if (deleteBtn) deleteBtn.disabled = selectedCount === 0;
   const selectAllBtn = document.getElementById('vaultSelectionSelectAllBtn');
-  if (selectAllBtn) selectAllBtn.textContent = allSelected ? 'Deselect all' : 'Select all';
+  if (selectAllBtn) selectAllBtn.textContent = allSelected ? 'Снять выделение' : 'Выбрать всё';
 }
 
 function handleSelectionSelectAll() {
@@ -6176,7 +6176,7 @@ function syncVaultSelectionUI() {
     isOpen: vaultSelectionMode,
     selectedCount: vaultSelectedIds.size,
     allSelected: ids.length > 0 && ids.every(id => vaultSelectedIds.has(id)),
-    ariaLabel: 'Selected workspaces',
+    ariaLabel: 'Выбранные медиатеки',
   });
 }
 
@@ -6245,7 +6245,7 @@ function syncFileSelectionUI() {
     isOpen: vaultFileSelectionMode,
     selectedCount: vaultFileSelectedIds.size,
     allSelected: ids.length > 0 && ids.every(id => vaultFileSelectedIds.has(id)),
-    ariaLabel: 'Selected files',
+    ariaLabel: 'Выбранные файлы',
   });
 }
 
@@ -6277,8 +6277,8 @@ function updateProjectDetailHeaderMeta(proj) {
   const emptyState = document.getElementById('projectFilesEmptyState');
   const btnDetailMenu = document.getElementById('btnProjectDetailMenu');
 
-  if (countEl) countEl.innerText = `${files.length} Media Files`;
-  if (sizeEl) sizeEl.innerText = `${formatBytes(totalSize)} Total`;
+  if (countEl) countEl.innerText = `Медиафайлов: ${files.length}`;
+  if (sizeEl) sizeEl.innerText = `Всего: ${formatBytes(totalSize)}`;
   if (emptyState) emptyState.classList.toggle('hidden', files.length > 0);
   if (btnDetailMenu) {
     btnDetailMenu.classList.toggle('hidden', !!proj.virtual && files.length === 0);
@@ -6297,13 +6297,13 @@ function confirmBulkDeleteVaultProjects() {
 
   if (ids.length === 1) {
     const proj = vaultProjects.find(p => p.project_id === ids[0]);
-    if (heading) heading.innerText = 'Delete this workspace?';
-    if (desc) desc.innerText = `Are you sure you want to delete workspace "${(proj && proj.workspace_name) || 'Медиатека'}"? All files in it will be deleted and cannot be recovered.`;
+    if (heading) heading.innerText = 'Удалить медиатеку?';
+    if (desc) desc.innerText = `Удалить медиатеку "${(proj && proj.workspace_name) || 'Медиатека'}"? Все файлы в ней будут удалены без возможности восстановления.`;
   } else {
-    if (heading) heading.innerText = `Delete ${ids.length} workspaces?`;
-    if (desc) desc.innerText = `All files in the ${ids.length} selected workspaces will be deleted and cannot be recovered.`;
+    if (heading) heading.innerText = `Удалить выбранные медиатеки (${ids.length})?`;
+    if (desc) desc.innerText = `Все файлы в выбранных медиатеках (${ids.length}) будут удалены без возможности восстановления.`;
   }
-  if (btnText) btnText.innerText = 'Delete';
+  if (btnText) btnText.innerText = 'Удалить';
   if (confirmBtn) {
     confirmBtn.disabled = false;
     confirmBtn.onclick = executeBulkDeleteVaultProjects;
@@ -6321,7 +6321,7 @@ async function executeBulkDeleteVaultProjects() {
 
   if (confirmBtn) confirmBtn.disabled = true;
   if (btnSpinner) btnSpinner.classList.remove('hidden');
-  if (btnText) btnText.innerText = 'Deleting...';
+  if (btnText) btnText.innerText = 'Удаление...';
 
   releaseMediaLocks();
 
@@ -6342,7 +6342,7 @@ async function executeBulkDeleteVaultProjects() {
 
   if (confirmBtn) confirmBtn.disabled = false;
   if (btnSpinner) btnSpinner.classList.add('hidden');
-  if (btnText) btnText.innerText = 'Delete';
+  if (btnText) btnText.innerText = 'Удалить';
   closeDeleteModal();
 
   // Keep only the workspaces that failed selected, so the user can retry them.
@@ -6355,8 +6355,8 @@ async function executeBulkDeleteVaultProjects() {
 
   if (failedIds.length) {
     showNoticeModal(
-      'Some workspaces could not be deleted',
-      `Could not delete: ${failedNames.join(', ')}. Close any files that are open elsewhere and try again.`
+      'Часть медиатек не удалось удалить',
+      `Не удалось удалить: ${failedNames.join(', ')}. Закройте открытые файлы и попробуйте снова.`
     );
   }
 }
@@ -6373,14 +6373,14 @@ function confirmBulkDeleteVaultItems() {
 
   if (ids.length === 1) {
     const file = findActiveProjectFile(ids[0]);
-    const label = (file && (file.title || file.filename)) || 'this file';
-    if (heading) heading.innerText = 'Delete this file?';
-    if (desc) desc.innerText = `Are you sure you want to delete "${label}"? This action cannot be undone.`;
+    const label = (file && (file.title || file.filename)) || 'этот файл';
+    if (heading) heading.innerText = 'Удалить файл?';
+    if (desc) desc.innerText = `Удалить "${label}"? Действие нельзя отменить.`;
   } else {
-    if (heading) heading.innerText = `Delete ${ids.length} files?`;
-    if (desc) desc.innerText = `${ids.length} selected files will be permanently removed from this workspace.`;
+    if (heading) heading.innerText = `Удалить выбранные файлы (${ids.length})?`;
+    if (desc) desc.innerText = `Выбранные файлы (${ids.length}) будут удалены из этой медиатеки без возможности восстановления.`;
   }
-  if (btnText) btnText.innerText = 'Delete';
+  if (btnText) btnText.innerText = 'Удалить';
   if (confirmBtn) {
     confirmBtn.disabled = false;
     confirmBtn.onclick = executeBulkDeleteVaultItems;
@@ -6398,7 +6398,7 @@ async function executeBulkDeleteVaultItems() {
 
   if (confirmBtn) confirmBtn.disabled = true;
   if (btnSpinner) btnSpinner.classList.remove('hidden');
-  if (btnText) btnText.innerText = 'Deleting...';
+  if (btnText) btnText.innerText = 'Удаление...';
 
   ids.forEach(id => {
     const cardEl = document.getElementById(`vault-card-${id}`);
@@ -6445,7 +6445,7 @@ async function executeBulkDeleteVaultItems() {
 
   if (confirmBtn) confirmBtn.disabled = false;
   if (btnSpinner) btnSpinner.classList.add('hidden');
-  if (btnText) btnText.innerText = 'Delete';
+  if (btnText) btnText.innerText = 'Удалить';
   closeDeleteModal();
 
   // Keep only the files that failed selected so the user can retry or cancel.
@@ -6459,8 +6459,8 @@ async function executeBulkDeleteVaultItems() {
 
   if (failedIds.length) {
     showNoticeModal(
-      'Some files could not be deleted',
-      `Could not delete: ${failedNames.join(', ')}. Close any files that are open elsewhere and try again.`
+      'Часть файлов не удалось удалить',
+      `Не удалось удалить: ${failedNames.join(', ')}. Закройте открытые файлы и попробуйте снова.`
     );
   }
 }
@@ -6560,8 +6560,8 @@ async function openProjectPage(projectId) {
     srcEl.innerHTML = '';
     srcEl.classList.add('hidden');
   }
-  if (countEl) countEl.innerText = `${files.length} Media Files`;
-  if (sizeEl) sizeEl.innerText = `${formatBytes(totalSize)} Total`;
+  if (countEl) countEl.innerText = `Медиафайлов: ${files.length}`;
+  if (sizeEl) sizeEl.innerText = `Всего: ${formatBytes(totalSize)}`;
   if (dateEl) dateEl.innerText = formatSavedDate(proj.created_at);
   if (breadcrumbEl) breadcrumbEl.innerText = `${proj.project_id}`;
 
@@ -7788,7 +7788,7 @@ function renderClipperWorkflow(proj) {
   const files = proj.files || [];
   clipperFilesCache = files;
 
-  const sourceTitle = proj.source_title ? escapeHtml(proj.source_title) : (files[0] && files[0].title ? escapeHtml(files[0].title) : 'Source Video');
+  const sourceTitle = proj.source_title ? escapeHtml(proj.source_title) : (files[0] && files[0].title ? escapeHtml(files[0].title) : 'Исходное видео');
   const titleLower = String(proj.source_title || proj.workspace_name || '').toLowerCase();
 
   // Source Channel / Creator extraction (pure factual extraction)
@@ -7821,7 +7821,7 @@ function renderClipperWorkflow(proj) {
     ? `<a href="${encodeURI(rawUrl)}" target="_blank" rel="noopener noreferrer" class="block text-[11px] font-medium text-white hover:text-white leading-tight truncate mt-0.5 hover:underline" data-no-drag="true">
             ${escapeHtml(displayUrl)}
           </a>`
-    : `<span class="block text-[11px] font-medium text-zinc-500 leading-tight truncate mt-0.5">Source unavailable</span>`;
+    : `<span class="block text-[11px] font-medium text-zinc-500 leading-tight truncate mt-0.5">Источник недоступен</span>`;
 
   // NODE 1: Trigger Node / Source Input (Exact matching dimensions: w-[224px] h-[238px])
   const triggerNode = document.createElement('div');
@@ -7832,25 +7832,25 @@ function renderClipperWorkflow(proj) {
   triggerNode.innerHTML = `
     <div class="w-full h-[238px] rounded-[14px] bg-[#171717] border border-white/[0.08] shadow-[0_6px_18px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col justify-between">
       <div class="flex items-center justify-between px-3.5 py-2.5 border-b border-white/[0.06] bg-white/[0.02] shrink-0">
-        <span class="text-[10px] font-semibold text-zinc-300 font-mono">Source</span>
-        <span class="text-[9.5px] font-mono text-zinc-400 font-medium">Ingested</span>
+        <span class="text-[10px] font-semibold text-zinc-300 font-mono">Источник</span>
+        <span class="text-[9.5px] font-mono text-zinc-400 font-medium">Загружено</span>
       </div>
       <div class="divide-y divide-white/[0.04] flex-1 flex flex-col justify-between">
         <div class="px-3.5 py-2 flex flex-col justify-center flex-1">
-          <span class="block text-[9px] text-zinc-500 font-mono leading-tight">Input Video</span>
+          <span class="block text-[9px] text-zinc-500 font-mono leading-tight">Входное видео</span>
           <span class="block text-[11px] font-medium text-white leading-tight truncate mt-0.5">${sourceTitle}</span>
         </div>
         <div class="px-3.5 py-2 flex flex-col justify-center flex-1">
-          <span class="block text-[9px] text-zinc-500 font-mono leading-tight">Channel / Source</span>
+          <span class="block text-[9px] text-zinc-500 font-mono leading-tight">Канал / источник</span>
           <span class="block text-[11px] font-medium text-white leading-tight truncate mt-0.5">${sourceChannel}</span>
         </div>
         <div class="px-3.5 py-2 flex flex-col justify-center flex-1">
-          <span class="block text-[9px] text-zinc-500 font-mono leading-tight">Link YouTube</span>
+          <span class="block text-[9px] text-zinc-500 font-mono leading-tight">Ссылка YouTube</span>
           ${sourceLinkHtml}
         </div>
         <div class="px-3.5 py-2.5 flex flex-col justify-center flex-1">
-          <span class="block text-[9px] text-zinc-500 font-mono leading-tight">Total Clips</span>
-          <span class="block text-[11px] font-medium text-white leading-tight mt-0.5">${files.length} Clips</span>
+          <span class="block text-[9px] text-zinc-500 font-mono leading-tight">Всего клипов</span>
+          <span class="block text-[11px] font-medium text-white leading-tight mt-0.5">Клипов: ${files.length}</span>
         </div>
       </div>
     </div>
@@ -7877,15 +7877,15 @@ function renderClipperWorkflow(proj) {
   const isTrimProject = (proj.action === 'type_yt_clip' || proj.action === 'manual_clip' || (proj.category || '').includes('trim'));
   const transcribeProvider = proj.transcribe_provider || 'Groq Cloud Whisper';
   const microSteps = isTrimProject ? [
-    { label: 'Download', sub: 'yt-dlp' },
-    { label: 'Engine', sub: 'Video Trimmer' },
-    { label: 'Crop Ratio', sub: detectedRatio || 'Original' },
-    { label: 'Segments', sub: `${files.length} Clips` }
+    { label: 'Скачивание', sub: 'yt-dlp' },
+    { label: 'Движок', sub: 'Нарезка видео' },
+    { label: 'Соотношение сторон', sub: detectedRatio || 'Исходное' },
+    { label: 'Фрагменты', sub: `Клипов: ${files.length}` }
   ] : [
-    { label: 'Download', sub: 'yt-dlp' },
-    { label: 'Transcribe', sub: transcribeProvider },
-    { label: 'Virality LLM', sub: 'AI Ranking' },
-    { label: 'Crop Ratio', sub: detectedRatio }
+    { label: 'Скачивание', sub: 'yt-dlp' },
+    { label: 'Транскрибация', sub: transcribeProvider },
+    { label: 'Оценка вирусности', sub: 'ИИ-ранжирование' },
+    { label: 'Соотношение сторон', sub: detectedRatio }
   ];
 
   const checkmarkHtml = `
@@ -7909,8 +7909,8 @@ function renderClipperWorkflow(proj) {
   pipelineNode.innerHTML = `
     <div class="w-full h-[238px] rounded-[14px] bg-[#171717] border border-white/[0.08] shadow-[0_6px_18px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col justify-between">
       <div class="flex items-center justify-between px-3.5 py-2.5 border-b border-white/[0.06] bg-white/[0.02] shrink-0">
-        <span class="text-[10px] font-semibold text-zinc-300 font-mono">${isTrimProject ? "Trim Pipeline" : "AI Pipeline"}</span>
-        <span class="text-[9.5px] font-mono text-zinc-400 font-medium">Task</span>
+        <span class="text-[10px] font-semibold text-zinc-300 font-mono">${isTrimProject ? "Конвейер нарезки" : "ИИ-конвейер"}</span>
+        <span class="text-[9.5px] font-mono text-zinc-400 font-medium">Задача</span>
       </div>
       <div class="divide-y divide-white/[0.04] flex-1 flex flex-col justify-between">
         ${stepsHtml}
@@ -7930,7 +7930,7 @@ function renderClipperWorkflow(proj) {
     emptyNode.className = 'clipper-flow-node flex flex-col items-start w-[245px] shrink-0';
     emptyNode.innerHTML = `
       <div class="w-full rounded-[14px] bg-[#171717] border border-white/[0.08] p-4 text-center text-[11px] text-zinc-400">
-        No clips have finished rendering yet.
+        Пока ни один клип не готов.
       </div>
     `;
     clipsCol.appendChild(emptyNode);
@@ -7945,7 +7945,7 @@ function renderClipperWorkflow(proj) {
       const rawMediaUrl = file.url || (file.relative_path ? `/media-vault/${file.relative_path.replace(/\\/g, '/')}` : '#');
       const mediaUrl = encodeMediaUrl(rawMediaUrl);
       const downloadUrl = file.download_url ? encodeMediaUrl(file.download_url) : mediaUrl;
-      const clipTitle = file.title || `Clip #${idx + 1}`;
+      const clipTitle = file.title || `Клип #${idx + 1}`;
       const escapedTitle = escapeHtml(clipTitle);
 
       const hasCaption = !isTrimProject && Boolean(file.caption && file.caption.trim());
@@ -7954,7 +7954,7 @@ function renderClipperWorkflow(proj) {
       const captionTrigger = hasCaption ? `
         <div class="caption-trigger-row group/caption flex items-center justify-between gap-2 px-2 py-1.5 rounded-lg mx-1 mb-1 cursor-pointer" onclick="toggleClipCaption(${idx}, event)" data-no-drag="true">
           <p class="text-[10px] text-zinc-400 group-hover/caption:text-zinc-200 leading-normal truncate flex-1 min-w-0 transition-colors select-none">${captionSnippet}</p>
-          <button type="button" onclick="copyClipCaption(${idx}, this, event)" class="caption-copy-btn p-1 rounded-md text-zinc-400 hover:text-white flex items-center justify-center cursor-pointer shrink-0" aria-label="Copy caption">
+          <button type="button" onclick="copyClipCaption(${idx}, this, event)" class="caption-copy-btn p-1 rounded-md text-zinc-400 hover:text-white flex items-center justify-center cursor-pointer shrink-0" aria-label="Копировать подпись">
             <i data-lucide="copy" class="w-3.5 h-3.5"></i>
           </button>
         </div>
@@ -8007,7 +8007,7 @@ function renderClipperWorkflow(proj) {
               `}
             </div>
             <div class="vault-file-actions flex items-center gap-1.5 shrink-0" data-no-drag="true">
-              <button type="button" class="t-card-btn-more" data-file-menu-id="${file.id}" data-no-drag="true" onclick="toggleFileCardMenu('${file.id}', this, event)" aria-label="More actions" aria-haspopup="menu" aria-expanded="false">
+              <button type="button" class="t-card-btn-more" data-file-menu-id="${file.id}" data-no-drag="true" onclick="toggleFileCardMenu('${file.id}', this, event)" aria-label="Действия" aria-haspopup="menu" aria-expanded="false">
                 <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
                   <circle cx="8" cy="3.5" r="1.2"></circle>
                   <circle cx="8" cy="8" r="1.2"></circle>
@@ -8015,7 +8015,7 @@ function renderClipperWorkflow(proj) {
                 </svg>
               </button>
               <span class="vault-card-action-sep" aria-hidden="true"></span>
-              <a href="${escapeHtml(downloadUrl)}" download="${escapeHtml(file.filename || `clip_${idx + 1}.mp4`)}" class="luna-download-icon-link" data-no-drag="true" aria-label="Download Clip">
+              <a href="${escapeHtml(downloadUrl)}" download="${escapeHtml(file.filename || `clip_${idx + 1}.mp4`)}" class="luna-download-icon-link" data-no-drag="true" aria-label="Скачать клип">
                 <i data-lucide="download" class="w-4 h-4"></i>
               </a>
             </div>
@@ -8293,7 +8293,7 @@ window.setVaultMediaFilter = function (filterType, immediate = false) {
   });
   const visibleCountEl = document.getElementById('vaultVisibleFileCount');
   if (visibleCountEl) {
-    visibleCountEl.innerText = `${visible} files shown`;
+    visibleCountEl.innerText = `Показано файлов: ${visible}`;
   }
 };
 
@@ -8403,7 +8403,7 @@ function renderProjectFiles(proj) {
               type="button"
               onclick="toggleFileCardMenu('${file.id}', this, event)"
               class="t-card-btn-more"
-              aria-label="More actions"
+              aria-label="Действия"
               aria-haspopup="menu"
               aria-expanded="false">
               <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
@@ -8417,7 +8417,7 @@ function renderProjectFiles(proj) {
               href="${mediaUrl}"
               download="${escapeHtml(file.filename)}"
               class="luna-download-icon-link"
-              aria-label="Download File">
+              aria-label="Скачать файл">
               <i data-lucide="download" class="w-4 h-4"></i>
             </a>
           </div>
@@ -8493,9 +8493,9 @@ function openRenameModalBox({ headingText, labelText, placeholderText, initialVa
 
 function promptRenameWorkspace(projectId, currentName) {
   openRenameModalBox({
-    headingText: 'Rename Workspace',
-    labelText: 'New Name',
-    placeholderText: 'New workspace name',
+    headingText: 'Переименовать медиатеку',
+    labelText: 'Новое имя',
+    placeholderText: 'Новое имя медиатеки',
     initialValue: currentName,
     targetIdVal: projectId,
     targetTypeVal: 'project',
@@ -8511,9 +8511,9 @@ function promptRenameVaultItem(fileId) {
     : null;
   if (activeProj && isAiClipperProject(activeProj)) {
     openRenameModalBox({
-      headingText: 'Rename Clip',
-      labelText: 'Clip Title',
-      placeholderText: 'New clip title',
+      headingText: 'Переименовать клип',
+      labelText: 'Название клипа',
+      placeholderText: 'Новое название клипа',
       initialValue: file.title || file.filename || '',
       targetIdVal: file.id,
       targetTypeVal: 'clip-title',
@@ -8523,9 +8523,9 @@ function promptRenameVaultItem(fileId) {
   }
   const { stem, ext } = splitFilenameParts(file.filename || file.title || '');
   openRenameModalBox({
-    headingText: 'Rename File',
-    labelText: 'New Filename',
-    placeholderText: 'New filename',
+    headingText: 'Переименовать файл',
+    labelText: 'Новое имя файла',
+    placeholderText: 'Новое имя файла',
     initialValue: stem,
     targetIdVal: file.id,
     targetTypeVal: 'file',
@@ -8582,15 +8582,15 @@ async function submitRenameWorkspace() {
         }
         await loadVaultItems();
       } else {
-        let errDetail = 'An error occurred while renaming the clip.';
+        let errDetail = 'При переименовании клипа произошла ошибка.';
         try {
           const errJson = await res.json();
           if (errJson && errJson.detail) errDetail = errJson.detail;
         } catch (_) {}
-        showNoticeModal('Could not rename clip', errDetail);
+        showNoticeModal('Не удалось переименовать клип', errDetail);
       }
     } catch (e) {
-      showNoticeModal('Connection Error', 'Could not connect to the server while renaming the clip.');
+      showNoticeModal('Ошибка соединения', 'Не удалось подключиться к серверу при переименовании клипа.');
     }
     return;
   }
@@ -8622,17 +8622,17 @@ async function submitRenameWorkspace() {
         syncItemRecord(vaultItems.find(it => it.id === idValue));
         await loadVaultItems();
       } else {
-        let errDetail = 'An error occurred while renaming the file.';
+        let errDetail = 'При переименовании файла произошла ошибка.';
         try {
           const errJson = await res.json();
           if (errJson && errJson.detail) errDetail = errJson.detail;
         } catch (_) {}
         if (activeProj) renderProjectFiles(activeProj);
-        showNoticeModal('Could not rename file', errDetail);
+        showNoticeModal('Не удалось переименовать файл', errDetail);
       }
     } catch (e) {
       if (activeProj) renderProjectFiles(activeProj);
-      showNoticeModal('Connection Error', 'Could not connect to the server while renaming the file.');
+      showNoticeModal('Ошибка соединения', 'Не удалось подключиться к серверу при переименовании файла.');
     }
     return;
   }
@@ -8660,15 +8660,15 @@ async function submitRenameWorkspace() {
       }
       await loadVaultItems();
     } else {
-      let errDetail = 'An error occurred while saving the workspace name.';
+      let errDetail = 'При сохранении имени медиатеки произошла ошибка.';
       try {
         const errJson = await res.json();
         if (errJson && errJson.detail) errDetail = errJson.detail;
       } catch (_) {}
-      showNoticeModal('Could not rename', errDetail);
+      showNoticeModal('Не удалось переименовать', errDetail);
     }
   } catch (e) {
-    showNoticeModal('Connection Error', 'Could not connect to the server while updating the workspace.');
+    showNoticeModal('Ошибка соединения', 'Не удалось подключиться к серверу при обновлении медиатеки.');
   }
 }
 
@@ -8708,9 +8708,9 @@ function confirmDeleteVaultProject(projectId, wsName, event) {
   const btnText = document.getElementById('deleteModalBtnText');
   const confirmBtn = document.getElementById('deleteModalConfirmBtn');
 
-  if (heading) heading.innerText = 'Delete this workspace?';
-  if (desc) desc.innerText = `Are you sure you want to delete workspace "${wsName || 'Медиатека'}"? All files in it will be deleted and cannot be recovered.`;
-  if (btnText) btnText.innerText = 'Delete';
+  if (heading) heading.innerText = 'Удалить медиатеку?';
+  if (desc) desc.innerText = `Удалить медиатеку "${wsName || 'Медиатека'}"? Все файлы в ней будут удалены без возможности восстановления.`;
+  if (btnText) btnText.innerText = 'Удалить';
   if (confirmBtn) {
     confirmBtn.disabled = false;
     confirmBtn.onclick = executeDeleteVaultProject;
@@ -8740,7 +8740,7 @@ async function executeDeleteVaultProject() {
 
   if (confirmBtn) confirmBtn.disabled = true;
   if (btnSpinner) btnSpinner.classList.remove('hidden');
-  if (btnText) btnText.innerText = 'Deleting...';
+  if (btnText) btnText.innerText = 'Удаление...';
 
   releaseMediaLocks();
 
@@ -8754,14 +8754,14 @@ async function executeDeleteVaultProject() {
       deletingProjectId = null;
       await loadVaultItems();
     } else {
-      showNoticeModal('Could not delete workspace', 'Could not delete this workspace. Please try again.');
+      showNoticeModal('Не удалось удалить медиатеку', 'Не удалось удалить эту медиатеку. Попробуйте снова.');
     }
   } catch (e) {
-    showNoticeModal('Server error', 'An error occurred while deleting the workspace.');
+    showNoticeModal('Ошибка сервера', 'При удалении медиатеки произошла ошибка.');
   } finally {
     if (confirmBtn) confirmBtn.disabled = false;
     if (btnSpinner) btnSpinner.classList.add('hidden');
-    if (btnText) btnText.innerText = 'Delete';
+    if (btnText) btnText.innerText = 'Удалить';
   }
 }
 
@@ -8774,7 +8774,7 @@ function getPlatformBadgeHtml(plat) {
   } else if (p === 'tiktok') {
     return `<span class="px-2 py-0.5 rounded-md bg-zinc-800/80 backdrop-blur-md border border-white/10 text-zinc-200 text-[10px] font-semibold flex items-center gap-1 shadow-sm"><img src="/assets/tiktok-logo.svg?v=3" class="w-3 h-3 object-contain" /> TikTok</span>`;
   }
-  return `<span class="px-2 py-0.5 rounded-md bg-white/10 backdrop-blur-md border border-white/20 text-zinc-300 text-[10px] font-semibold flex items-center gap-1 shadow-sm"><i data-lucide="film" class="w-3 h-3"></i> Media</span>`;
+  return `<span class="px-2 py-0.5 rounded-md bg-white/10 backdrop-blur-md border border-white/20 text-zinc-300 text-[10px] font-semibold flex items-center gap-1 shadow-sm"><i data-lucide="film" class="w-3 h-3"></i> Медиа</span>`;
 }
 
 function formatBytes(bytes) {
@@ -8788,7 +8788,7 @@ function formatSavedDate(ts) {
   if (!ts) return '';
   try {
     const d = new Date(ts * 1000);
-    return d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+    return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
   } catch (e) {
     return '';
   }
@@ -8797,7 +8797,7 @@ function formatSavedDate(ts) {
 function formatClipDuration(item) {
   if (item.start_time !== undefined && item.end_time !== undefined && item.end_time > item.start_time) {
     const dur = Math.round(item.end_time - item.start_time);
-    return `${dur}s`;
+    return `${dur} с`;
   }
   return '';
 }
@@ -8816,11 +8816,11 @@ async function openVaultFolder() {
   try {
     const res = await fetch('/api/vault/open-folder', { method: 'POST' });
     if (!res.ok) {
-      showNoticeModal('Could not open folder', 'Folder not found or the file manager could not be opened.');
+      showNoticeModal('Не удалось открыть папку', 'Папка не найдена или не удалось открыть проводник.');
     }
   } catch (err) {
     console.error('Error opening vault folder:', err);
-    showNoticeModal('Could not open folder', 'An error occurred while opening the folder.');
+    showNoticeModal('Не удалось открыть папку', 'При открытии папки произошла ошибка.');
   }
 }
 
@@ -8833,11 +8833,11 @@ async function openVaultFile(filePath) {
       body: JSON.stringify({ file_path: filePath })
     });
     if (!res.ok) {
-      showNoticeModal('Could not open file', 'File not found or the file manager could not open it.');
+      showNoticeModal('Не удалось открыть файл', 'Файл не найден или проводник не смог его открыть.');
     }
   } catch (err) {
     console.error('Error opening file in Explorer:', err);
-    showNoticeModal('Could not open file', 'An error occurred while opening the file.');
+    showNoticeModal('Не удалось открыть файл', 'При открытии файла произошла ошибка.');
   }
 }
 
@@ -8849,9 +8849,9 @@ function confirmDeleteVaultItem(id, title, filePath) {
   const btnText = document.getElementById('deleteModalBtnText');
   const confirmBtn = document.getElementById('deleteModalConfirmBtn');
 
-  if (heading) heading.innerText = 'Delete this file?';
-  if (desc) desc.innerText = `Are you sure you want to delete "${title || 'this file'}"? This action cannot be undone.`;
-  if (btnText) btnText.innerText = 'Delete';
+  if (heading) heading.innerText = 'Удалить файл?';
+  if (desc) desc.innerText = `Удалить "${title || 'этот файл'}"? Действие нельзя отменить.`;
+  if (btnText) btnText.innerText = 'Удалить';
   if (confirmBtn) {
     confirmBtn.disabled = false;
     confirmBtn.onclick = executeDeleteVaultItem;
@@ -8868,7 +8868,7 @@ async function executeDeleteVaultItem() {
 
   if (confirmBtn) confirmBtn.disabled = true;
   if (btnSpinner) btnSpinner.classList.remove('hidden');
-  if (btnText) btnText.innerText = 'Deleting...';
+  if (btnText) btnText.innerText = 'Удаление...';
 
   const idToDelete = deletingItemId;
 
@@ -8881,7 +8881,7 @@ async function executeDeleteVaultItem() {
 
     if (!res.ok) {
       const err = await res.json();
-      throw new Error(err.detail || 'Could not delete file');
+      throw new Error(err.detail || 'Не удалось удалить файл');
     }
 
     // Card smooth exit animation (standard grid); clipper workflow re-renders immediately
@@ -8922,11 +8922,11 @@ async function executeDeleteVaultItem() {
     if (activeProj) {
       syncAfterProjectFilesChanged(activeProj, { forceRerender: true });
     }
-    showNoticeModal('Could not delete file', err.message || 'An error occurred while deleting the file.');
+    showNoticeModal('Не удалось удалить файл', err.message || 'При удалении файла произошла ошибка.');
   } finally {
     if (confirmBtn) confirmBtn.disabled = false;
     if (btnSpinner) btnSpinner.classList.add('hidden');
-    if (btnText) btnText.innerText = 'Delete';
+    if (btnText) btnText.innerText = 'Удалить';
   }
 }
 
@@ -8954,7 +8954,7 @@ function openUpdateModal(data) {
   const available = Boolean(data && data.update_available);
 
   if (available) {
-    if (heading) heading.textContent = 'Update Available';
+    if (heading) heading.textContent = 'Доступно обновление';
     if (desc) {
       desc.textContent = data.reason === 'untracked_install'
         ? 'Доступно обновление Luna. Обновление также синхронизирует локальный учёт версии.'
@@ -8962,16 +8962,16 @@ function openUpdateModal(data) {
     }
     if (meta) meta.classList.remove('hidden');
     if (shaEl) shaEl.textContent = data.latest_short_sha || '-';
-    if (msgEl) msgEl.textContent = data.latest_message || 'Latest release on main';
+    if (msgEl) msgEl.textContent = data.latest_message || 'Последний релиз в main';
     if (laterBtn) laterBtn.classList.remove('hidden');
     if (actionBtn) {
       actionBtn.classList.remove('hidden');
       actionBtn.disabled = Boolean(data.busy_jobs);
-      actionBtn.textContent = data.busy_jobs ? 'Job Running' : 'Update';
+      actionBtn.textContent = data.busy_jobs ? 'Задача выполняется' : 'Обновить';
     }
     if (okBtn) okBtn.classList.add('hidden');
   } else {
-    if (heading) heading.textContent = "You're up to date";
+    if (heading) heading.textContent = 'Обновлений нет';
     if (desc) {
       const shaTag = data && data.current_short_sha ? ` (${data.current_short_sha})` : '';
       desc.textContent = `Luna${shaTag}: уже установлена последняя версия.`;
@@ -9019,18 +9019,18 @@ async function checkForLunaUpdates(btn) {
     const res = await fetch('/api/system/check-update');
     const data = await res.json();
     if (!res.ok) {
-      throw new Error(data.detail || 'Could not check for updates');
+      throw new Error(data.detail || 'Не удалось проверить обновления');
     }
     openUpdateModal(data);
   } catch (err) {
-    showNoticeModal('Update check failed', err.message || 'Could not reach GitHub to check for updates.');
+    showNoticeModal('Проверка обновлений не удалась', err.message || 'Не удалось связаться с GitHub для проверки обновлений.');
   } finally {
     if (trigger) trigger.disabled = false;
     const currentIcon = document.getElementById('checkUpdatesIcon');
     const currentSpinner = document.getElementById('checkUpdatesSpinner');
     if (currentIcon) currentIcon.classList.remove('hidden');
     if (currentSpinner) currentSpinner.classList.add('hidden');
-    if (label) label.textContent = 'Check for Updates';
+    if (label) label.textContent = 'Проверить обновления';
   }
 }
 
@@ -9047,7 +9047,7 @@ async function waitForServerRestartAndReload() {
         if (__lunaUpdateToastId) {
           lunaToast.update(__lunaUpdateToastId, {
             type: 'success',
-            title: 'Update complete',
+            title: 'Обновление завершено',
             description: 'Перезапускаем Luna...',
             indeterminate: false,
             timeout: 3000,
@@ -9064,7 +9064,7 @@ async function waitForServerRestartAndReload() {
   if (__lunaUpdateToastId) {
     lunaToast.update(__lunaUpdateToastId, {
       type: 'warning',
-      title: 'Restart pending',
+      title: 'Нужен перезапуск',
       description: 'Обновление завершено. Обновите страницу или откройте Luna заново.',
       indeterminate: false,
       timeout: 5000,
@@ -9081,7 +9081,7 @@ async function startLunaUpdate() {
   __lunaUpdateToastId = lunaToast.add({
     type: 'info',
     title: 'Обновляем Luna',
-    description: 'Downloading latest update...',
+    description: 'Скачиваем обновление...',
     timeout: 0,
     closable: false,
     indeterminate: true,
@@ -9095,7 +9095,7 @@ async function startLunaUpdate() {
     });
     const data = await res.json();
     if (!res.ok) {
-      throw new Error(data.detail || 'Could not start update');
+      throw new Error(data.detail || 'Не удалось запустить обновление');
     }
 
     while (true) {
@@ -9146,7 +9146,7 @@ async function startLunaUpdate() {
         if (__lunaUpdateToastId) {
           lunaToast.update(__lunaUpdateToastId, {
             type: 'success',
-            title: 'Update complete',
+            title: 'Обновление завершено',
             description: 'Luna обновлена до последней версии.',
             indeterminate: false,
             timeout: 3000,
@@ -9157,7 +9157,7 @@ async function startLunaUpdate() {
       }
 
       if (st.status === 'error') {
-        throw new Error(st.error || st.message || 'Update failed');
+        throw new Error(st.error || st.message || 'Обновление не удалось');
       }
     }
   } catch (err) {
@@ -9165,7 +9165,7 @@ async function startLunaUpdate() {
     if (__lunaUpdateToastId) {
       lunaToast.update(__lunaUpdateToastId, {
         type: 'error',
-        title: 'Update failed',
+        title: 'Обновление не удалось',
         description: err.message || 'Не удалось обновить Luna.',
         indeterminate: false,
         timeout: 5500,
@@ -9258,14 +9258,14 @@ window.addEventListener('resize', () => {
 });
 // A failed job runs again in its own folder, so a finished or partial download is reused.
 async function offerRetry(jobId, errMsg) {
-  if (!await showConfirmModal('Processing failed', errMsg, 'Retry')) return;
+  if (!await showConfirmModal('Обработка не удалась', errMsg, 'Повторить')) return;
   try {
     const res = await fetch(`/api/retry/${jobId}`, { method: 'POST' });
-    if (!res.ok) throw new Error((await res.json()).detail || 'Could not retry the job');
+    if (!res.ok) throw new Error((await res.json()).detail || 'Не удалось повторить задачу');
     try { localStorage.setItem('luna_active_job_id', jobId); } catch (e) {}
     await checkAndResumeSavedJob(jobId);
   } catch (err) {
-    showNoticeModal('Could not retry', err.message);
+    showNoticeModal('Не удалось повторить', err.message);
   }
 }
 
@@ -9287,7 +9287,7 @@ async function checkAndResumeSavedJob(savedJobId) {
       if (progressStateCard) {
         progressStateCard.classList.remove('hidden');
       }
-      setCancelButtonVisible(true, 'Cancel');
+      setCancelButtonVisible(true, 'Отмена');
       const savedAction = data.action || localStorage.getItem('luna_active_action') || 'type_yt_ai_clip';
       const savedQuality = data.quality || localStorage.getItem('luna_active_quality') || selectedQuality || '1080';
       currentJobWorkspaceName = data.workspace_name || localStorage.getItem('luna_active_ws') || null;
@@ -9334,7 +9334,7 @@ document.addEventListener('DOMContentLoaded', () => {
       sessionStorage.removeItem('luna_update_just_completed');
       lunaToast.add({
         type: 'success',
-        title: 'Update complete',
+        title: 'Обновление завершено',
         description: 'Luna обновлена до последней версии.',
         timeout: 3000,
       });

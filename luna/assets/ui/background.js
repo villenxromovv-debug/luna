@@ -6,7 +6,7 @@ const LUNA_STUDIO_BACKGROUNDS = [
   {
     id: 'obsidian',
     name: 'Obsidian',
-    badge: 'Default',
+    badge: 'По умолчанию',
     type: 'obsidian',
     css: '#0d0d0d',
     preview: '#0d0d0d',
@@ -14,7 +14,7 @@ const LUNA_STUDIO_BACKGROUNDS = [
   {
     id: 'lunar-waves',
     name: 'Lunar Waves',
-    badge: 'Animated',
+    badge: 'Анимированный',
     type: 'webgl',
     css: '#000000',
     preview: 'radial-gradient(circle at 50% 95%, rgba(160, 160, 160, 0.28), transparent 48%), linear-gradient(155deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 34%, transparent 52%, rgba(255, 255, 255, 0.11) 70%, transparent 88%), #050505',
@@ -22,77 +22,77 @@ const LUNA_STUDIO_BACKGROUNDS = [
   {
     id: 'crimson-horizon',
     name: 'Crimson Horizon',
-    badge: 'Static',
+    badge: 'Статичный',
     type: 'css',
     css: 'radial-gradient(125% 125% at 50% 100%, #000000 40%, #2b0707 100%)',
   },
   {
     id: 'emerald-horizon',
     name: 'Emerald Horizon',
-    badge: 'Static',
+    badge: 'Статичный',
     type: 'css',
     css: 'radial-gradient(125% 125% at 50% 90%, #000000 40%, #072607 100%)',
   },
   {
     id: 'dark-horizon',
     name: 'Dark Horizon',
-    badge: 'Static',
+    badge: 'Статичный',
     type: 'css',
     css: 'radial-gradient(125% 125% at 50% 90%, #000000 40%, #0d1a36 100%)',
   },
   {
     id: 'crimson-abyss',
     name: 'Crimson Abyss',
-    badge: 'Static',
+    badge: 'Статичный',
     type: 'css',
     css: 'radial-gradient(125% 125% at 50% 10%, #000000 40%, #2b0707 100%)',
   },
   {
     id: 'emerald-abyss',
     name: 'Emerald Abyss',
-    badge: 'Static',
+    badge: 'Статичный',
     type: 'css',
     css: 'radial-gradient(125% 125% at 50% 10%, #000000 40%, #072607 100%)',
   },
   {
     id: 'violet-abyss',
     name: 'Violet Abyss',
-    badge: 'Static',
+    badge: 'Статичный',
     type: 'css',
     css: 'radial-gradient(125% 125% at 50% 10%, #000000 40%, #2b092b 100%)',
   },
   {
     id: 'ocean-glow',
     name: 'Ocean Glow',
-    badge: 'Static',
+    badge: 'Статичный',
     type: 'css',
     css: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(6, 182, 212, 0.25), transparent 70%), #000000',
   },
   {
     id: 'copper-forge',
     name: 'Copper Forge',
-    badge: 'Static',
+    badge: 'Статичный',
     type: 'css',
     css: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249, 115, 22, 0.25), transparent 70%), #000000',
   },
   {
     id: 'stellar-mist',
     name: 'Stellar Mist',
-    badge: 'Static',
+    badge: 'Статичный',
     type: 'css',
     css: 'radial-gradient(ellipse 140% 50% at 15% 60%, rgba(124, 58, 237, 0.11), transparent 48%), radial-gradient(ellipse 90% 80% at 85% 25%, rgba(245, 101, 101, 0.09), transparent 58%), radial-gradient(ellipse 120% 65% at 40% 90%, rgba(34, 197, 94, 0.13), transparent 52%), radial-gradient(ellipse 100% 45% at 70% 5%, rgba(251, 191, 36, 0.07), transparent 42%), radial-gradient(ellipse 80% 75% at 90% 80%, rgba(168, 85, 247, 0.10), transparent 55%), #000000',
   },
   {
     id: 'cosmic-nebula',
     name: 'Cosmic Nebula',
-    badge: 'Static',
+    badge: 'Статичный',
     type: 'css',
     css: 'radial-gradient(ellipse 110% 70% at 25% 80%, rgba(147, 51, 234, 0.12), transparent 55%), radial-gradient(ellipse 130% 60% at 75% 15%, rgba(59, 130, 246, 0.10), transparent 65%), radial-gradient(ellipse 80% 90% at 20% 30%, rgba(236, 72, 153, 0.14), transparent 50%), radial-gradient(ellipse 100% 40% at 60% 70%, rgba(16, 185, 129, 0.08), transparent 45%), #000000',
   },
   {
     id: 'prismatic-aurora',
     name: 'Prismatic Aurora',
-    badge: 'Static',
+    badge: 'Статичный',
     type: 'css',
     css: 'radial-gradient(ellipse 120% 80% at 70% 20%, rgba(255, 20, 147, 0.15), transparent 50%), radial-gradient(ellipse 100% 60% at 30% 10%, rgba(0, 255, 255, 0.12), transparent 60%), radial-gradient(ellipse 90% 70% at 50% 0%, rgba(138, 43, 226, 0.18), transparent 65%), radial-gradient(ellipse 110% 50% at 80% 30%, rgba(255, 215, 0, 0.08), transparent 40%), #000000',
   },
@@ -483,44 +483,44 @@ const GUIDE_DOCS_ORDER = [
   {
     id: 'wf-youtube',
     label: 'YouTube',
-    title: 'YouTube Workflow',
-    subtitle: 'Select a YouTube mode below to trace every node from URL input to Workspace output.',
+    title: 'Сценарии работы с YouTube',
+    subtitle: 'Выберите режим YouTube ниже и просмотрите весь путь от ссылки до файлов в медиатеке.',
   },
   {
     id: 'wf-instagram',
     label: 'Instagram Reels',
-    title: 'Instagram Reels Workflow',
-    subtitle: 'How Luna validates and downloads Instagram Reels directly to your local Workspace.',
+    title: 'Сценарии работы с Instagram Reels',
+    subtitle: 'Как Luna проверяет и скачивает Instagram Reels прямо в вашу локальную медиатеку.',
   },
   {
     id: 'wf-tiktok',
     label: 'TikTok',
-    title: 'TikTok Workflow',
-    subtitle: 'Select Video MP4 or Audio MP3 to inspect each processing node from link to saved output.',
+    title: 'Сценарии работы с TikTok',
+    subtitle: 'Выберите режим «Видео MP4» или «Аудио MP3», чтобы изучить каждый этап обработки от ссылки до сохранённого файла.',
   },
   {
     id: 'modes',
-    label: 'Features & Modes',
-    title: 'Features & Modes',
-    subtitle: 'Compare the four download, trimming, and AI clipping modes to pick what fits your content.',
+    label: 'Возможности и режимы',
+    title: 'Возможности и режимы',
+    subtitle: 'Сравните четыре режима скачивания, нарезки и ИИ-клипов и выберите подходящий для вашего контента.',
   },
   {
     id: 'setup',
-    label: 'Setup & Requirements',
-    title: 'Setup & Requirements',
-    subtitle: 'What Luna sets up automatically via install.ps1, install.sh, or Docker, and what is optional.',
+    label: 'Установка и требования',
+    title: 'Установка и требования',
+    subtitle: 'Что Luna настраивает автоматически через install.ps1, install.sh или Docker, а что можно настроить по желанию.',
   },
   {
     id: 'vault',
-    label: 'Workspace',
-    title: 'Workspace',
-    subtitle: 'Luna organizes outputs into structured category folders, customizable anytime from Move Folder in Settings.',
+    label: 'Медиатека',
+    title: 'Медиатека',
+    subtitle: 'Luna раскладывает вывод по папкам категорий; их можно в любой момент изменить через «Перенести папку» в Настройках.',
   },
   {
     id: 'faq',
-    label: 'FAQ',
-    title: 'FAQ & Troubleshooting',
-    subtitle: 'Quick answers to common setup, download, and configuration questions.',
+    label: 'Вопросы и ответы',
+    title: 'Вопросы и ответы',
+    subtitle: 'Быстрые ответы на частые вопросы по установке, загрузке и настройке.',
   },
 ];
 
@@ -531,14 +531,14 @@ const GUIDE_WORKFLOWS = {
     summaryId: 'wfYoutubeSummary',
     modes: {
       ai_clip: {
-        summary: 'Pipeline for AI Short Clips: requires an LLM key (and Groq/Gemini key if the video has no captions).',
-        phases: ['1. Input', '2. Speech & Cache', '3. AI & Render', '4. Output'],
+        summary: 'Конвейер ИИ-клипов: нужен ключ LLM (а также ключ Groq или Gemini, если у видео нет субтитров).',
+        phases: ['1. Ввод', '2. Речь и кэш', '3. ИИ и рендер', '4. Вывод'],
         studio: [
           {
             align: 'bottom',
             nodes: [
-              { id: 'u-url', kind: 'box', label: 'YouTube URL', step: 0 },
-              { id: 'u-cfg', kind: 'pill', label: 'Config & Start', step: 0 },
+              { id: 'u-url', kind: 'box', label: 'Ссылка YouTube', step: 0 },
+              { id: 'u-cfg', kind: 'pill', label: 'Настройка и запуск', step: 0 },
             ],
           },
           { align: 'bottom', nodes: [] },
@@ -546,9 +546,9 @@ const GUIDE_WORKFLOWS = {
           {
             align: 'bottom',
             nodes: [
-              { id: 'u-zip', kind: 'pill', label: 'Download .ZIP', step: 3 },
-              { id: 'u-prev', kind: 'pill', label: 'Preview Clips', step: 3 },
-              { id: 'u-canv', kind: 'box', label: 'Clipper Canvas', step: 3 },
+              { id: 'u-zip', kind: 'pill', label: 'Скачать .ZIP', step: 3 },
+              { id: 'u-prev', kind: 'pill', label: 'Просмотр клипов', step: 3 },
+              { id: 'u-canv', kind: 'box', label: 'Холст нарезки', step: 3 },
             ],
           },
         ],
@@ -563,30 +563,30 @@ const GUIDE_WORKFLOWS = {
           {
             align: 'top',
             nodes: [
-              { id: 'p-stt', kind: 'box', label: 'Transcription', step: 1 },
-              { id: 'p-srt', kind: 'pill', label: 'Captions / .SRT', step: 1 },
+              { id: 'p-stt', kind: 'box', label: 'Транскрипция', step: 1 },
+              { id: 'p-srt', kind: 'pill', label: 'Субтитры / .SRT', step: 1 },
               { id: 'p-asr', kind: 'pill', label: 'Groq · Gemini · Whisper', step: 1 },
             ],
           },
           {
             align: 'top',
             nodes: [
-              { id: 'p-ai', kind: 'box', label: 'Virality + FFmpeg', step: 2 },
-              { id: 'p-llm', kind: 'pill', label: 'LLM Hook Score', step: 2 },
-              { id: 'p-crop', kind: 'pill', label: 'Crop / Face Track', step: 2 },
+              { id: 'p-ai', kind: 'box', label: 'Вирусность + FFmpeg', step: 2 },
+              { id: 'p-llm', kind: 'pill', label: 'Оценка вирусности (LLM)', step: 2 },
+              { id: 'p-crop', kind: 'pill', label: 'Обрезка / слежение за лицом', step: 2 },
             ],
           },
           {
             align: 'top',
             nodes: [
               { id: 'p-vault', kind: 'box', label: '01-AI-Clips', step: 3 },
-              { id: 'p-meta', kind: 'pill', label: 'Clips + meta.json', step: 3 },
+              { id: 'p-meta', kind: 'pill', label: 'Клипы + meta.json', step: 3 },
             ],
           },
         ],
         edges: [
           { from: 'u-url', to: 'u-cfg', route: 'v', style: 'green' },
-          { from: 'u-cfg', to: 'p-dlp', route: 'v', style: 'dashed', badge: { color: '#a855f7', text: 'Submit' } },
+          { from: 'u-cfg', to: 'p-dlp', route: 'v', style: 'dashed', badge: { color: '#a855f7', text: 'Отправить' } },
           { from: 'p-dlp', to: 'p-h264', route: 'left-branch', style: 'green' },
           { from: 'p-dlp', to: 'p-stt', route: 'h', style: 'green' },
           { from: 'p-stt', to: 'p-srt', route: 'left-branch', style: 'green' },
@@ -596,68 +596,68 @@ const GUIDE_WORKFLOWS = {
           { from: 'p-ai', to: 'p-crop', route: 'left-branch', style: 'green' },
           { from: 'p-ai', to: 'p-vault', route: 'h', style: 'green' },
           { from: 'p-vault', to: 'p-meta', route: 'left-branch', style: 'green' },
-          { from: 'p-vault', to: 'u-canv', route: 'v-up', style: 'dashed', badge: { color: '#22c55e', text: 'Ready' } },
+          { from: 'p-vault', to: 'u-canv', route: 'v-up', style: 'dashed', badge: { color: '#22c55e', text: 'Готово' } },
           { from: 'u-canv', to: 'u-prev', route: 'right-up', style: 'green' },
           { from: 'u-canv', to: 'u-zip', route: 'right-up', style: 'green' },
         ],
         steps: [
           {
-            tag: 'Studio',
-            title: 'Input URL & Configuration',
-            detail: 'Paste a YouTube video URL in Studio. Before dispatching the job, Luna validates URL format and public host safety, fetches quick metadata, and locks in your rendering preferences.',
+            tag: 'Студия',
+            title: 'Ввод URL и настройка',
+            detail: 'Вставьте ссылку на видео YouTube в Студии. Перед запуском задачи Luna проверяет формат URL и безопасность публичного хоста, быстро получает метаданные и фиксирует ваши настройки рендера.',
             points: [
-              '<strong>Target Aspect Ratio:</strong> Choose 9:16 (vertical Reels/Shorts/TikTok), 16:9, 1:1, or 3:4.',
-              '<strong>Clip Count & Framing:</strong> Pick between 3 to 7 clips and select either fast Center Crop or OpenCV Face Tracking.',
-              '<strong>Workspace Destination:</strong> Outputs are routed into your active Workspace subfolder so parallel channels or projects stay separated.',
+              '<strong>Целевое соотношение сторон:</strong> выберите 9:16 (вертикальные Reels/Shorts/TikTok), 16:9, 1:1 или 3:4.',
+              '<strong>Количество клипов и кадрирование:</strong> выберите от 3 до 7 клипов и быструю обрезку по центру или слежение за лицом через OpenCV.',
+              '<strong>Папка медиатеки:</strong> вывод попадает в подпапку активной медиатеки, чтобы параллельные каналы и проекты не смешивались.',
             ],
           },
           {
-            tag: 'yt-dlp + Speech',
-            title: 'Download Source & Resolve Transcript',
-            detail: 'Luna ingests the clean high-resolution source stream via yt-dlp powered by the Deno JS runtime, then builds a time-synced transcript before touching your LLM quota.',
+            tag: 'yt-dlp + речь',
+            title: 'Загрузка источника и получение транскрипта',
+            detail: 'Luna загружает чистый поток источника в высоком разрешении через yt-dlp на среде Deno, затем строит синхронизированный по времени транскрипт, прежде чем расходовать квоту LLM.',
             points: [
-              '<strong>1080p H.264 Stream & Cookies:</strong> Downloads video + audio and automatically attaches cookies.txt if uploaded in Settings to bypass YouTube sign-in or 403 challenges.',
-              '<strong>Transcript Priority Chain:</strong> Checks existing local .srt cache first, then official YouTube captions, before falling back to Groq Cloud Whisper, Gemini audio transcription, or local Faster-Whisper.',
+              '<strong>Поток 1080p H.264 и cookies:</strong> скачивает видео и звук и автоматически подставляет cookies.txt, если он загружен в Настройках, чтобы обойти вход в YouTube или ошибки 403.',
+              '<strong>Порядок поиска транскрипта:</strong> сначала проверяет локальный кэш .srt, затем официальные субтитры YouTube и только потом переходит к Groq Cloud Whisper, транскрипции Gemini или локальному Faster-Whisper.',
             ],
           },
           {
             tag: 'LLM + FFmpeg',
-            title: 'Virality Scoring, Reframing & Rendering',
-            detail: 'Your configured LLM scans the timestamped transcript to find standalone hooks, then FFmpeg cuts and reframes each selected moment cleanly.',
+            title: 'Оценка вирусности, перекадрирование и рендер',
+            detail: 'Настроенная вами LLM просматривает транскрипт с таймкодами и находит самостоятельные хуки, затем FFmpeg чисто нарезает и перекадрирует выбранные моменты.',
             points: [
-              '<strong>Hook Scoring (0–100):</strong> Uses your OpenAI-compatible endpoint or Gemini model to rank self-contained segments with non-overlapping timestamps.',
-              '<strong>Reframe & Encode:</strong> Slices the video accurately per timestamp and applies Center Crop or OpenCV face centering into ready-to-upload MP4 files (without hardcoded burned captions).',
+              '<strong>Оценка вирусности (0–100):</strong> ранжирует самостоятельные фрагменты с непересекающимися таймкодами через совместимую с OpenAI конечную точку или модель Gemini.',
+              '<strong>Перекадрирование и кодирование:</strong> точно режет видео по таймкодам и применяет обрезку по центру или центрирование по лицу через OpenCV, сохраняя готовые к загрузке MP4 (без вшитых субтитров).',
             ],
           },
           {
-            tag: 'Storage + UI',
-            title: 'Save to Workspace & Clipper Canvas',
-            detail: 'Finished clips are indexed atomically and handed back to the Studio UI so you can inspect results right away.',
+            tag: 'Хранилище + интерфейс',
+            title: 'Сохранение в медиатеку и на холст нарезки',
+            detail: 'Готовые клипы атомарно индексируются и передаются в интерфейс Студии, чтобы вы сразу могли посмотреть результат.',
             points: [
-              '<strong>Folder Structure:</strong> Saves every rendered MP4 along with meta.json (score, timestamps, summary, and provider metadata) into 01-AI-Clips\\{Workspace}.',
-              '<strong>Interactive Review & Export:</strong> Opens clips inside Clipper Canvas for instant preview, individual downloads, or a one-click batch .ZIP archive.',
+              '<strong>Структура папок:</strong> сохраняет каждый отрендеренный MP4 вместе с meta.json (оценка, таймкоды, краткое описание и метаданные провайдера) в 01-AI-Clips\\{Медиатека}.',
+              '<strong>Просмотр и экспорт:</strong> открывает клипы на холсте нарезки для мгновенного просмотра, скачивания по одному или пакетного архива .ZIP в один клик.',
             ],
           },
         ],
       },
       video: {
-        summary: 'Standard YouTube video download with optional resolution, aspect ratio crop, and FPS conversion. No API key needed.',
-        phases: ['1. Input', '2. Download & Format', '3. Output'],
+        summary: 'Обычная загрузка видео YouTube с выбором разрешения, обрезкой по соотношению сторон и сменой FPS. API-ключ не нужен.',
+        phases: ['1. Ввод', '2. Загрузка и формат', '3. Вывод'],
         studio: [
           {
             align: 'bottom',
             nodes: [
-              { id: 'u-url', kind: 'box', label: 'YouTube URL', step: 0 },
-              { id: 'u-cfg', kind: 'pill', label: 'Quality, Ratio & FPS', step: 0 },
+              { id: 'u-url', kind: 'box', label: 'Ссылка YouTube', step: 0 },
+              { id: 'u-cfg', kind: 'pill', label: 'Качество, соотношение и FPS', step: 0 },
             ],
           },
           { align: 'bottom', nodes: [] },
           {
             align: 'bottom',
             nodes: [
-              { id: 'u-open', kind: 'pill', label: 'Open Folder', step: 2 },
-              { id: 'u-prev', kind: 'pill', label: 'Preview MP4', step: 2 },
-              { id: 'u-vault', kind: 'box', label: 'Workspace', step: 2 },
+              { id: 'u-open', kind: 'pill', label: 'Открыть папку', step: 2 },
+              { id: 'u-prev', kind: 'pill', label: 'Просмотр MP4', step: 2 },
+              { id: 'u-vault', kind: 'box', label: 'Медиатека', step: 2 },
             ],
           },
         ],
@@ -665,16 +665,16 @@ const GUIDE_WORKFLOWS = {
           {
             align: 'top',
             nodes: [
-              { id: 'p-dlp', kind: 'box', label: 'yt-dlp Mux', step: 1 },
+              { id: 'p-dlp', kind: 'box', label: 'Сборка yt-dlp', step: 1 },
               { id: 'p-res', kind: 'pill', label: '1080p / 720p / 480p', step: 1 },
             ],
           },
           {
             align: 'top',
             nodes: [
-              { id: 'p-ff', kind: 'box', label: 'FFmpeg Format', step: 1 },
-              { id: 'p-ratio', kind: 'pill', label: 'Aspect Ratio Crop', step: 1 },
-              { id: 'p-fps', kind: 'pill', label: 'Auto / 60 / 30 FPS', step: 1 },
+              { id: 'p-ff', kind: 'box', label: 'Формат FFmpeg', step: 1 },
+              { id: 'p-ratio', kind: 'pill', label: 'Обрезка по соотношению', step: 1 },
+              { id: 'p-fps', kind: 'pill', label: 'Авто / 60 / 30 FPS', step: 1 },
             ],
           },
           {
@@ -687,65 +687,65 @@ const GUIDE_WORKFLOWS = {
         ],
         edges: [
           { from: 'u-url', to: 'u-cfg', route: 'v', style: 'green' },
-          { from: 'u-cfg', to: 'p-dlp', route: 'v', style: 'dashed', badge: { color: '#a855f7', text: 'Submit' } },
+          { from: 'u-cfg', to: 'p-dlp', route: 'v', style: 'dashed', badge: { color: '#a855f7', text: 'Отправить' } },
           { from: 'p-dlp', to: 'p-res', route: 'left-branch', style: 'green' },
           { from: 'p-dlp', to: 'p-ff', route: 'h', style: 'green' },
           { from: 'p-ff', to: 'p-ratio', route: 'left-branch', style: 'green' },
           { from: 'p-ff', to: 'p-fps', route: 'left-branch', style: 'green' },
           { from: 'p-ff', to: 'p-out', route: 'h', style: 'green' },
           { from: 'p-out', to: 'p-meta', route: 'left-branch', style: 'green' },
-          { from: 'p-out', to: 'u-vault', route: 'v-up', style: 'dashed', badge: { color: '#22c55e', text: 'Ready' } },
+          { from: 'p-out', to: 'u-vault', route: 'v-up', style: 'dashed', badge: { color: '#22c55e', text: 'Готово' } },
           { from: 'u-vault', to: 'u-prev', route: 'right-up', style: 'green' },
           { from: 'u-vault', to: 'u-open', route: 'right-up', style: 'green' },
         ],
         steps: [
           {
-            tag: 'Studio',
-            title: 'Input URL & Format Options',
-            detail: 'Paste a standard YouTube or Shorts URL in Studio and choose your desired resolution, aspect ratio, and frame rate without configuring any AI API keys.',
+            tag: 'Студия',
+            title: 'Ввод URL и параметров формата',
+            detail: 'Вставьте обычную ссылку YouTube или Shorts в Студии и выберите разрешение, соотношение сторон и частоту кадров без настройки ключей ИИ.',
             points: [
-              '<strong>Video Quality:</strong> Select 1080p, 720p, or 480p depending on speed vs. file size requirements.',
-              '<strong>Ratio & Frame Rate:</strong> Keep Original / Auto FPS for maximum speed, or enforce 9:16 / 3:4 / 1:1 crop and 60 or 30 FPS output.',
+              '<strong>Качество видео:</strong> выберите 1080p, 720p или 480p в зависимости от требований к скорости и размеру файла.',
+              '<strong>Соотношение и частота кадров:</strong> оставьте «Оригинал» и «Авто FPS» для максимальной скорости или задайте обрезку 9:16 / 3:4 / 1:1 и вывод 60 или 30 FPS.',
             ],
           },
           {
             tag: 'yt-dlp + FFmpeg',
-            title: 'Download, Mux & Conditional Re-Encoding',
-            detail: 'Luna pulls separate best-match video and audio streams via yt-dlp + Deno runtime and merges them into a standard H.264 MP4 container.',
+            title: 'Загрузка, сборка и при необходимости перекодирование',
+            detail: 'Luna вытягивает отдельные лучшие потоки видео и звука через yt-dlp на среде Deno и объединяет их в обычный контейнер H.264 MP4.',
             points: [
-              '<strong>Direct Stream Copy vs. Re-Encode:</strong> When Original ratio and Auto FPS are selected, muxing finishes quickly without re-encoding pixels.',
-              '<strong>Custom Format Conversion:</strong> If a cropped aspect ratio or fixed FPS (60/30) is chosen, FFmpeg applies center framing and frame-rate normalization automatically.',
+              '<strong>Копирование потока или перекодирование:</strong> при выборе «Оригинал» и «Авто FPS» сборка проходит быстро, без повторного кодирования пикселей.',
+              '<strong>Своё преобразование формата:</strong> если выбрана обрезка по соотношению или фиксированный FPS (60/30), FFmpeg сам кадрирует по центру и приводит частоту кадров к нужной.',
             ],
           },
           {
-            tag: 'Storage + UI',
-            title: 'Save to 02-YouTube-Full & Workspace',
-            detail: 'Completed files are organized inside your storage root and surfaced immediately inside Studio and Workspace.',
+            tag: 'Хранилище + интерфейс',
+            title: 'Сохранение в 02-YouTube-Full и медиатеку',
+            detail: 'Готовые файлы раскладываются в корне хранилища и сразу появляются в Студии и медиатеке.',
             points: [
-              '<strong>Destination & Metadata:</strong> Stores the final MP4 and meta.json inside 02-YouTube-Full\\{Workspace}.',
-              '<strong>Quick Actions:</strong> Play inline in Workspace, trigger browser download, or jump straight to the local folder.',
+              '<strong>Папка и метаданные:</strong> сохраняет итоговый MP4 и meta.json в 02-YouTube-Full\\{Медиатека}.',
+              '<strong>Быстрые действия:</strong> воспроизводите прямо в медиатеке, запускайте скачивание в браузере или сразу открывайте локальную папку.',
             ],
           },
         ],
       },
       mp3: {
-        summary: 'Fast audio-only extraction directly to high-bitrate MP3. No API key needed.',
-        phases: ['1. Input', '2. Extract Audio', '3. Output'],
+        summary: 'Быстрое извлечение только звука сразу в MP3 с высоким битрейтом. API-ключ не нужен.',
+        phases: ['1. Ввод', '2. Извлечение звука', '3. Вывод'],
         studio: [
           {
             align: 'bottom',
             nodes: [
-              { id: 'u-url', kind: 'box', label: 'YouTube URL', step: 0 },
-              { id: 'u-cfg', kind: 'pill', label: 'Audio MP3 Mode', step: 0 },
+              { id: 'u-url', kind: 'box', label: 'Ссылка YouTube', step: 0 },
+              { id: 'u-cfg', kind: 'pill', label: 'Режим Аудио MP3', step: 0 },
             ],
           },
           { align: 'bottom', nodes: [] },
           {
             align: 'bottom',
             nodes: [
-              { id: 'u-open', kind: 'pill', label: 'Open Folder', step: 2 },
-              { id: 'u-play', kind: 'pill', label: 'Play Audio', step: 2 },
-              { id: 'u-vault', kind: 'box', label: 'Workspace', step: 2 },
+              { id: 'u-open', kind: 'pill', label: 'Открыть папку', step: 2 },
+              { id: 'u-play', kind: 'pill', label: 'Слушать аудио', step: 2 },
+              { id: 'u-vault', kind: 'box', label: 'Медиатека', step: 2 },
             ],
           },
         ],
@@ -753,14 +753,14 @@ const GUIDE_WORKFLOWS = {
           {
             align: 'top',
             nodes: [
-              { id: 'p-dlp', kind: 'box', label: 'yt-dlp Audio', step: 1 },
-              { id: 'p-trk', kind: 'pill', label: 'Best Audio Track', step: 1 },
+              { id: 'p-dlp', kind: 'box', label: 'yt-dlp: аудио', step: 1 },
+              { id: 'p-trk', kind: 'pill', label: 'Лучшая аудиодорожка', step: 1 },
             ],
           },
           {
             align: 'top',
             nodes: [
-              { id: 'p-ff', kind: 'box', label: 'FFmpeg Transcode', step: 1 },
+              { id: 'p-ff', kind: 'box', label: 'Перекодирование FFmpeg', step: 1 },
               { id: 'p-br', kind: 'pill', label: '320 kbps MP3', step: 1 },
             ],
           },
@@ -774,62 +774,62 @@ const GUIDE_WORKFLOWS = {
         ],
         edges: [
           { from: 'u-url', to: 'u-cfg', route: 'v', style: 'green' },
-          { from: 'u-cfg', to: 'p-dlp', route: 'v', style: 'dashed', badge: { color: '#a855f7', text: 'Submit' } },
+          { from: 'u-cfg', to: 'p-dlp', route: 'v', style: 'dashed', badge: { color: '#a855f7', text: 'Отправить' } },
           { from: 'p-dlp', to: 'p-trk', route: 'left-branch', style: 'green' },
           { from: 'p-dlp', to: 'p-ff', route: 'h', style: 'green' },
           { from: 'p-ff', to: 'p-br', route: 'left-branch', style: 'green' },
           { from: 'p-ff', to: 'p-out', route: 'h', style: 'green' },
           { from: 'p-out', to: 'p-meta', route: 'left-branch', style: 'green' },
-          { from: 'p-out', to: 'u-vault', route: 'v-up', style: 'dashed', badge: { color: '#22c55e', text: 'Ready' } },
+          { from: 'p-out', to: 'u-vault', route: 'v-up', style: 'dashed', badge: { color: '#22c55e', text: 'Готово' } },
           { from: 'u-vault', to: 'u-play', route: 'right-up', style: 'green' },
           { from: 'u-vault', to: 'u-open', route: 'right-up', style: 'green' },
         ],
         steps: [
           {
-            tag: 'Studio',
-            title: 'Input YouTube Link',
-            detail: 'Paste a YouTube link (music track, podcast, interview, or video) and choose Audio MP3 mode. Zero AI tokens or API keys are required.',
+            tag: 'Студия',
+            title: 'Ввод ссылки YouTube',
+            detail: 'Вставьте ссылку YouTube (музыка, подкаст, интервью или видео) и выберите режим «Аудио MP3». Токены ИИ и API-ключи не нужны.',
             points: [
-              '<strong>Fast Metadata Check:</strong> Validates the URL host and pulls title/thumbnail metadata before starting extraction.',
+              '<strong>Быстрая проверка метаданных:</strong> проверяет хост URL и получает название и обложку до начала извлечения.',
             ],
           },
           {
             tag: 'yt-dlp + FFmpeg',
-            title: 'Fetch Audio Stream & Transcode 320 kbps MP3',
-            detail: 'Instead of pulling large 1080p video files, yt-dlp grabs only the highest-bitrate audio track and pipes it into FFmpeg.',
+            title: 'Получение аудиопотока и перекодирование в MP3 320 kbps',
+            detail: 'Вместо загрузки больших видео 1080p yt-dlp берёт только аудиодорожку с максимальным битрейтом и передаёт её в FFmpeg.',
             points: [
-              '<strong>High-Bitrate Output:</strong> FFmpeg runs FFmpegExtractAudio with preferredcodec mp3 and preferredquality 320 kbps.',
-              '<strong>Cookie Support:</strong> Automatically uses Settings cookies.txt if YouTube requires sign-in verification.',
+              '<strong>Высокий битрейт:</strong> FFmpeg запускает FFmpegExtractAudio с кодеком mp3 и качеством 320 kbps.',
+              '<strong>Поддержка cookies:</strong> автоматически использует cookies.txt из Настроек, если YouTube требует подтвердить вход.',
             ],
           },
           {
-            tag: 'Storage + UI',
-            title: 'Save to 05-Audio-MP3 & Workspace',
-            detail: 'Once conversion finishes, the audio file is registered in your workspace.',
+            tag: 'Хранилище + интерфейс',
+            title: 'Сохранение в 05-Audio-MP3 и медиатеку',
+            detail: 'Когда преобразование закончено, аудиофайл регистрируется в вашей медиатеке.',
             points: [
-              '<strong>Destination & Playback:</strong> Saves the .mp3 alongside meta.json inside 05-Audio-MP3\\{Workspace} for instant audio playback or folder access.',
+              '<strong>Папка и воспроизведение:</strong> сохраняет .mp3 вместе с meta.json в 05-Audio-MP3\\{Медиатека} для мгновенного прослушивания или доступа к папке.',
             ],
           },
         ],
       },
       trim: {
-        summary: 'Exact multi-segment cutter (up to 20 ranges per job) with aspect ratio framing. Uses zero AI quota.',
-        phases: ['1. Input & Ranges', '2. Cut & Frame', '3. Output'],
+        summary: 'Точная нарезка нескольких фрагментов (до 20 диапазонов за задачу) с кадрированием по соотношению сторон. Лимиты ИИ не расходуются.',
+        phases: ['1. Ввод и отрезки', '2. Нарезка и кадрирование', '3. Вывод'],
         studio: [
           {
             align: 'bottom',
             nodes: [
-              { id: 'u-url', kind: 'box', label: 'YouTube URL', step: 0 },
-              { id: 'u-cfg', kind: 'pill', label: '1–20 Timestamps', step: 0 },
+              { id: 'u-url', kind: 'box', label: 'Ссылка YouTube', step: 0 },
+              { id: 'u-cfg', kind: 'pill', label: '1–20 таймкодов', step: 0 },
             ],
           },
           { align: 'bottom', nodes: [] },
           {
             align: 'bottom',
             nodes: [
-              { id: 'u-zip', kind: 'pill', label: 'Download .ZIP', step: 2 },
-              { id: 'u-prev', kind: 'pill', label: 'Preview Clips', step: 2 },
-              { id: 'u-vault', kind: 'box', label: 'Workspace', step: 2 },
+              { id: 'u-zip', kind: 'pill', label: 'Скачать .ZIP', step: 2 },
+              { id: 'u-prev', kind: 'pill', label: 'Просмотр клипов', step: 2 },
+              { id: 'u-vault', kind: 'box', label: 'Медиатека', step: 2 },
             ],
           },
         ],
@@ -837,64 +837,64 @@ const GUIDE_WORKFLOWS = {
           {
             align: 'top',
             nodes: [
-              { id: 'p-dlp', kind: 'box', label: 'yt-dlp Source', step: 1 },
-              { id: 'p-src', kind: 'pill', label: 'Up to 1080p MP4', step: 1 },
+              { id: 'p-dlp', kind: 'box', label: 'Источник yt-dlp', step: 1 },
+              { id: 'p-src', kind: 'pill', label: 'MP4 до 1080p', step: 1 },
             ],
           },
           {
             align: 'top',
             nodes: [
-              { id: 'p-ff', kind: 'box', label: 'FFmpeg Trimmer', step: 1 },
-              { id: 'p-rng', kind: 'pill', label: 'Exact Timecodes', step: 1 },
-              { id: 'p-crop', kind: 'pill', label: 'Ratio Crop', step: 1 },
+              { id: 'p-ff', kind: 'box', label: 'Обрезка FFmpeg', step: 1 },
+              { id: 'p-rng', kind: 'pill', label: 'Точные таймкоды', step: 1 },
+              { id: 'p-crop', kind: 'pill', label: 'Обрезка по соотношению', step: 1 },
             ],
           },
           {
             align: 'top',
             nodes: [
               { id: 'p-out', kind: 'box', label: '02-YouTube-Full', step: 2 },
-              { id: 'p-meta', kind: 'pill', label: 'Clips + meta.json', step: 2 },
+              { id: 'p-meta', kind: 'pill', label: 'Клипы + meta.json', step: 2 },
             ],
           },
         ],
         edges: [
           { from: 'u-url', to: 'u-cfg', route: 'v', style: 'green' },
-          { from: 'u-cfg', to: 'p-dlp', route: 'v', style: 'dashed', badge: { color: '#a855f7', text: 'Submit' } },
+          { from: 'u-cfg', to: 'p-dlp', route: 'v', style: 'dashed', badge: { color: '#a855f7', text: 'Отправить' } },
           { from: 'p-dlp', to: 'p-src', route: 'left-branch', style: 'green' },
           { from: 'p-dlp', to: 'p-ff', route: 'h', style: 'green' },
           { from: 'p-ff', to: 'p-rng', route: 'left-branch', style: 'green' },
           { from: 'p-ff', to: 'p-crop', route: 'left-branch', style: 'green' },
           { from: 'p-ff', to: 'p-out', route: 'h', style: 'green' },
           { from: 'p-out', to: 'p-meta', route: 'left-branch', style: 'green' },
-          { from: 'p-out', to: 'u-vault', route: 'v-up', style: 'dashed', badge: { color: '#22c55e', text: 'Ready' } },
+          { from: 'p-out', to: 'u-vault', route: 'v-up', style: 'dashed', badge: { color: '#22c55e', text: 'Готово' } },
           { from: 'u-vault', to: 'u-prev', route: 'right-up', style: 'green' },
           { from: 'u-vault', to: 'u-zip', route: 'right-up', style: 'green' },
         ],
         steps: [
           {
-            tag: 'Studio',
-            title: 'Input Link & Exact Timestamp Ranges',
-            detail: 'Select Video Trimmer mode when you already know the exact timestamps to extract — uses zero AI quota and requires no API keys.',
+            tag: 'Студия',
+            title: 'Ввод ссылки и точных диапазонов',
+            detail: 'Выберите режим «Нарезка видео», если уже знаете точные таймкоды для извлечения. Лимиты ИИ не расходуются, API-ключи не нужны.',
             points: [
-              '<strong>Multi-Segment Queue:</strong> Add between 1 and 20 start/end timestamp ranges in a single job.',
-              '<strong>Aspect Ratio Framing:</strong> Pick Original, 9:16, 3:4, or 1:1 crop to apply uniformly across every trimmed cut.',
+              '<strong>Очередь из нескольких фрагментов:</strong> добавьте от 1 до 20 диапазонов начала и конца в одну задачу.',
+              '<strong>Кадрирование по соотношению:</strong> выберите «Оригинал», 9:16, 3:4 или 1:1, чтобы применить обрезку ко всем фрагментам одинаково.',
             ],
           },
           {
             tag: 'yt-dlp + FFmpeg',
-            title: 'Download Source Once & Cut Every Segment',
-            detail: 'Luna downloads the source video up to 1080p locally once, then runs FFmpeg sequentially over your timestamp list for frame-accurate cuts.',
+            title: 'Однократная загрузка источника и нарезка всех фрагментов',
+            detail: 'Luna один раз скачивает исходное видео до 1080p локально, затем последовательно прогоняет список таймкодов через FFmpeg для покадровой точности.',
             points: [
-              '<strong>Precise Seeking:</strong> Trims each start-to-end range cleanly with synchronized audio and video.',
-              '<strong>Optional Reframing:</strong> Applies the requested aspect ratio filter on each output segment during rendering.',
+              '<strong>Точная перемотка:</strong> чисто вырезает каждый диапазон от начала до конца с синхронным звуком и видео.',
+              '<strong>Необязательное перекадрирование:</strong> применяет выбранный фильтр соотношения сторон к каждому фрагменту при рендере.',
             ],
           },
           {
-            tag: 'Storage + UI',
-            title: 'Save Trimmed Clips to 02-YouTube-Full & .ZIP',
-            detail: 'All generated segments from the batch are stored together and bundled for easy delivery.',
+            tag: 'Хранилище + интерфейс',
+            title: 'Сохранение нарезанных клипов в 02-YouTube-Full и .ZIP',
+            detail: 'Все фрагменты пакета сохраняются вместе и упаковываются для удобной выдачи.',
             points: [
-              '<strong>Destination & Batch Export:</strong> Writes numbered clips + meta.json into 02-YouTube-Full\\{Workspace}, with inline preview and a single .ZIP archive for all segments.',
+              '<strong>Папка и пакетный экспорт:</strong> записывает пронумерованные клипы и meta.json в 02-YouTube-Full\\{Медиатека}, с просмотром прямо в интерфейсе и одним архивом .ZIP для всех фрагментов.',
             ],
           },
         ],
@@ -907,23 +907,23 @@ const GUIDE_WORKFLOWS = {
     summaryId: 'wfInstagramSummary',
     modes: {
       reels: {
-        summary: 'Direct Instagram Reels video download at full available quality. No API key needed.',
-        phases: ['1. Input', '2. Fetch Reel', '3. Output'],
+        summary: 'Прямое скачивание видео Instagram Reels в доступном качестве. API-ключ не нужен.',
+        phases: ['1. Ввод', '2. Загрузка Reel', '3. Вывод'],
         studio: [
           {
             align: 'bottom',
             nodes: [
-              { id: 'u-url', kind: 'box', label: 'Reels URL', step: 0 },
-              { id: 'u-cfg', kind: 'pill', label: 'Start Download', step: 0 },
+              { id: 'u-url', kind: 'box', label: 'Ссылка Reels', step: 0 },
+              { id: 'u-cfg', kind: 'pill', label: 'Начать загрузку', step: 0 },
             ],
           },
           { align: 'bottom', nodes: [] },
           {
             align: 'bottom',
             nodes: [
-              { id: 'u-open', kind: 'pill', label: 'Open Folder', step: 2 },
-              { id: 'u-prev', kind: 'pill', label: 'Preview Reel', step: 2 },
-              { id: 'u-vault', kind: 'box', label: 'Workspace', step: 2 },
+              { id: 'u-open', kind: 'pill', label: 'Открыть папку', step: 2 },
+              { id: 'u-prev', kind: 'pill', label: 'Просмотр Reel', step: 2 },
+              { id: 'u-vault', kind: 'box', label: 'Медиатека', step: 2 },
             ],
           },
         ],
@@ -931,15 +931,15 @@ const GUIDE_WORKFLOWS = {
           {
             align: 'top',
             nodes: [
-              { id: 'p-val', kind: 'box', label: 'URL Validator', step: 0 },
-              { id: 'p-sec', kind: 'pill', label: 'HTTPS Public Check', step: 0 },
+              { id: 'p-val', kind: 'box', label: 'Проверка URL', step: 0 },
+              { id: 'p-sec', kind: 'pill', label: 'Проверка HTTPS и хоста', step: 0 },
             ],
           },
           {
             align: 'top',
             nodes: [
-              { id: 'p-dlp', kind: 'box', label: 'yt-dlp Reels', step: 1 },
-              { id: 'p-mp4', kind: 'pill', label: 'Full Quality MP4', step: 1 },
+              { id: 'p-dlp', kind: 'box', label: 'yt-dlp: Reels', step: 1 },
+              { id: 'p-mp4', kind: 'pill', label: 'MP4 в полном качестве', step: 1 },
             ],
           },
           {
@@ -952,40 +952,40 @@ const GUIDE_WORKFLOWS = {
         ],
         edges: [
           { from: 'u-url', to: 'u-cfg', route: 'v', style: 'green' },
-          { from: 'u-cfg', to: 'p-val', route: 'v', style: 'dashed', badge: { color: '#a855f7', text: 'Submit' } },
+          { from: 'u-cfg', to: 'p-val', route: 'v', style: 'dashed', badge: { color: '#a855f7', text: 'Отправить' } },
           { from: 'p-val', to: 'p-sec', route: 'left-branch', style: 'green' },
           { from: 'p-val', to: 'p-dlp', route: 'h', style: 'green' },
           { from: 'p-dlp', to: 'p-mp4', route: 'left-branch', style: 'green' },
           { from: 'p-dlp', to: 'p-out', route: 'h', style: 'green' },
           { from: 'p-out', to: 'p-meta', route: 'left-branch', style: 'green' },
-          { from: 'p-out', to: 'u-vault', route: 'v-up', style: 'dashed', badge: { color: '#22c55e', text: 'Ready' } },
+          { from: 'p-out', to: 'u-vault', route: 'v-up', style: 'dashed', badge: { color: '#22c55e', text: 'Готово' } },
           { from: 'u-vault', to: 'u-prev', route: 'right-up', style: 'green' },
           { from: 'u-vault', to: 'u-open', route: 'right-up', style: 'green' },
         ],
         steps: [
           {
-            tag: 'Studio + Guard',
-            title: 'Input & Validate Instagram Reels URL',
-            detail: 'Paste any public Instagram Reels link in Studio. No AI API key is needed to download Reels.',
+            tag: 'Студия + проверка',
+            title: 'Ввод и проверка ссылки Instagram Reels',
+            detail: 'Вставьте любую публичную ссылку Instagram Reels в Студии. Для скачивания Reels API-ключ ИИ не нужен.',
             points: [
-              '<strong>Host & Safety Validation:</strong> Verifies HTTPS scheme and valid public Instagram hostnames before queuing the request.',
-              '<strong>Instant Feedback:</strong> Rejects malformed or private/local host targets upfront with a clear alert modal.',
+              '<strong>Проверка хоста и безопасности:</strong> проверяет схему HTTPS и допустимые публичные домены Instagram, прежде чем поставить запрос в очередь.',
+              '<strong>Мгновенная обратная связь:</strong> сразу отклоняет некорректные, приватные или локальные адреса с понятным окном предупреждения.',
             ],
           },
           {
             tag: 'yt-dlp',
-            title: 'Fetch Full-Quality Reels MP4 Stream',
-            detail: 'Luna hands the validated URL to yt-dlp to pull the highest-quality MP4 video + audio stream available for that Reel.',
+            title: 'Загрузка MP4 Reels в полном качестве',
+            detail: 'Luna передаёт проверенный URL в yt-dlp, чтобы получить доступный видеопоток MP4 с аудио в максимальном качестве для этого Reel.',
             points: [
-              '<strong>Cookie Fallback Ready:</strong> If Instagram rate-limits or requests authentication on a session, cookies uploaded in Settings are used automatically.',
+              '<strong>Готовность к cookies:</strong> если Instagram ограничивает частоту запросов или требует авторизацию, автоматически используются cookies, загруженные в Настройках.',
             ],
           },
           {
-            tag: 'Storage + UI',
-            title: 'Save to 03-Instagram-Reels & Workspace',
-            detail: 'Completed Reels are organized under a dedicated platform directory so they never mix with YouTube or TikTok downloads.',
+            tag: 'Хранилище + интерфейс',
+            title: 'Сохранение в 03-Instagram-Reels и медиатеку',
+            detail: 'Готовые Reels попадают в отдельную папку платформы и не смешиваются с загрузками из YouTube или TikTok.',
             points: [
-              '<strong>Destination & Access:</strong> Writes the MP4 alongside meta.json into 03-Instagram-Reels\\{Workspace} with immediate Workspace preview, download, and Open Folder buttons.',
+              '<strong>Папка и доступ:</strong> записывает MP4 вместе с meta.json в 03-Instagram-Reels\\{Медиатека}, сразу с просмотром в медиатеке, скачиванием и кнопкой «Открыть папку».',
             ],
           },
         ],
@@ -998,23 +998,23 @@ const GUIDE_WORKFLOWS = {
     summaryId: 'wfTiktokSummary',
     modes: {
       video: {
-        summary: 'Clean TikTok MP4 download without watermark. No API key needed.',
-        phases: ['1. Input', '2. Clean Fetch', '3. Output'],
+        summary: 'Чистая загрузка MP4 из TikTok без водяного знака. API-ключ не нужен.',
+        phases: ['1. Ввод', '2. Чистая загрузка', '3. Вывод'],
         studio: [
           {
             align: 'bottom',
             nodes: [
-              { id: 'u-url', kind: 'box', label: 'TikTok URL', step: 0 },
-              { id: 'u-cfg', kind: 'pill', label: 'oEmbed Preview', step: 0 },
+              { id: 'u-url', kind: 'box', label: 'Ссылка TikTok', step: 0 },
+              { id: 'u-cfg', kind: 'pill', label: 'Предпросмотр oEmbed', step: 0 },
             ],
           },
           { align: 'bottom', nodes: [] },
           {
             align: 'bottom',
             nodes: [
-              { id: 'u-open', kind: 'pill', label: 'Open Folder', step: 2 },
-              { id: 'u-prev', kind: 'pill', label: 'Preview Video', step: 2 },
-              { id: 'u-vault', kind: 'box', label: 'Workspace', step: 2 },
+              { id: 'u-open', kind: 'pill', label: 'Открыть папку', step: 2 },
+              { id: 'u-prev', kind: 'pill', label: 'Просмотр видео', step: 2 },
+              { id: 'u-vault', kind: 'box', label: 'Медиатека', step: 2 },
             ],
           },
         ],
@@ -1022,15 +1022,15 @@ const GUIDE_WORKFLOWS = {
           {
             align: 'top',
             nodes: [
-              { id: 'p-val', kind: 'box', label: 'URL Validator', step: 0 },
-              { id: 'p-sec', kind: 'pill', label: 'Host & Link Check', step: 0 },
+              { id: 'p-val', kind: 'box', label: 'Проверка URL', step: 0 },
+              { id: 'p-sec', kind: 'pill', label: 'Проверка хоста и ссылки', step: 0 },
             ],
           },
           {
             align: 'top',
             nodes: [
-              { id: 'p-dlp', kind: 'box', label: 'yt-dlp Clean', step: 1 },
-              { id: 'p-mp4', kind: 'pill', label: 'No Watermark MP4', step: 1 },
+              { id: 'p-dlp', kind: 'box', label: 'yt-dlp: без водяного знака', step: 1 },
+              { id: 'p-mp4', kind: 'pill', label: 'MP4 без водяного знака', step: 1 },
             ],
           },
           {
@@ -1043,61 +1043,61 @@ const GUIDE_WORKFLOWS = {
         ],
         edges: [
           { from: 'u-url', to: 'u-cfg', route: 'v', style: 'green' },
-          { from: 'u-cfg', to: 'p-val', route: 'v', style: 'dashed', badge: { color: '#a855f7', text: 'Submit' } },
+          { from: 'u-cfg', to: 'p-val', route: 'v', style: 'dashed', badge: { color: '#a855f7', text: 'Отправить' } },
           { from: 'p-val', to: 'p-sec', route: 'left-branch', style: 'green' },
           { from: 'p-val', to: 'p-dlp', route: 'h', style: 'green' },
           { from: 'p-dlp', to: 'p-mp4', route: 'left-branch', style: 'green' },
           { from: 'p-dlp', to: 'p-out', route: 'h', style: 'green' },
           { from: 'p-out', to: 'p-meta', route: 'left-branch', style: 'green' },
-          { from: 'p-out', to: 'u-vault', route: 'v-up', style: 'dashed', badge: { color: '#22c55e', text: 'Ready' } },
+          { from: 'p-out', to: 'u-vault', route: 'v-up', style: 'dashed', badge: { color: '#22c55e', text: 'Готово' } },
           { from: 'u-vault', to: 'u-prev', route: 'right-up', style: 'green' },
           { from: 'u-vault', to: 'u-open', route: 'right-up', style: 'green' },
         ],
         steps: [
           {
-            tag: 'Studio + Guard',
-            title: 'Input Link, Validate & Preview Metadata',
-            detail: 'Paste a full or shortened TikTok video link in Studio. No AI API key is needed.',
+            tag: 'Студия + проверка',
+            title: 'Ввод ссылки, проверка и предпросмотр метаданных',
+            detail: 'Вставьте полную или сокращённую ссылку на видео TikTok в Студии. API-ключ ИИ не нужен.',
             points: [
-              '<strong>Preview & Safety Check:</strong> Fetches video title, author, and thumbnail via TikTok oEmbed (with yt-dlp fallback) while enforcing public HTTPS URL validation.',
+              '<strong>Предпросмотр и проверка безопасности:</strong> получает название видео, автора и обложку через TikTok oEmbed (с запасным вариантом через yt-dlp) и проверяет, что URL публичный и использует HTTPS.',
             ],
           },
           {
             tag: 'yt-dlp',
-            title: 'Download Clean Watermark-Free MP4',
-            detail: 'Luna extracts the source video stream directly via yt-dlp without TikTok overlay watermarks.',
+            title: 'Загрузка чистого MP4 без водяного знака',
+            detail: 'Luna напрямую извлекает исходный видеопоток через yt-dlp, без наложенного водяного знака TikTok.',
             points: [
-              '<strong>Original Fidelity:</strong> Preserves source vertical resolution and audio sync directly inside a clean MP4 container.',
+              '<strong>Исходное качество:</strong> сохраняет вертикальное разрешение источника и синхронизацию звука в чистом контейнере MP4.',
             ],
           },
           {
-            tag: 'Storage + UI',
-            title: 'Save to 04-TikTok-Clean & Workspace',
-            detail: 'Finished downloads are indexed automatically inside your local TikTok workspace.',
+            tag: 'Хранилище + интерфейс',
+            title: 'Сохранение в 04-TikTok-Clean и медиатеку',
+            detail: 'Завершённые загрузки автоматически индексируются в вашей локальной медиатеке TikTok.',
             points: [
-              '<strong>Destination & Quick Actions:</strong> Saves the clean MP4 and meta.json inside 04-TikTok-Clean\\{Workspace} so you can preview, download, or open the folder immediately.',
+              '<strong>Папка и быстрые действия:</strong> сохраняет чистый MP4 и meta.json в 04-TikTok-Clean\\{Медиатека}, чтобы сразу посмотреть видео, скачать его или открыть папку.',
             ],
           },
         ],
       },
       mp3: {
-        summary: 'Extract TikTok audio track or song directly to 320 kbps MP3. No API key needed.',
-        phases: ['1. Input', '2. Extract Audio', '3. Output'],
+        summary: 'Извлечение аудиодорожки или песни из TikTok сразу в MP3 320 kbps. API-ключ не нужен.',
+        phases: ['1. Ввод', '2. Извлечение звука', '3. Вывод'],
         studio: [
           {
             align: 'bottom',
             nodes: [
-              { id: 'u-url', kind: 'box', label: 'TikTok URL', step: 0 },
-              { id: 'u-cfg', kind: 'pill', label: 'Audio MP3 Mode', step: 0 },
+              { id: 'u-url', kind: 'box', label: 'Ссылка TikTok', step: 0 },
+              { id: 'u-cfg', kind: 'pill', label: 'Режим Аудио MP3', step: 0 },
             ],
           },
           { align: 'bottom', nodes: [] },
           {
             align: 'bottom',
             nodes: [
-              { id: 'u-open', kind: 'pill', label: 'Open Folder', step: 2 },
-              { id: 'u-play', kind: 'pill', label: 'Play Audio', step: 2 },
-              { id: 'u-vault', kind: 'box', label: 'Workspace', step: 2 },
+              { id: 'u-open', kind: 'pill', label: 'Открыть папку', step: 2 },
+              { id: 'u-play', kind: 'pill', label: 'Слушать аудио', step: 2 },
+              { id: 'u-vault', kind: 'box', label: 'Медиатека', step: 2 },
             ],
           },
         ],
@@ -1105,14 +1105,14 @@ const GUIDE_WORKFLOWS = {
           {
             align: 'top',
             nodes: [
-              { id: 'p-dlp', kind: 'box', label: 'yt-dlp Audio', step: 0 },
-              { id: 'p-trk', kind: 'pill', label: 'Fetch Audio Track', step: 0 },
+              { id: 'p-dlp', kind: 'box', label: 'yt-dlp: аудио', step: 0 },
+              { id: 'p-trk', kind: 'pill', label: 'Получение аудиодорожки', step: 0 },
             ],
           },
           {
             align: 'top',
             nodes: [
-              { id: 'p-ff', kind: 'box', label: 'FFmpeg Transcode', step: 1 },
+              { id: 'p-ff', kind: 'box', label: 'Перекодирование FFmpeg', step: 1 },
               { id: 'p-br', kind: 'pill', label: '320 kbps MP3', step: 1 },
             ],
           },
@@ -1126,39 +1126,39 @@ const GUIDE_WORKFLOWS = {
         ],
         edges: [
           { from: 'u-url', to: 'u-cfg', route: 'v', style: 'green' },
-          { from: 'u-cfg', to: 'p-dlp', route: 'v', style: 'dashed', badge: { color: '#a855f7', text: 'Submit' } },
+          { from: 'u-cfg', to: 'p-dlp', route: 'v', style: 'dashed', badge: { color: '#a855f7', text: 'Отправить' } },
           { from: 'p-dlp', to: 'p-trk', route: 'left-branch', style: 'green' },
           { from: 'p-dlp', to: 'p-ff', route: 'h', style: 'green' },
           { from: 'p-ff', to: 'p-br', route: 'left-branch', style: 'green' },
           { from: 'p-ff', to: 'p-out', route: 'h', style: 'green' },
           { from: 'p-out', to: 'p-meta', route: 'left-branch', style: 'green' },
-          { from: 'p-out', to: 'u-vault', route: 'v-up', style: 'dashed', badge: { color: '#22c55e', text: 'Ready' } },
+          { from: 'p-out', to: 'u-vault', route: 'v-up', style: 'dashed', badge: { color: '#22c55e', text: 'Готово' } },
           { from: 'u-vault', to: 'u-play', route: 'right-up', style: 'green' },
           { from: 'u-vault', to: 'u-open', route: 'right-up', style: 'green' },
         ],
         steps: [
           {
-            tag: 'Studio + yt-dlp',
-            title: 'Validate Link & Extract Source Audio Track',
-            detail: 'Paste any TikTok video or sound link and select Audio MP3 mode. Zero AI keys required.',
+            tag: 'Студия + yt-dlp',
+            title: 'Проверка ссылки и извлечение исходной аудиодорожки',
+            detail: 'Вставьте ссылку на видео или звук TikTok и выберите режим «Аудио MP3». Ключи ИИ не нужны.',
             points: [
-              '<strong>Audio-Only Fetch:</strong> Validates the TikTok URL and pulls the clean audio track via yt-dlp without rendering unnecessary video copies.',
+              '<strong>Загрузка только звука:</strong> проверяет URL TikTok и забирает чистую аудиодорожку через yt-dlp без лишних видеокопий.',
             ],
           },
           {
             tag: 'FFmpeg',
-            title: 'Transcode to 320 kbps High-Bitrate MP3',
-            detail: 'FFmpeg processes the pulled audio track through FFmpegExtractAudio into a standardized high-quality MP3.',
+            title: 'Перекодирование в MP3 320 kbps с высоким битрейтом',
+            detail: 'FFmpeg обрабатывает полученную аудиодорожку через FFmpegExtractAudio и делает стандартный MP3 высокого качества.',
             points: [
-              '<strong>Uniform Quality:</strong> Outputs clean 320 kbps stereo MP3 compatible with editors, DAWs, and mobile players.',
+              '<strong>Единое качество:</strong> выдаёт чистый стерео MP3 320 kbps, совместимый с редакторами, DAW и мобильными плеерами.',
             ],
           },
           {
-            tag: 'Storage + UI',
-            title: 'Save to 05-Audio-MP3 & Workspace',
-            detail: 'Completed MP3 tracks share the central audio folder across platforms, separated cleanly by Workspace.',
+            tag: 'Хранилище + интерфейс',
+            title: 'Сохранение в 05-Audio-MP3 и медиатеку',
+            detail: 'Готовые MP3 лежат в общей папке аудио для всех платформ и аккуратно разделены по медиатекам.',
             points: [
-              '<strong>Destination & Playback:</strong> Stores the .mp3 file + meta.json inside 05-Audio-MP3\\{Workspace} for built-in playback and instant folder access.',
+              '<strong>Папка и воспроизведение:</strong> сохраняет .mp3 и meta.json в 05-Audio-MP3\\{Медиатека} для встроенного проигрывания и мгновенного доступа к папке.',
             ],
           },
         ],
@@ -1401,14 +1401,14 @@ function renderGuideWorkflow(platform) {
       <div class="sl-head-row">${headsHtml}</div>
       <div class="sl-lane">
         <div class="sl-lane-grid">
-          <div class="sl-lane-rail">Studio</div>
+          <div class="sl-lane-rail">Студия</div>
           ${studioHtml}
         </div>
       </div>
       <div class="sl-lane-gap"></div>
       <div class="sl-lane">
         <div class="sl-lane-grid">
-          <div class="sl-lane-rail">Pipeline</div>
+          <div class="sl-lane-rail">Конвейер</div>
           ${pipeHtml}
         </div>
       </div>
