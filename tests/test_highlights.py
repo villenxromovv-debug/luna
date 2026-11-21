@@ -144,7 +144,7 @@ class TestHighlights(unittest.TestCase):
         self.assertGreaterEqual(h["end_time"], 18.0)
 
     def test_clip_language_controls_prompt_instruction(self):
-        seen_id = []
+        seen_ru = []
         seen_en = []
 
         def cap(bucket):
@@ -154,11 +154,12 @@ class TestHighlights(unittest.TestCase):
             return _fn
 
         t = transcript(40)
-        get_highlights(t, num_clips=1, llm_fn=cap(seen_id), clip_language="id")
+        get_highlights(t, num_clips=1, llm_fn=cap(seen_ru), clip_language="ru")
         get_highlights(t, num_clips=1, llm_fn=cap(seen_en), clip_language="en")
-        self.assertIn("Indonesian", seen_id[0])
-        self.assertNotIn("strictly in natural English", seen_id[0])
+        self.assertIn("natural, engaging Russian", seen_ru[0])
+        self.assertNotIn("strictly in natural English", seen_ru[0])
         self.assertIn("strictly in natural English", seen_en[0])
+        self.assertNotIn("Russian", seen_en[0])
 
 
 if __name__ == "__main__":

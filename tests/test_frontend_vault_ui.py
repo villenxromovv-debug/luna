@@ -40,15 +40,15 @@ class TestFrontendVaultUI(unittest.TestCase):
     def test_job_confirmation_states_rights_and_privacy(self):
         html = self.response.text
         self.assertIn('id="wsModalUsageNotice"', html)
-        self.assertIn("rights to use", html)
-        self.assertIn("providers chosen in Settings", html)
+        self.assertIn("на которые у вас есть права", html)
+        self.assertIn("в провайдеров, выбранных в Настройках", html)
 
     def test_failed_job_can_be_dismissed(self):
         """A failed job must keep a working close control and a calm badge."""
         html = self.source
-        self.assertIn("setCancelButtonVisible(true, 'Close')", html)
+        self.assertIn("setCancelButtonVisible(true, 'Закрыть')", html)
         self.assertNotIn('Failed <span class="animate-spin', html)
-        self.assertIn("The download was interrupted", html)
+        self.assertIn("Скачивание прервалось", html)
 
     def test_ratio_labels_cover_every_supported_ratio(self):
         """Video card ratio badges stay minimal: numeric ratios only, zero icons or orientation words."""
@@ -122,7 +122,7 @@ class TestFrontendVaultUI(unittest.TestCase):
         studio_block = source.split("function renderOpusResults(data)")[1].split("function copyText(")[0]
 
         self.assertIn("hasExplicitStart", helper_block)
-        self.assertIn("`Clip #${idx + 1}`", helper_block)
+        self.assertIn("`Клип #${idx + 1}`", helper_block)
         self.assertIn("if (hasClip)", helper_block)
 
         self.assertIn("buildStudioVideoMetaParts(item, idx)", studio_block)
@@ -166,17 +166,17 @@ class TestFrontendVaultUI(unittest.TestCase):
         self.assertIn('id="vaultPlatformUnderline"', html)
         self.assertIn('id="vaultModeDropdownBtn"', html)
         self.assertIn('id="vaultSortDropdownBtn"', html)
-        self.assertIn("All", html)
-        self.assertIn("All Types", html)
+        self.assertIn("Все типы", html)
+        self.assertIn("Все типы", html)
         self.assertIn("YouTube", html)
         self.assertIn("Instagram", html)
         self.assertIn("TikTok", html)
-        self.assertIn("AI Clips", html)
-        self.assertIn("Video Trimmer", html)
-        self.assertIn("Full Video", html)
-        self.assertIn("Audio MP3", html)
-        self.assertIn("Newest", html)
-        self.assertIn("Oldest", html)
+        self.assertIn("ИИ-клипы", html)
+        self.assertIn("Нарезка видео", html)
+        self.assertIn("Полное видео", html)
+        self.assertIn("Аудио MP3", html)
+        self.assertIn("Сначала новые", html)
+        self.assertIn("Сначала старые", html)
         for count_id in (
             "vaultCountAll",
             "vaultCountYoutube",
@@ -216,7 +216,7 @@ class TestFrontendVaultUI(unittest.TestCase):
 
         # Dropdown labels & file card footer (no Open in Explorer, no white Download capsule button)
         self.assertIn('id="vaultCardMenuSelectLabel"', source)
-        self.assertIn("Select Files", source)
+        self.assertIn("Выбрать файлы", source)
         self.assertIn("toggleFileCardMenu", source)
         self.assertIn("luna-download-icon-link", source)
         self.assertIn("executeBulkDeleteVaultItems", source)
@@ -375,14 +375,14 @@ class TestFrontendVaultUI(unittest.TestCase):
         self.assertNotIn(".button-wrapper", css)
 
     def test_youtube_shorts_autodetect_locks_ratio_and_ai_clip(self):
-        """YouTube Shorts links auto-select Full HD Video and lock ratio + AI Short Clips + Video Trimmer."""
+        """YouTube Shorts links auto-select Full HD Video and lock ratio + AI Short Clips + Нарезка видео."""
         html = self.source
         for expected in (
             "function isYoutubeShortUrl",
             "function syncYoutubeShortState",
             "function syncYoutubeShortLockUI",
             "YOUTUBE_SHORT_LOCKED_FEATURES",
-            "Video Trimmer is unavailable for YouTube Shorts",
+            "Нарезка видео недоступна для YouTube Shorts",
             "short-lock-icon",
             "pill-lock-icon",
             "isYoutubeShortLocked",
@@ -416,7 +416,7 @@ class TestFrontendVaultUI(unittest.TestCase):
         html = self.source
         for expected in (
             "function syncFaceDetectLockUI",
-            "Face Track is unavailable for 16:9 Wide ratio",
+            "Отслеживание лица недоступно для широкого соотношения 16:9",
             "syncFaceDetectLockUI();",
             "pill-lock-icon",
         ):
@@ -438,7 +438,7 @@ class TestFrontendVaultUI(unittest.TestCase):
             "SUPPORTED_MEDIA_DOMAINS",
             "function isSupportedMediaHost",
             "QUALITY_LABELS",
-            "Downloading Video ${activeTaskQuality}p",
+            "Скачивание видео ${activeTaskQuality}p",
             "data.quality || localStorage.getItem('luna_active_quality')",
         ):
             self.assertIn(expected, html)
@@ -477,11 +477,11 @@ class TestFrontendVaultUI(unittest.TestCase):
         html = self.source
         for expected in (
             "function renderCookieStatus",
-            "Core utilities ready (YouTube cookies not uploaded)",
-            "All utilities & YouTube cookies are ready",
-            "Unsaved key entered — click Test Connection to verify and enable Save Key.",
-            "Unsaved • Test to save",
-            "Move Folder transfers saved media only.",
+            "Основные утилиты готовы (cookies YouTube не загружены)",
+            "Все утилиты и cookies YouTube готовы",
+            "Ключ введён, но не сохранён: проверьте его кнопкой «Проверить подключение», чтобы стала доступна кнопка «Сохранить ключ».",
+            "Не сохранён • проверьте",
+            "«Перенести папку» переносит только сохранённые медиафайлы.",
         ):
             self.assertIn(expected, html)
 
@@ -596,11 +596,11 @@ class TestFrontendVaultUI(unittest.TestCase):
         ):
             self.assertIn(expected_css, css)
 
-        # Preflight API key toast with subtle "Go to Settings" link & refined Check for Updates button (no bounce .t-btn)
+        # Preflight API key toast with subtle "Перейти в настройки" link & refined Check for Updates button (no bounce .t-btn)
         for expected_preflight in (
             "function showMissingApiKeyToast",
             "async function checkAiClipApiKeysBeforeGenerate",
-            "Go to Settings",
+            "Перейти в настройки",
             "X-Luna-Error-Code",
             'id="checkUpdatesSpinner"',
             'data-lucide="arrow-down-to-line"',
