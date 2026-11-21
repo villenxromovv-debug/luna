@@ -7,13 +7,21 @@ import datetime
 import json
 import os
 import re
+import sys
 import tempfile
 import unicodedata
 from typing import Dict, Optional, Union
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEFAULT_D_PATH = r"D:\Luna-Media" if os.name == "nt" else os.path.join(BASE_DIR, "output")
-FALLBACK_PATH = os.path.join(BASE_DIR, "output")
+# The packaged build keeps media in the user's app data: the install folder may be read-only.
+_DATA_DIR = (
+    os.environ.get("LUNA_DATA_DIR")
+    or os.path.join(os.environ.get("LOCALAPPDATA") or os.path.expanduser("~"), "Luna")
+    if getattr(sys, "frozen", False)
+    else BASE_DIR
+)
+DEFAULT_D_PATH = r"D:\Luna-Media" if os.name == "nt" else os.path.join(_DATA_DIR, "output")
+FALLBACK_PATH = os.path.join(_DATA_DIR, "output")
 
 # Resolving the root probes the disk, so cache it per (target, default, fallback).
 # Settings changes and storage migrations call invalidate_storage_root_cache().

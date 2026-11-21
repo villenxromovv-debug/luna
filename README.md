@@ -37,6 +37,27 @@
 
 Синхронизация с апстримом: `git fetch upstream && git merge upstream/main`. Конфликты ожидаются в `luna/templates/index.html`, `luna/assets/ui/app.js`, `luna/assets/ui/background.js`.
 
+## Сборка установщика (Windows)
+
+Нужны Windows x64, Python 3.12 и [Inno Setup 6](https://jrsoftware.org/isinfo.php).
+
+```powershell
+uv pip install --python .venv\Scripts\python.exe -r requirements-build.txt
+
+# Инструменты кладутся внутрь сборки, чтобы чистая машина ничего не докачивала.
+New-Item -ItemType Directory -Force packaging\vendor
+Copy-Item .venv\Scripts\deno.exe packaging\vendor\deno.exe
+Copy-Item C:\ffmpeg\bin\ffmpeg.exe,C:\ffmpeg\bin\ffprobe.exe packaging\vendor\
+
+.venv\Scripts\pyinstaller.exe packaging\luna.spec --noconfirm
+& "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe" packaging\luna.iss
+```
+
+Результат: `dist\installer\Luna-Setup-0.1.0.exe`. Ставится без прав администратора в
+`%LOCALAPPDATA%\Programs\Luna`, ярлыки на рабочем столе и в меню Пуск. Настройки,
+cookies и готовая медиатека лежат в `%LOCALAPPDATA%\Luna`, поэтому переустановка и
+удаление приложения их не трогают.
+
 ## Requirements
 
 - Python 3.12 or newer (installed automatically by the installer).

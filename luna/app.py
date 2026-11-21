@@ -43,14 +43,31 @@ from pydantic import BaseModel, Field, field_validator, model_validator
 PACKAGE_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(PACKAGE_DIR)
 
+# A packaged build must not write next to its own executable: Program Files is read-only
+# for normal users. Settings, cookies and media live under the user's local app data.
+if getattr(sys, "frozen", False):
+    DATA_DIR = os.environ.get("LUNA_DATA_DIR") or os.path.join(
+        os.environ.get("LOCALAPPDATA") or os.path.expanduser("~"), "Luna"
+    )
+else:
+    DATA_DIR = os.environ.get("LUNA_DATA_DIR") or BASE_DIR
+os.makedirs(DATA_DIR, exist_ok=True)
+
 # Load environment variables
-load_dotenv(os.path.join(BASE_DIR, ".env"))
+load_dotenv(os.path.join(DATA_DIR, ".env"))
 
 # Ensure ffmpeg in PATH
 os.environ["PATH"] += os.pathsep + r"C:\ffmpeg\bin"
 # The start scripts run .venv/bin/python without activating the venv, so deno from
 # requirements.txt (yt-dlp solves YouTube's JS challenge with it) is not on PATH otherwise.
-os.environ["PATH"] = os.path.dirname(sys.executable) + os.pathsep + os.environ["PATH"]
+if getattr(sys, "frozen", False):
+    # The packaged build keeps its tools in _internal next to Luna.exe.
+    bundle_dir = os.path.dirname(sys.executable)
+    os.environ["PATH"] = os.pathsep.join(
+        [bundle_dir, os.path.join(bundle_dir, "_internal"), os.environ["PATH"]]
+    )
+else:
+    os.environ["PATH"] = os.path.dirname(sys.executable) + os.pathsep + os.environ["PATH"]
 if not shutil.which("deno"):
     print("[setup] deno not found: YouTube downloads will fail or be throttled. Run the installer again.", flush=True)
 
@@ -110,8 +127,8 @@ from .vault_service import (
     workspace_name_taken,
 )
 
-OUTPUT_DIR = os.path.join(BASE_DIR, "output")
-STATIC_DIR = os.path.join(BASE_DIR, "static")
+OUTPUT_DIR = os.path.join(DATA_DIR, "output")
+STATIC_DIR = os.path.join(DATA_DIR, "static")
 TEMPLATES_DIR = os.path.join(PACKAGE_DIR, "templates")
 ASSETS_DIR = os.path.join(PACKAGE_DIR, "assets")
 
@@ -3129,7 +3146,7 @@ def _update_env_file_locked(updates: dict):
             # An embedded newline would append arbitrary KEY=value lines to .env.
             raise ValueError(f"Value for {key} cannot contain line breaks")
 
-    env_path = os.path.join(BASE_DIR, ".env")
+    env_path = os.path.join(DATA_DIR, ".env")
     lines = []
     if os.path.exists(env_path):
         with open(env_path, "r", encoding="utf-8") as f:

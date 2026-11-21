@@ -60,3 +60,7 @@ desktop.ini
 # docs
 /issue/
 /skills/
+# Desktop build artifacts
+build/
+dist/
+packaging/vendor/

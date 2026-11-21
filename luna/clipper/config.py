@@ -3,11 +3,19 @@
 # THIRD_PARTY_NOTICES.md for the upstream notice.
 
 import os
+import sys
 from typing import Optional
 
 from dotenv import load_dotenv
 
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+_SOURCE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# A packaged build keeps settings and cookies in the user's app data, where writes are allowed.
+ROOT_DIR = (
+    os.environ.get("LUNA_DATA_DIR")
+    or os.path.join(os.environ.get("LOCALAPPDATA") or os.path.expanduser("~"), "Luna")
+    if getattr(sys, "frozen", False)
+    else _SOURCE_ROOT
+)
 load_dotenv(os.path.join(ROOT_DIR, ".env"))
 
 DEFAULT_OPENAI_BASE_URL = "https://api.openai.com/v1"

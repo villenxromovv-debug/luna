@@ -93,6 +93,16 @@ def run_supervised_server(port: int, url: str, *, no_browser: bool = False) -> i
     if not no_browser:
         threading.Thread(target=open_browser_when_ready, args=(url,), daemon=True).start()
 
+    if getattr(sys, "frozen", False):
+        # A packaged build has no interpreter to spawn `python -m uvicorn`, so the server
+        # runs in this process. Updates replace the whole installed build, not the module.
+        import uvicorn
+
+        from .app import app as fastapi_app
+
+        uvicorn.run(fastapi_app, host=HOST, port=port, log_level="info")
+        return 0
+
     while True:
         child_env = dict(os.environ)
         child_env["LUNA_PORT"] = str(port)
